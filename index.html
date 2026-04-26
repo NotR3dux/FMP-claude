@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find My Partner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HOME VIEW
+═══════════════════════════════════════════════════════════ -->
+<div id="v-home" class="view home-page" style="display:none;">
+  <div class="blob-tr"></div>
+  <div class="blob-bl"></div>
+
+  <!-- NAV -->
+  <nav id="main-nav" style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:18px 52px;transition:background 0.3s,box-shadow 0.3s,backdrop-filter 0.3s;">
+    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;">
+      <span style="font-size:26px;line-height:1;" class="cherry-bounce">🍒</span>
+      <span class="jk" style="font-weight:800;font-size:16.5px;color:var(--dark);">Find My Partner</span>
+    </button>
+
+    <div style="display:flex;align-items:center;gap:30px;">
+      <a href="#how"     class="nav-a" style="font-size:14.5px;color:#4A4035;font-weight:500;text-decoration:none;">How It Works</a>
+      <a href="#why"     class="nav-a" style="font-size:14.5px;color:#4A4035;font-weight:500;text-decoration:none;">Why Us</a>
+      <a href="#stories" class="nav-a" style="font-size:14.5px;color:#4A4035;font-weight:500;text-decoration:none;">Stories</a>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:18px;">
+      <button onclick="navTo('status')" class="nav-a jk" style="background:none;border:none;font-size:14.5px;color:var(--dark);font-weight:600;cursor:pointer;">Check Status</button>
+      <button onclick="navTo('form')" class="btn-red" style="padding:10px 22px;font-size:14px;">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero-section" style="text-align:center;padding:54px 24px 72px;position:relative;z-index:1;">
+    <div class="hero-cherry hero-d0" style="font-size:52px;margin-bottom:14px;line-height:1;filter:drop-shadow(0 4px 12px rgba(200,60,60,0.2));display:inline-block;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);">🍒</div>
+
+    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:6px;background:#E8E2EE;border-radius:9999px;padding:8px 18px;font-size:13px;color:#6A6080;font-weight:500;margin-bottom:26px;">
+      <span>✨</span><span>From Instagram, with love and friendship</span>
+    </div>
+
+    <h1 class="jk hero-d2" style="font-size:clamp(54px,7.5vw,82px);font-weight:900;line-height:1.04;letter-spacing:-0.035em;color:var(--dark);margin-bottom:22px;">
+      Find Your <span style="color:var(--brand);">Person</span>
+    </h1>
+
+    <p class="hero-d3" style="max-width:560px;margin:0 auto 10px;font-size:17.5px;color:#5A5048;line-height:1.72;">
+      Whether you're searching for a
+      <span style="color:var(--brand);font-weight:600;text-decoration:underline;text-decoration-color:rgba(212,78,39,0.35);text-underline-offset:3px;">romantic partner</span>
+      or a
+      <span style="color:#4478CC;font-weight:600;text-decoration:underline;text-decoration-color:rgba(68,120,204,0.35);text-underline-offset:3px;">new best friend</span>
+      — we personally find the perfect match for you. Real people, real connections, zero swiping.
+    </p>
+    <p class="hero-d3" style="font-size:13.5px;color:#9A8A80;margin:0 0 36px;">No algorithms. No swiping. Just us, doing the work for you. 🍒</p>
+
+    <div class="hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 32px;">Find My Person <span>→</span></button>
+      <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" class="btn-outline" style="font-size:16px;padding:14px 32px;">How Does It Work?</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:480px;margin:52px auto 0;">
+      <div style="flex:1;text-align:center;">
+        <div class="jk stat-num" style="font-size:28px;font-weight:800;color:var(--dark);" data-count="2000" data-suffix="+" data-label="K">2K+</div>
+        <div style="font-size:12.5px;color:var(--light-muted);margin-top:3px;">Matches Made</div>
+      </div>
+      <div style="width:1px;height:36px;background:#DCCEC4;"></div>
+      <div style="flex:1;text-align:center;">
+        <div class="jk" style="font-size:28px;font-weight:800;color:var(--dark);">50/50</div>
+        <div style="font-size:12.5px;color:var(--light-muted);margin-top:3px;">Love &amp; Friendship</div>
+      </div>
+      <div style="width:1px;height:36px;background:#DCCEC4;"></div>
+      <div style="flex:1;text-align:center;">
+        <div class="jk stat-num" style="font-size:28px;font-weight:800;color:var(--dark);" data-count="50000" data-suffix="+" data-label="K">50K+</div>
+        <div style="font-size:12.5px;color:var(--light-muted);margin-top:3px;">Instagram Followers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="padding:72px 52px;position:relative;z-index:1;">
+    <div style="text-align:center;margin-bottom:44px;" class="reveal">
+      <div class="sec-label" style="margin-bottom:10px;">THE PROCESS</div>
+      <h2 class="jk" style="font-size:clamp(34px,5vw,52px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">How It Works</h2>
+      <p style="color:var(--muted);font-size:16.5px;">Four easy steps. We handle the hard stuff so you don't have to.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;">
+      <div class="card card-tilt reveal reveal-d1">
+        <div style="font-size:30px;margin-bottom:14px;">📝</div>
+        <div class="sec-label" style="margin-bottom:7px;">STEP 01</div>
+        <h3 class="jk" style="font-weight:800;font-size:16.5px;margin-bottom:9px;color:var(--dark);">Tell Us About You</h3>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Fill out your profile — your vibe, interests, and what kind of connection you're after. Upload a photo too.</p>
+      </div>
+      <div class="card card-tilt reveal reveal-d2">
+        <div style="font-size:30px;margin-bottom:14px;">🔍</div>
+        <div class="sec-label" style="margin-bottom:7px;">STEP 02</div>
+        <h3 class="jk" style="font-weight:800;font-size:16.5px;margin-bottom:9px;color:var(--dark);">We Do The Work</h3>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Our team personally looks through profiles and handpicks someone who matches your energy. No bots.</p>
+      </div>
+      <div class="card card-tilt reveal reveal-d3">
+        <div style="font-size:30px;margin-bottom:14px;">🍒</div>
+        <div class="sec-label" style="margin-bottom:7px;">STEP 03</div>
+        <h3 class="jk" style="font-weight:800;font-size:16.5px;margin-bottom:9px;color:var(--dark);">Meet Your Match</h3>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.64;">We reveal your match and you get to decide — are you feeling it? Accept or pass, totally your call.</p>
+      </div>
+      <div class="card card-tilt reveal reveal-d4">
+        <div style="font-size:30px;margin-bottom:14px;">💬</div>
+        <div class="sec-label" style="margin-bottom:7px;">STEP 04</div>
+        <h3 class="jk" style="font-weight:800;font-size:16.5px;margin-bottom:9px;color:var(--dark);">Connect &amp; Go!</h3>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.64;">If you're both in, we'll introduce you privately so the connection can bloom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="why" style="padding:72px 52px;background:linear-gradient(to bottom,#EDE5DC,#E8DFD4);position:relative;z-index:1;">
+    <div style="text-align:center;margin-bottom:44px;" class="reveal">
+      <div class="sec-label" style="margin-bottom:10px;">WHY US</div>
+      <h2 class="jk" style="font-size:clamp(34px,5vw,56px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">Not Your Typical<br>Matchmaker</h2>
+      <p style="color:var(--muted);font-size:16.5px;max-width:460px;margin:0 auto;">We're different because we actually care — about who you are and who you end up with.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
+      <div class="card card-tilt reveal reveal-d1"><div style="font-size:26px;margin-bottom:13px;">🤝</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Human Matchmaking</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">No bots. A real person reads your profile and picks your match with care. It's personal.</p></div>
+      <div class="card card-tilt reveal reveal-d2"><div style="font-size:26px;margin-bottom:13px;">🔒</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Safe &amp; Private</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Your info stays between us until both of you say yes. We keep it safe and confidential.</p></div>
+      <div class="card card-tilt reveal reveal-d3"><div style="font-size:26px;margin-bottom:13px;">💛</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Love OR Friendship</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Not everyone wants romance — and that's totally fine. We match for deep friendships too.</p></div>
+      <div class="card card-tilt reveal reveal-d4"><div style="font-size:26px;margin-bottom:13px;">✅</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Verified Profiles</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Every profile is manually reviewed. Real people, real photos. No fakes.</p></div>
+      <div class="card card-tilt reveal reveal-d5"><div style="font-size:26px;margin-bottom:13px;">⚡</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Fast Turnaround</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Most matches are found within 48–72 hours. We don't leave you hanging.</p></div>
+      <div class="card card-tilt reveal reveal-d6"><div style="font-size:26px;margin-bottom:13px;">📸</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Instagram Native</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">We started on Instagram and we're proud of it. Follow us for stories, updates and BTS content.</p></div>
+    </div>
+  </section>
+
+  <!-- STORIES -->
+  <section id="stories" style="padding:72px 52px;position:relative;z-index:1;">
+    <div style="text-align:center;margin-bottom:44px;" class="reveal">
+      <div class="sec-label" style="margin-bottom:10px;">REAL STORIES</div>
+      <h2 class="jk" style="font-size:clamp(34px,5vw,52px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">People Who Found<br>Their Person</h2>
+      <p style="color:var(--muted);font-size:16.5px;">Romance, friendship, or both — we celebrate every kind of connection.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
+      <div class="story-1 card card-tilt reveal reveal-d1" style="box-shadow:0 2px 14px rgba(212,78,39,0.07);">
+        <div class="stars" style="margin-bottom:14px;">★★★★★</div>
+        <p style="font-size:14.5px;color:#3A2018;line-height:1.72;margin-bottom:20px;">"We honestly didn't think an Instagram matchmaker could work this well. Six months later we're still going strong. The cherry logo really does bring good luck 🍒"</p>
+        <div style="display:flex;align-items:center;gap:11px;">
+          <img src="https://placehold.co/44x44/D4A090/ffffff?text=SJ" alt="Sarah" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+          <div>
+            <div class="jk" style="font-weight:700;font-size:14.5px;color:var(--dark);">Sarah &amp; James</div>
+            <div style="font-size:12.5px;color:#8A6A60;">💕 Romantic Match</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-2 card card-tilt reveal reveal-d2" style="box-shadow:0 2px 14px rgba(70,110,200,0.07);">
+        <div class="stars" style="margin-bottom:14px;">★★★★★</div>
+        <p style="font-size:14.5px;color:#182038;line-height:1.72;margin-bottom:20px;">"I moved cities and knew nobody. Within a week I met Tasha and now she's my ride-or-die. This isn't just for romance — the friendship matching is SO real."</p>
+        <div style="display:flex;align-items:center;gap:11px;">
+          <img src="https://placehold.co/44x44/8AAAD4/ffffff?text=MT" alt="Mia" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+          <div>
+            <div class="jk" style="font-weight:700;font-size:14.5px;color:var(--dark);">Mia &amp; Tasha</div>
+            <div style="font-size:12.5px;color:#6A7A90;">🧡 New Best Friends</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-3 card card-tilt reveal reveal-d3" style="box-shadow:0 2px 14px rgba(200,80,150,0.07);">
+        <div class="stars" style="margin-bottom:14px;">★★★★★</div>
+        <p style="font-size:14.5px;color:#2A1830;line-height:1.72;margin-bottom:20px;">"A real human picked my match. That made all the difference. It felt intentional and genuine — not some random swipe."</p>
+        <div style="display:flex;align-items:center;gap:11px;">
+          <img src="https://placehold.co/44x44/C09080/ffffff?text=AJ" alt="Alex" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+          <div>
+            <div class="jk" style="font-weight:700;font-size:14.5px;color:var(--dark);">Alex &amp; Jordan</div>
+            <div style="font-size:12.5px;color:#8A6070;">💕 Romantic Match</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section style="padding:20px 52px 72px;position:relative;z-index:1;">
+    <div class="cta-section reveal" style="border-radius:28px;padding:60px 48px;text-align:center;position:relative;overflow:hidden;max-width:900px;margin:0 auto;">
+      <div class="cta-blob" style="width:110px;height:110px;bottom:-28px;left:-22px;"></div>
+      <div class="cta-blob" style="width:80px;height:80px;top:-20px;right:60px;animation-delay:2s;"></div>
+      <div class="cta-blob" style="width:55px;height:55px;top:40%;right:-15px;animation-delay:1s;"></div>
+      <div style="font-size:44px;margin-bottom:16px;position:relative;z-index:1;" class="cherry-bounce">🍒</div>
+      <h2 class="jk" style="font-size:clamp(28px,4vw,44px);font-weight:900;color:#fff;letter-spacing:-0.025em;margin-bottom:14px;position:relative;z-index:1;">Ready to Find Your Person?</h2>
+      <p style="color:rgba(255,255,255,0.84);font-size:16.5px;margin-bottom:32px;line-height:1.6;position:relative;z-index:1;">Love, friendship, or something in between — sign up and<br>let us do the work. Your match is out there.</p>
+      <button onclick="navTo('form')" class="jk btn-red" style="background:#fff;color:var(--brand);box-shadow:0 4px 18px rgba(0,0,0,0.14);font-size:16px;padding:14px 36px;position:relative;z-index:1;">
+        Get Started →
+      </button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #DCCEC4;position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="font-size:22px;">🍒</span>
+      <span class="jk" style="font-weight:800;font-size:14.5px;color:var(--dark);">Find My Partner</span>
+    </div>
+    <div style="font-size:13px;color:var(--light-muted);">For everyone looking for their person — romantic or not. 🧡</div>
+    <div style="display:flex;align-items:center;gap:18px;font-size:13px;color:#4A4035;">
+      <span style="cursor:pointer;display:flex;align-items:center;gap:5px;" class="nav-a">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        Follow Us
+      </span>
+      <span style="color:var(--light-muted);">© 2026 Find My Partner</span>
+    </div>
+  </footer>
+</div><!-- /v-home -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FORM VIEW
+═══════════════════════════════════════════════════════════ -->
+<div id="v-form" class="view" style="display:none;background:var(--bg);">
+  <header style="padding:15px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E4D8CE;background:rgba(240,234,226,0.92);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20;">
+    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+      <div style="width:34px;height:34px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <span class="jk" style="font-weight:800;font-size:16.5px;color:var(--dark);">Find My Partner</span>
+    </button>
+    <button id="form-back-btn" onclick="window.stepBack()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:#4A4035;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;transition:color 0.18s,transform 0.18s;" onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'" onmouseout="this.style.color='#4A4035';this.style.transform=''">
+      ← Back
+    </button>
+  </header>
+
+  <div style="display:flex;justify-content:center;padding:28px 0 0;">
+    <div id="stepper" style="display:flex;align-items:center;gap:0;width:260px;"></div>
+  </div>
+
+  <div id="step-title" style="text-align:center;padding:18px 0 0;"></div>
+  <div id="step-content" style="max-width:580px;margin:20px auto 0;padding:0 20px;"></div>
+  <div id="step-nav"     style="max-width:580px;margin:0 auto;padding:16px 20px 52px;display:flex;align-items:center;justify-content:space-between;"></div>
+</div><!-- /v-form -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATUS VIEW
+═══════════════════════════════════════════════════════════ -->
+<div id="v-status" class="view" style="display:none;background:var(--bg);">
+  <header style="padding:15px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E4D8CE;background:rgba(240,234,226,0.92);backdrop-filter:blur(10px);position:sticky;top:0;z-index:20;">
+    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+      <div style="width:34px;height:34px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <span class="jk" style="font-weight:800;font-size:16.5px;color:var(--dark);">Find My Partner</span>
+    </button>
+    <button onclick="navTo('home')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:#4A4035;font-size:14px;font-weight:600;font-family:'Inter',sans-serif;transition:color 0.18s,transform 0.18s;" onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'" onmouseout="this.style.color='#4A4035';this.style.transform=''">
+      ← Home
+    </button>
+  </header>
+
+  <div style="max-width:520px;margin:48px auto;padding:0 20px;">
+    <div id="status-check" class="card fade-up" style="text-align:center;padding:44px 36px;transition:opacity 0.28s,transform 0.28s;">
+      <div style="width:78px;height:78px;background:#FCE8E4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D44E27" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <h2 class="jk" style="font-size:22px;font-weight:800;color:var(--dark);margin-bottom:8px;">Check Your Status</h2>
+      <p style="color:var(--muted);font-size:14.5px;line-height:1.65;margin-bottom:26px;">Enter your Instagram handle or email to see where you are in the matchmaking process.</p>
+      <input type="text" id="status-inp" class="finput" placeholder="@yourusername or email" style="text-align:center;margin-bottom:14px;">
+      <button onclick="window.showStatusResult()" class="btn-red" style="width:100%;justify-content:center;padding:13px;">Check My Status</button>
+    </div>
+
+    <div id="status-result" style="display:none;" class="card" style="text-align:center;padding:44px 36px;">
+      <div style="width:78px;height:78px;background:#FCE8E4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D44E27" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <h2 class="jk" style="font-size:24px;font-weight:800;color:var(--dark);margin-bottom:8px;">We're On It! 🍒</h2>
+      <p style="color:var(--muted);font-size:14.5px;line-height:1.65;margin-bottom:26px;text-align:center;">Our team is looking through profiles to find the perfect person for you. Usually takes 48–72 hours.</p>
+
+      <div style="background:#FDF0EC;border-radius:16px;padding:18px 22px;margin-bottom:22px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:13px;">
+          <div style="width:38px;height:38px;background:#FCE0D8;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#D44E27"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div>
+            <div class="jk" style="font-weight:700;font-size:14.5px;color:var(--dark);" id="status-uname">@yourhandle</div>
+            <div style="font-size:12.5px;color:var(--light-muted);">Looking for: romantic partner</div>
+          </div>
+        </div>
+        <div class="pbar-track"><div class="pbar-fill" id="pbar" style="width:0%;"></div></div>
+        <div style="font-size:12px;color:var(--light-muted);margin-top:8px;text-align:center;">Searching for your partner...</div>
+      </div>
+
+      <button onclick="document.getElementById('status-result').style.display='none';document.getElementById('status-check').style.display='block';document.getElementById('status-check').style.opacity='1';document.getElementById('status-check').style.transform='';"
+        style="background:none;border:none;cursor:pointer;color:var(--brand);font-size:13.5px;font-weight:600;font-family:'Inter',sans-serif;transition:opacity 0.18s;"
+        onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+        ← Check Again
+      </button>
+    </div>
+  </div>
+</div><!-- /v-status -->
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
