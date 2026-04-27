@@ -8,10 +8,10 @@ let step = 1;
 const STEPS = 4;
 
 const stepMeta = {
-  1: { title: 'Personal Info',  sub: 'Tell us about yourself' },
-  2: { title: 'Preferences',    sub: 'What kind of connection are you looking for?' },
-  3: { title: 'Your Photo',     sub: 'Add a photo to your profile' },
-  4: { title: 'Payment',        sub: 'Complete your registration' },
+  1: { title: 'Personal Info ✏️',  sub: 'Tell us a little about yourself!' },
+  2: { title: 'Preferences 💛',    sub: 'What kind of connection are you looking for?' },
+  3: { title: 'Your Photo 📸',     sub: 'Add a photo so we can find your perfect match' },
+  4: { title: 'Almost There! 🍒',  sub: 'Complete your registration' },
 };
 
 export function initForm() {
@@ -36,8 +36,8 @@ function renderStepper() {
 function renderTitle() {
   const { title, sub } = stepMeta[step];
   document.getElementById('step-title').innerHTML = `
-    <h2 class="jk fade-up" style="font-size:25px;font-weight:800;color:var(--dark);margin-bottom:5px;">${title}</h2>
-    <p class="fade-up" style="color:var(--light-muted);font-size:14.5px;animation-delay:0.06s;">${sub}</p>
+    <h2 class="jk fade-up" style="font-size:26px;font-weight:900;color:var(--dark);margin-bottom:5px;letter-spacing:-0.02em;">${title}</h2>
+    <p class="fade-up int" style="color:var(--muted);font-size:14.5px;animation-delay:0.06s;">${sub}</p>
   `;
 }
 
