@@ -11,6 +11,7 @@ import {
   initCardTilt,
   transitionView,
   initNavScroll,
+  initGradientInteractive,
 } from './animations.js';
 
 import { initForm, renderForm, stepNext, stepBack } from './form.js';
@@ -80,4 +81,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParallax();
   initCardTilt();
   initNavScroll();
+  initGradientInteractive();
 });

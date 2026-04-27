@@ -153,6 +153,26 @@ export function transitionView(fromEl, toEl) {
   }
 }
 
+// ── Interactive gradient blob follows mouse ────────────────
+export function initGradientInteractive() {
+  const interactive = document.getElementById('grad-interactive');
+  if (!interactive) return;
+  let curX = 0, curY = 0, tgX = 0, tgY = 0, rafId = null;
+
+  function move() {
+    curX += (tgX - curX) / 20;
+    curY += (tgY - curY) / 20;
+    interactive.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+    rafId = requestAnimationFrame(move);
+  }
+
+  window.addEventListener('mousemove', e => {
+    tgX = e.clientX;
+    tgY = e.clientY;
+    if (!rafId) move();
+  });
+}
+
 // ── Sticky nav shadow on scroll ────────────────────────────
 export function initNavScroll() {
   const nav = document.querySelector('#main-nav');
