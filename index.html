@@ -6,7 +6,7 @@
   <title>Find My Partner 🍒</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=3">
+  <link rel="stylesheet" href="css/styles.css?v=4">
 </head>
 <body>
 
@@ -78,109 +78,73 @@
   <!-- ── HERO ───────────────────────────────────────────────── -->
   <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:52px 24px 68px;position:relative;z-index:1;overflow:hidden;">
 
-    <!-- SVG filter for goo blob effect -->
-    <svg style="display:none;position:absolute;">
-      <defs>
-        <filter id="grad-blur">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
-          <feBlend in="SourceGraphic" in2="goo"/>
-        </filter>
-      </defs>
-    </svg>
-
-    <!-- Sunset gradient background -->
-    <div class="grad-hero" id="grad-hero">
-      <div class="grad-blobs" id="grad-blobs">
-        <div class="grad-blob grad-blob-1"></div>
-        <div class="grad-blob grad-blob-2"></div>
-        <div class="grad-blob grad-blob-3"></div>
-        <div class="grad-blob grad-blob-4"></div>
-        <div class="grad-blob grad-blob-5"></div>
-        <div class="grad-blob-interactive" id="grad-interactive"></div>
-      </div>
+    <!-- Big cute logo illustration -->
+    <div class="hero-d0" style="margin-bottom:18px;">
+      <svg width="120" height="100" viewBox="0 0 120 100" fill="none" style="display:inline-block;filter:drop-shadow(0 4px 18px rgba(232,104,74,0.18));">
+        <ellipse cx="38" cy="56" rx="26" ry="26" fill="#E8684A"/>
+        <circle cx="28" cy="52" r="3.5" fill="#2A180E"/>
+        <circle cx="48" cy="52" r="3.5" fill="#2A180E"/>
+        <circle cx="29.5" cy="50.5" r="1.2" fill="white"/>
+        <circle cx="49.5" cy="50.5" r="1.2" fill="white"/>
+        <path d="M29 60 Q38 66 47 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="82" cy="56" rx="26" ry="26" fill="#6AADE0"/>
+        <circle cx="72" cy="52" r="3.5" fill="#2A180E"/>
+        <circle cx="92" cy="52" r="3.5" fill="#2A180E"/>
+        <circle cx="73.5" cy="50.5" r="1.2" fill="white"/>
+        <circle cx="93.5" cy="50.5" r="1.2" fill="white"/>
+        <path d="M73 60 Q82 66 91 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M60 26 L61.4 33 L68 34 L61.4 35 L60 42 L58.6 35 L52 34 L58.6 33Z" fill="#FAC740"/>
+        <text x="48" y="13" font-size="13" fill="#FAC740">✦</text>
+        <text x="62" y="10" font-size="9"  fill="#6BC47A">✦</text>
+        <text x="36" y="17" font-size="8"  fill="#6AADE0">✦</text>
+      </svg>
     </div>
 
-    <!-- Content (on top of gradient) -->
-    <div style="position:relative;z-index:2;">
+    <!-- Badge -->
+    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:white;border:1.5px solid rgba(232,104,74,0.2);border-radius:9999px;padding:8px 20px;font-size:13px;color:var(--coral);font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;box-shadow:0 2px 12px rgba(232,104,74,0.1);">
+      <span>✨</span><span>From Instagram, with love & friendship</span><span>✨</span>
+    </div>
 
-      <!-- Big cute logo illustration -->
-      <div class="hero-d0" style="margin-bottom:18px;">
-        <svg width="120" height="100" viewBox="0 0 120 100" fill="none" style="display:inline-block;filter:drop-shadow(0 6px 24px rgba(0,0,0,0.25));">
-          <ellipse cx="38" cy="56" rx="30" ry="30" fill="rgba(255,255,255,0.22)"/>
-          <ellipse cx="38" cy="56" rx="26" ry="26" fill="#E8684A"/>
-          <circle cx="28" cy="52" r="3.5" fill="#2A180E"/>
-          <circle cx="48" cy="52" r="3.5" fill="#2A180E"/>
-          <circle cx="29.5" cy="50.5" r="1.2" fill="white"/>
-          <circle cx="49.5" cy="50.5" r="1.2" fill="white"/>
-          <path d="M29 60 Q38 66 47 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <ellipse cx="82" cy="56" rx="30" ry="30" fill="rgba(255,255,255,0.18)"/>
-          <ellipse cx="82" cy="56" rx="26" ry="26" fill="#6AADE0"/>
-          <circle cx="72" cy="52" r="3.5" fill="#2A180E"/>
-          <circle cx="92" cy="52" r="3.5" fill="#2A180E"/>
-          <circle cx="73.5" cy="50.5" r="1.2" fill="white"/>
-          <circle cx="93.5" cy="50.5" r="1.2" fill="white"/>
-          <path d="M73 60 Q82 66 91 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- Star sparkle connector instead of heart -->
-          <path d="M60 26 L61.4 33 L68 34 L61.4 35 L60 42 L58.6 35 L52 34 L58.6 33Z" fill="#FAC740"/>
-          <line x1="8"  y1="44" x2="2"  y2="44" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-          <line x1="10" y1="52" x2="3"  y2="52" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-          <line x1="9"  y1="60" x2="2"  y2="60" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-          <line x1="112" y1="44" x2="118" y2="44" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-          <line x1="110" y1="52" x2="117" y2="52" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-          <line x1="111" y1="60" x2="118" y2="60" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
-          <text x="48" y="13" font-size="13" fill="rgba(255,255,255,0.9)">✦</text>
-          <text x="62" y="10" font-size="9"  fill="rgba(255,255,255,0.7)">✦</text>
-          <text x="36" y="17" font-size="8"  fill="rgba(255,255,255,0.8)">✦</text>
-        </svg>
+    <!-- H1 -->
+    <h1 class="jk hero-d2" style="font-size:clamp(40px,7.5vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--dark);margin-bottom:20px;">
+      Find Your <span style="color:var(--coral);position:relative;">Person
+        <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="var(--coral)" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.4"/></svg>
+      </span>
+    </h1>
+
+    <!-- Sub -->
+    <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:var(--text);line-height:1.75;">
+      Whether you're looking for a
+      <span style="color:var(--coral);font-weight:700;background:var(--coral-l);padding:1px 8px;border-radius:6px;">romantic partner</span>
+      or a
+      <span style="color:var(--blue-d);font-weight:700;background:var(--blue-l);padding:1px 8px;border-radius:6px;">new best friend</span>
+      — we personally find the perfect match for you 🍒
+    </p>
+    <p class="hero-d3 int" style="font-size:13.5px;color:var(--muted);margin:0 0 36px;">No algorithms. No swiping. Just real humans, doing the work for you!</p>
+
+    <!-- CTAs -->
+    <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;">Find My Person →</button>
+      <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" class="btn-outline" style="font-size:16px;padding:14px 34px;">How Does It Work?</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:white;border-radius:24px;padding:22px 28px;border:2px solid rgba(232,104,74,0.1);box-shadow:0 4px 24px rgba(42,24,14,0.06);">
+      <div class="hero-stats-item" style="flex:1;text-align:center;">
+        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:var(--coral);" data-count="2000" data-suffix="+" data-label="K">2K+</div>
+        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Matches Made</div>
       </div>
-
-      <!-- Badge -->
-      <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.3);border-radius:9999px;padding:8px 20px;font-size:13px;color:rgba(255,255,255,0.95);font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;">
-        <span>✨</span><span>From Instagram, with love & friendship</span><span>✨</span>
+      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(42,24,14,0.08);"></div>
+      <div class="hero-stats-item" style="flex:1;text-align:center;">
+        <div class="jk" style="font-size:30px;font-weight:900;color:var(--green);">50/50</div>
+        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Love & Friendship</div>
       </div>
-
-      <!-- H1 -->
-      <h1 class="jk hero-d2" style="font-size:clamp(40px,7.5vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:20px;text-shadow:0 2px 20px rgba(0,0,0,0.2);">
-        Find Your <span style="color:#FAC740;position:relative;">Person
-          <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="rgba(255,255,255,0.5)" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
-        </span>
-      </h1>
-
-      <!-- Sub -->
-      <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:rgba(255,255,255,0.88);line-height:1.75;">
-        Whether you're looking for a
-        <span style="color:#FAC740;font-weight:700;">romantic partner</span>
-        or a
-        <span style="color:#A8E4FF;font-weight:700;">new best friend</span>
-        — we personally find the perfect match for you
-      </p>
-      <p class="hero-d3 int" style="font-size:13.5px;color:rgba(255,255,255,0.6);margin:0 0 36px;">No algorithms. No swiping. Just real humans, doing the work for you!</p>
-
-      <!-- CTAs -->
-      <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-        <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.95);color:var(--coral);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 0 rgba(0,0,0,0.15),0 6px 20px rgba(0,0,0,0.2);">Find My Person →</button>
-        <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);color:#fff;border:2.5px solid rgba(255,255,255,0.4);border-radius:9999px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;transition:background 0.2s,transform 0.15s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 4px 0 rgba(0,0,0,0.12);" onmouseover="this.style.background='rgba(255,255,255,0.22)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.transform=''">How Does It Work?</button>
+      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(42,24,14,0.08);"></div>
+      <div class="hero-stats-item" style="flex:1;text-align:center;">
+        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:var(--blue);" data-count="50000" data-suffix="+" data-label="K">50K+</div>
+        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Instagram Followers</div>
       </div>
-
-      <!-- Stats -->
-      <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border-radius:24px;padding:22px 28px;border:1.5px solid rgba(255,255,255,0.25);">
-        <div class="hero-stats-item" style="flex:1;text-align:center;">
-          <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#FAC740;" data-count="2000" data-suffix="+" data-label="K">2K+</div>
-          <div class="int" style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Matches Made</div>
-        </div>
-        <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.25);"></div>
-        <div class="hero-stats-item" style="flex:1;text-align:center;">
-          <div class="jk" style="font-size:30px;font-weight:900;color:#A8F0C8;">50/50</div>
-          <div class="int" style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Love & Friendship</div>
-        </div>
-        <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.25);"></div>
-        <div class="hero-stats-item" style="flex:1;text-align:center;">
-          <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#A8E4FF;" data-count="50000" data-suffix="+" data-label="K">50K+</div>
-          <div class="int" style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Instagram Followers</div>
-        </div>
-      </div>
-    </div><!-- /content -->
+    </div>
   </section>
 
   <!-- Wave divider → green section -->
