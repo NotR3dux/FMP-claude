@@ -31,28 +31,23 @@
 
     <!-- Logo -->
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;z-index:100;position:relative;">
-      <!-- Cute logo SVG: two blob characters with faces connected by a heart -->
+      <!-- Cute logo SVG: two blob characters with faces connected by a sparkle -->
       <div class="logo-bounce" style="display:flex;align-items:center;">
         <svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
           <!-- Left blob (coral) -->
-          <ellipse cx="13" cy="20" rx="12" ry="12" fill="#E8684A"/>
           <ellipse cx="13" cy="20" rx="12" ry="12" fill="#E8684A"/>
           <!-- Left face -->
           <circle cx="9.5" cy="18.5" r="1.4" fill="#2A180E"/>
           <circle cx="16.5" cy="18.5" r="1.4" fill="#2A180E"/>
           <path d="M10 22 Q13 24.5 16 22" stroke="#2A180E" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          <circle cx="8" cy="21" r="1.8" fill="#F9ABBE" opacity="0.55"/>
-          <circle cx="18" cy="21" r="1.8" fill="#F9ABBE" opacity="0.55"/>
           <!-- Right blob (blue) -->
           <ellipse cx="31" cy="20" rx="12" ry="12" fill="#6AADE0"/>
           <!-- Right face -->
           <circle cx="27.5" cy="18.5" r="1.4" fill="#2A180E"/>
           <circle cx="34.5" cy="18.5" r="1.4" fill="#2A180E"/>
           <path d="M28 22 Q31 24.5 34 22" stroke="#2A180E" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          <circle cx="26" cy="21" r="1.8" fill="#F9ABBE" opacity="0.55"/>
-          <circle cx="36" cy="21" r="1.8" fill="#F9ABBE" opacity="0.55"/>
-          <!-- Heart in the middle -->
-          <path d="M22 16.5 C22 14.8 20.2 13.5 19 14.8 C17.8 16 17.8 18 19.2 19.2 L22 22 L24.8 19.2 C26.2 18 26.2 16 25 14.8 C23.8 13.5 22 14.8 22 16.5Z" fill="#FAC740"/>
+          <!-- Star/sparkle connector in middle -->
+          <path d="M22 15 L22.6 18.4 L26 19 L22.6 19.6 L22 23 L21.4 19.6 L18 19 L21.4 18.4Z" fill="#FAC740"/>
           <!-- Sparkles -->
           <text x="1" y="10" font-size="8" fill="#FAC740">✦</text>
           <text x="34" y="9" font-size="7" fill="#6BC47A">✦</text>
@@ -81,115 +76,111 @@
   </nav>
 
   <!-- ── HERO ───────────────────────────────────────────────── -->
-  <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:48px 24px 64px;position:relative;z-index:1;">
+  <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:52px 24px 68px;position:relative;z-index:1;overflow:hidden;">
 
-    <!-- Floating doodles -->
-    <div class="hero-doodles" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
-      <!-- Top left star -->
-      <svg class="floatie" style="position:absolute;top:8%;left:6%;width:42px;" viewBox="0 0 40 40"><text y="32" font-size="32">⭐</text></svg>
-      <!-- Top right heart -->
-      <svg class="floatie floatie-2" style="position:absolute;top:12%;right:8%;width:38px;" viewBox="0 0 40 40"><text y="32" font-size="28">💛</text></svg>
-      <!-- Left sparkle -->
-      <svg class="floatie floatie-3" style="position:absolute;top:45%;left:3%;width:32px;" viewBox="0 0 40 40"><text y="32" font-size="26">✨</text></svg>
-      <!-- Right rainbow -->
-      <svg class="floatie floatie-4" style="position:absolute;top:38%;right:4%;width:36px;" viewBox="0 0 40 40"><text y="32" font-size="26">🌈</text></svg>
-      <!-- Bottom left -->
-      <svg class="floatie floatie-5" style="position:absolute;bottom:18%;left:8%;width:34px;" viewBox="0 0 40 40"><text y="32" font-size="26">🌸</text></svg>
-      <!-- Bottom right -->
-      <svg class="floatie floatie-2" style="position:absolute;bottom:22%;right:7%;width:34px;" viewBox="0 0 40 40"><text y="32" font-size="24">💫</text></svg>
-      <!-- Extra -->
-      <svg class="floatie floatie-3" style="position:absolute;top:20%;left:18%;width:28px;" viewBox="0 0 40 40"><text y="28" font-size="22">🎀</text></svg>
-      <svg class="floatie floatie-5" style="position:absolute;top:22%;right:16%;width:28px;" viewBox="0 0 40 40"><text y="28" font-size="22">🍓</text></svg>
-    </div>
+    <!-- SVG filter for goo blob effect -->
+    <svg style="display:none;position:absolute;">
+      <defs>
+        <filter id="grad-blur">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
+          <feBlend in="SourceGraphic" in2="goo"/>
+        </filter>
+      </defs>
+    </svg>
 
-    <!-- Big cute logo illustration -->
-    <div class="hero-d0" style="margin-bottom:18px;">
-      <svg width="120" height="100" viewBox="0 0 120 100" fill="none" style="display:inline-block;filter:drop-shadow(0 6px 18px rgba(232,104,74,0.22));">
-        <!-- Left big blob (coral) -->
-        <ellipse cx="38" cy="56" rx="30" ry="30" fill="#E8684A"/>
-        <!-- Left face -->
-        <circle cx="28" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="48" cy="52" r="3.5" fill="#2A180E"/>
-        <!-- Left eye shine -->
-        <circle cx="29.5" cy="50.5" r="1.2" fill="white"/>
-        <circle cx="49.5" cy="50.5" r="1.2" fill="white"/>
-        <!-- Left smile -->
-        <path d="M29 60 Q38 66 47 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <!-- Left cheeks -->
-        <circle cx="23" cy="59" r="4.5" fill="#F9ABBE" opacity="0.6"/>
-        <circle cx="53" cy="59" r="4.5" fill="#F9ABBE" opacity="0.6"/>
-        <!-- Right big blob (blue) -->
-        <ellipse cx="82" cy="56" rx="30" ry="30" fill="#6AADE0"/>
-        <!-- Right face -->
-        <circle cx="72" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="92" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="73.5" cy="50.5" r="1.2" fill="white"/>
-        <circle cx="93.5" cy="50.5" r="1.2" fill="white"/>
-        <path d="M73 60 Q82 66 91 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <circle cx="67" cy="59" r="4.5" fill="#F9ABBE" opacity="0.6"/>
-        <circle cx="97" cy="59" r="4.5" fill="#F9ABBE" opacity="0.6"/>
-        <!-- Big heart in middle top -->
-        <path d="M60 30 C60 25.5 55.5 22 52.5 25.5 C49.5 29 49.5 34.5 53 37.5 L60 44 L67 37.5 C70.5 34.5 70.5 29 67.5 25.5 C64.5 22 60 25.5 60 30Z" fill="#FAC740"/>
-        <!-- Motion lines left -->
-        <line x1="8"  y1="44" x2="2"  y2="44" stroke="#2A180E" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="10" y1="52" x2="3"  y2="52" stroke="#2A180E" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="9"  y1="60" x2="2"  y2="60" stroke="#2A180E" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Motion lines right -->
-        <line x1="112" y1="44" x2="118" y2="44" stroke="#2A180E" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="110" y1="52" x2="117" y2="52" stroke="#2A180E" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="111" y1="60" x2="118" y2="60" stroke="#2A180E" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Sparkles around -->
-        <text x="50" y="12" font-size="12" fill="#FAC740">✦</text>
-        <text x="62" y="10" font-size="9"  fill="#6BC47A">✦</text>
-        <text x="38" y="16" font-size="8"  fill="#F9ABBE">✦</text>
-      </svg>
-    </div>
-
-    <!-- Badge -->
-    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:#F0EBF8;border:1.5px solid rgba(185,163,220,0.4);border-radius:9999px;padding:8px 20px;font-size:13px;color:#7A60A0;font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;">
-      <span>✨</span><span>From Instagram, with love & friendship</span><span>✨</span>
-    </div>
-
-    <!-- H1 -->
-    <h1 class="jk hero-d2" style="font-size:clamp(40px,7.5vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--dark);margin-bottom:20px;">
-      Find Your <span style="color:var(--coral);position:relative;">Person
-        <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="#FAC740" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
-      </span> 💛
-    </h1>
-
-    <!-- Sub -->
-    <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:var(--text);line-height:1.75;">
-      Whether you're looking for a
-      <span style="color:var(--coral);font-weight:700;background:var(--coral-l);padding:1px 6px;border-radius:6px;">romantic partner</span>
-      or a
-      <span style="color:var(--blue-d);font-weight:700;background:var(--blue-l);padding:1px 6px;border-radius:6px;">new best friend</span>
-      — we personally find the perfect match for you 🍒
-    </p>
-    <p class="hero-d3 int" style="font-size:13.5px;color:var(--muted);margin:0 0 36px;">No algorithms. No swiping. Just real humans, doing the work for you!</p>
-
-    <!-- CTAs -->
-    <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;">Find My Person →</button>
-      <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" class="btn-outline" style="font-size:16px;padding:14px 34px;">How Does It Work?</button>
-    </div>
-
-    <!-- Stats -->
-    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:#fff;border-radius:24px;padding:22px 28px;border:2.5px solid rgba(42,24,14,0.07);box-shadow:0 4px 0 rgba(42,24,14,0.06);">
-      <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:var(--coral);" data-count="2000" data-suffix="+" data-label="K">2K+</div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Matches Made</div>
-      </div>
-      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:#F0D8CC;"></div>
-      <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk" style="font-size:30px;font-weight:900;color:var(--green);">50/50</div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Love & Friendship</div>
-      </div>
-      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:#F0D8CC;"></div>
-      <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:var(--blue);" data-count="50000" data-suffix="+" data-label="K">50K+</div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Instagram Followers</div>
+    <!-- Sunset gradient background -->
+    <div class="grad-hero" id="grad-hero">
+      <div class="grad-blobs" id="grad-blobs">
+        <div class="grad-blob grad-blob-1"></div>
+        <div class="grad-blob grad-blob-2"></div>
+        <div class="grad-blob grad-blob-3"></div>
+        <div class="grad-blob grad-blob-4"></div>
+        <div class="grad-blob grad-blob-5"></div>
+        <div class="grad-blob-interactive" id="grad-interactive"></div>
       </div>
     </div>
+
+    <!-- Content (on top of gradient) -->
+    <div style="position:relative;z-index:2;">
+
+      <!-- Big cute logo illustration -->
+      <div class="hero-d0" style="margin-bottom:18px;">
+        <svg width="120" height="100" viewBox="0 0 120 100" fill="none" style="display:inline-block;filter:drop-shadow(0 6px 24px rgba(0,0,0,0.25));">
+          <ellipse cx="38" cy="56" rx="30" ry="30" fill="rgba(255,255,255,0.22)"/>
+          <ellipse cx="38" cy="56" rx="26" ry="26" fill="#E8684A"/>
+          <circle cx="28" cy="52" r="3.5" fill="#2A180E"/>
+          <circle cx="48" cy="52" r="3.5" fill="#2A180E"/>
+          <circle cx="29.5" cy="50.5" r="1.2" fill="white"/>
+          <circle cx="49.5" cy="50.5" r="1.2" fill="white"/>
+          <path d="M29 60 Q38 66 47 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="82" cy="56" rx="30" ry="30" fill="rgba(255,255,255,0.18)"/>
+          <ellipse cx="82" cy="56" rx="26" ry="26" fill="#6AADE0"/>
+          <circle cx="72" cy="52" r="3.5" fill="#2A180E"/>
+          <circle cx="92" cy="52" r="3.5" fill="#2A180E"/>
+          <circle cx="73.5" cy="50.5" r="1.2" fill="white"/>
+          <circle cx="93.5" cy="50.5" r="1.2" fill="white"/>
+          <path d="M73 60 Q82 66 91 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Star sparkle connector instead of heart -->
+          <path d="M60 26 L61.4 33 L68 34 L61.4 35 L60 42 L58.6 35 L52 34 L58.6 33Z" fill="#FAC740"/>
+          <line x1="8"  y1="44" x2="2"  y2="44" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="10" y1="52" x2="3"  y2="52" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="9"  y1="60" x2="2"  y2="60" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="112" y1="44" x2="118" y2="44" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="110" y1="52" x2="117" y2="52" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="111" y1="60" x2="118" y2="60" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+          <text x="48" y="13" font-size="13" fill="rgba(255,255,255,0.9)">✦</text>
+          <text x="62" y="10" font-size="9"  fill="rgba(255,255,255,0.7)">✦</text>
+          <text x="36" y="17" font-size="8"  fill="rgba(255,255,255,0.8)">✦</text>
+        </svg>
+      </div>
+
+      <!-- Badge -->
+      <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.3);border-radius:9999px;padding:8px 20px;font-size:13px;color:rgba(255,255,255,0.95);font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;">
+        <span>✨</span><span>From Instagram, with love & friendship</span><span>✨</span>
+      </div>
+
+      <!-- H1 -->
+      <h1 class="jk hero-d2" style="font-size:clamp(40px,7.5vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:20px;text-shadow:0 2px 20px rgba(0,0,0,0.2);">
+        Find Your <span style="color:#FAC740;position:relative;">Person
+          <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="rgba(255,255,255,0.5)" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
+        </span>
+      </h1>
+
+      <!-- Sub -->
+      <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:rgba(255,255,255,0.88);line-height:1.75;">
+        Whether you're looking for a
+        <span style="color:#FAC740;font-weight:700;">romantic partner</span>
+        or a
+        <span style="color:#A8E4FF;font-weight:700;">new best friend</span>
+        — we personally find the perfect match for you
+      </p>
+      <p class="hero-d3 int" style="font-size:13.5px;color:rgba(255,255,255,0.6);margin:0 0 36px;">No algorithms. No swiping. Just real humans, doing the work for you!</p>
+
+      <!-- CTAs -->
+      <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.95);color:var(--coral);border-color:rgba(255,255,255,0.5);box-shadow:0 4px 0 rgba(0,0,0,0.15),0 6px 20px rgba(0,0,0,0.2);">Find My Person →</button>
+        <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);color:#fff;border:2.5px solid rgba(255,255,255,0.4);border-radius:9999px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;transition:background 0.2s,transform 0.15s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 4px 0 rgba(0,0,0,0.12);" onmouseover="this.style.background='rgba(255,255,255,0.22)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.12)';this.style.transform=''">How Does It Work?</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border-radius:24px;padding:22px 28px;border:1.5px solid rgba(255,255,255,0.25);">
+        <div class="hero-stats-item" style="flex:1;text-align:center;">
+          <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#FAC740;" data-count="2000" data-suffix="+" data-label="K">2K+</div>
+          <div class="int" style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Matches Made</div>
+        </div>
+        <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.25);"></div>
+        <div class="hero-stats-item" style="flex:1;text-align:center;">
+          <div class="jk" style="font-size:30px;font-weight:900;color:#A8F0C8;">50/50</div>
+          <div class="int" style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Love & Friendship</div>
+        </div>
+        <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.25);"></div>
+        <div class="hero-stats-item" style="flex:1;text-align:center;">
+          <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#A8E4FF;" data-count="50000" data-suffix="+" data-label="K">50K+</div>
+          <div class="int" style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px;">Instagram Followers</div>
+        </div>
+      </div>
+    </div><!-- /content -->
   </section>
 
   <!-- Wave divider → green section -->
@@ -294,8 +285,8 @@
         <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Your info stays between us until both say yes. We keep everything safe and confidential.</p>
       </div>
       <div class="card card-tilt reveal reveal-d3" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">💛</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Love OR Friendship</h3>
+        <div style="font-size:36px;margin-bottom:12px;">🌟</div>
+        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Romance OR Friendship</h3>
         <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Not everyone wants romance — totally fine! We match for deep friendships too.</p>
       </div>
       <div class="card card-tilt reveal reveal-d4" style="border-color:rgba(106,173,224,0.25);">
@@ -325,14 +316,14 @@
     <!-- Cute doodle decoration -->
     <div style="text-align:center;margin-bottom:8px;">
       <svg width="80" height="30" viewBox="0 0 80 30" fill="none">
-        <text x="0"  y="24" font-size="22">🌸</text>
-        <text x="28" y="22" font-size="18">✦</text>
-        <text x="50" y="24" font-size="22">🌸</text>
+        <text x="0"  y="24" font-size="20" fill="#FAC740">✦</text>
+        <text x="28" y="22" font-size="16" fill="#6BC47A">✦</text>
+        <text x="50" y="24" font-size="20" fill="#6AADE0">✦</text>
       </svg>
     </div>
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:var(--pink-l);color:#C06080;border-color:rgba(249,171,190,0.35);margin-bottom:14px;">REAL STORIES</div>
-      <h2 class="jk" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">People Who Found<br>Their Person 💕</h2>
+      <div class="sec-label" style="background:var(--purple-l);color:#7050A0;border-color:rgba(185,163,220,0.35);margin-bottom:14px;">REAL STORIES</div>
+      <h2 class="jk" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">People Who Found<br>Their Person ✨</h2>
       <p class="int" style="color:var(--text);font-size:16px;">Romance, friendship, or both — every connection counts!</p>
     </div>
     <div class="stories-grid grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto;">
@@ -347,7 +338,7 @@
           <img src="https://placehold.co/46x46/E8A090/ffffff?text=SJ" alt="Sarah" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(232,104,74,0.3);">
           <div>
             <div class="jk" style="font-weight:900;font-size:14px;color:var(--dark);">Sarah & James</div>
-            <div class="int" style="font-size:12px;color:var(--coral);">💕 Romantic Match</div>
+            <div class="int" style="font-size:12px;color:var(--coral);">✨ Romantic Match</div>
           </div>
         </div>
       </div>
@@ -375,7 +366,7 @@
           <img src="https://placehold.co/46x46/C0A0C8/ffffff?text=AJ" alt="Alex" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(185,163,220,0.35);">
           <div>
             <div class="jk" style="font-weight:900;font-size:14px;color:var(--dark);">Alex & Jordan</div>
-            <div class="int" style="font-size:12px;color:#8A60A0;">💕 Romantic Match</div>
+            <div class="int" style="font-size:12px;color:#8A60A0;">✨ Romantic Match</div>
           </div>
         </div>
       </div>
@@ -399,22 +390,19 @@
           <circle cx="20" cy="42" r="2.8" fill="white"/>
           <circle cx="36" cy="42" r="2.8" fill="white"/>
           <path d="M21 50 Q28 55 35 50" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <circle cx="17" cy="48" r="3.5" fill="#F9ABBE" opacity="0.5"/>
-          <circle cx="39" cy="48" r="3.5" fill="#F9ABBE" opacity="0.5"/>
           <ellipse cx="62" cy="46" rx="24" ry="24" fill="rgba(255,255,255,0.2)"/>
           <circle cx="54" cy="42" r="2.8" fill="white"/>
           <circle cx="70" cy="42" r="2.8" fill="white"/>
           <path d="M55 50 Q62 55 69 50" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <circle cx="51" cy="48" r="3.5" fill="#F9ABBE" opacity="0.5"/>
-          <circle cx="73" cy="48" r="3.5" fill="#F9ABBE" opacity="0.5"/>
-          <path d="M45 20 C45 15.5 40.5 12.5 38 15.5 C35.5 18.5 35.5 24 38.5 26.5 L45 33 L51.5 26.5 C54.5 24 54.5 18.5 52 15.5 C49.5 12.5 45 15.5 45 20Z" fill="white"/>
+          <!-- Star sparkle connector -->
+          <path d="M45 18 L46 23 L51 24 L46 25 L45 30 L44 25 L39 24 L44 23Z" fill="white"/>
           <text x="6"  y="18" font-size="14" fill="rgba(255,255,255,0.7)">✦</text>
           <text x="68" y="16" font-size="12" fill="rgba(255,255,255,0.6)">✦</text>
           <text x="38" y="10" font-size="10" fill="rgba(255,255,255,0.8)">✦</text>
         </svg>
       </div>
 
-      <h2 class="jk reveal" style="font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:14px;position:relative;z-index:1;">Ready to Find Your Person? 💛</h2>
+      <h2 class="jk reveal" style="font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:14px;position:relative;z-index:1;">Ready to Find Your Person? ✨</h2>
       <p class="int reveal" style="color:rgba(255,255,255,0.88);font-size:16px;margin-bottom:32px;line-height:1.65;position:relative;z-index:1;">Love, friendship, or something in between — sign up and<br>let us do the work. Your match is out there waiting!</p>
       <button onclick="navTo('form')" class="jk reveal" style="background:#fff;color:var(--coral);border:2.5px solid rgba(255,255,255,0.6);border-radius:9999px;padding:14px 40px;font-size:17px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:1;box-shadow:0 4px 0 rgba(0,0,0,0.12);transition:transform 0.18s,box-shadow 0.18s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 7px 0 rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 0 rgba(0,0,0,0.12)'">
         Get Started → ✨
@@ -428,7 +416,7 @@
       <svg width="28" height="24" viewBox="0 0 44 38" fill="none">
         <ellipse cx="13" cy="20" rx="12" ry="12" fill="#E8684A"/>
         <ellipse cx="31" cy="20" rx="12" ry="12" fill="#6AADE0"/>
-        <path d="M22 12.5 C22 10.3 19.8 8.8 18.3 10.3 C16.8 11.8 16.8 14.5 18.5 16 L22 19 L25.5 16 C27.2 14.5 27.2 11.8 25.7 10.3 C24.2 8.8 22 10.3 22 12.5Z" fill="#FAC740"/>
+        <path d="M22 14 L22.8 18.2 L27 19 L22.8 19.8 L22 24 L21.2 19.8 L17 19 L21.2 18.2Z" fill="#FAC740"/>
       </svg>
       <span class="jk" style="font-weight:900;font-size:15px;color:var(--dark);">Find My Partner</span>
     </div>
@@ -451,7 +439,7 @@
   <header class="form-header" style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
       <div style="width:36px;height:36px;background:var(--coral);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--coral-d);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9Z"/></svg>
       </div>
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
     </button>
@@ -476,7 +464,7 @@
   <header style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
       <div style="width:36px;height:36px;background:var(--coral);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--coral-d);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9Z"/></svg>
       </div>
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
     </button>
@@ -503,7 +491,7 @@
       <div style="background:var(--coral-l);border-radius:18px;padding:18px 22px;margin-bottom:22px;text-align:left;border:1.5px solid rgba(232,104,74,0.15);">
         <div style="display:flex;align-items:center;gap:11px;margin-bottom:13px;">
           <div style="width:40px;height:40px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid rgba(232,104,74,0.2);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--coral)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--coral)"><path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9Z"/></svg>
           </div>
           <div>
             <div class="jk" style="font-weight:900;font-size:14.5px;color:var(--dark);" id="status-uname">@yourhandle</div>
