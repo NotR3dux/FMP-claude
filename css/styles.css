@@ -76,24 +76,132 @@ body {
   pointer-events: none;
 }
 
-/* ── Background blobs ───────────────────────────────────── */
+/* ── Background blobs (page-level, non-hero) ────────────── */
 .blob-tr {
   position: fixed; top: -80px; right: -80px;
   width: 420px; height: 420px; max-width: 60vw;
-  background: radial-gradient(circle, rgba(250,199,64,0.18) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(250,199,64,0.13) 0%, transparent 65%);
   pointer-events: none; z-index: 0;
   animation: blobFloat 10s ease-in-out infinite alternate;
 }
 .blob-bl {
   position: fixed; bottom: -80px; left: -80px;
   width: 420px; height: 420px; max-width: 60vw;
-  background: radial-gradient(circle, rgba(107,196,122,0.14) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(107,196,122,0.10) 0%, transparent 65%);
   pointer-events: none; z-index: 0;
   animation: blobFloat 13s ease-in-out infinite alternate-reverse;
 }
 @keyframes blobFloat {
   0%   { transform: translate(0,0) scale(1); }
   100% { transform: translate(18px,-18px) scale(1.08); }
+}
+
+/* ══ SUNSET GRADIENT ANIMATION (hero background) ════════════
+   Ported from BackgroundGradientAnimation (React → vanilla)
+═══════════════════════════════════════════════════════════ */
+:root {
+  --grad-bg-start: rgb(255, 100, 40);
+  --grad-bg-end:   rgb(48, 8, 88);
+  --gc1: 255, 80, 30;
+  --gc2: 255, 155, 0;
+  --gc3: 200, 38, 110;
+  --gc4: 120, 18, 170;
+  --gc5: 255, 195, 50;
+  --gcp: 160, 55, 225;
+  --gsz: 80%;
+  --gbl: hard-light;
+}
+
+.grad-hero {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--grad-bg-start), var(--grad-bg-end));
+}
+
+/* Safari gets simpler blur since it doesn't support the SVG filter well */
+.grad-blobs {
+  width: 100%; height: 100%;
+  filter: url(#grad-blur) blur(40px);
+}
+.grad-blobs.safari-blur { filter: blur(48px); }
+
+.grad-blob {
+  position: absolute;
+  width: var(--gsz); height: var(--gsz);
+  top:  calc(50% - var(--gsz) / 2);
+  left: calc(50% - var(--gsz) / 2);
+  mix-blend-mode: var(--gbl);
+  opacity: 1;
+}
+.grad-blob-1 {
+  background: radial-gradient(circle at center, rgb(var(--gc1)) 0, rgb(var(--gc1)) 50%) no-repeat;
+  transform-origin: center center;
+  animation: moveVertical 30s ease infinite;
+}
+.grad-blob-2 {
+  background: radial-gradient(circle at center, rgba(var(--gc2),.8) 0, rgba(var(--gc2),0) 50%) no-repeat;
+  transform-origin: calc(50% - 400px);
+  animation: moveInCircle 20s reverse infinite;
+}
+.grad-blob-3 {
+  background: radial-gradient(circle at center, rgba(var(--gc3),.8) 0, rgba(var(--gc3),0) 50%) no-repeat;
+  transform-origin: calc(50% + 400px);
+  animation: moveInCircle 40s linear infinite;
+}
+.grad-blob-4 {
+  background: radial-gradient(circle at center, rgba(var(--gc4),.8) 0, rgba(var(--gc4),0) 50%) no-repeat;
+  transform-origin: calc(50% - 200px);
+  animation: moveHorizontal 40s ease infinite;
+  opacity: 0.75;
+}
+.grad-blob-5 {
+  background: radial-gradient(circle at center, rgba(var(--gc5),.8) 0, rgba(var(--gc5),0) 50%) no-repeat;
+  transform-origin: calc(50% - 800px) calc(50% + 800px);
+  animation: moveInCircle 20s ease infinite;
+}
+.grad-blob-interactive {
+  background: radial-gradient(circle at center, rgba(var(--gcp),.8) 0, rgba(var(--gcp),0) 50%) no-repeat;
+  mix-blend-mode: var(--gbl);
+  width: 100%; height: 100%;
+  position: absolute;
+  top: -50%; left: -50%;
+  opacity: 0.7;
+}
+
+@keyframes moveVertical {
+  0%   { transform: translateY(-50%); }
+  50%  { transform: translateY(50%);  }
+  100% { transform: translateY(-50%); }
+}
+@keyframes moveInCircle {
+  0%   { transform: rotate(0deg);   }
+  50%  { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes moveHorizontal {
+  0%   { transform: translateX(-50%) translateY(-10%); }
+  50%  { transform: translateX(50%)  translateY(10%);  }
+  100% { transform: translateX(-50%) translateY(-10%); }
+}
+
+/* ── Sparkle text effect ─────────────────────────────────── */
+.sparkle-wrap {
+  position: relative;
+  display: inline-block;
+}
+@keyframes sparkle-pop {
+  0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+  45%  { opacity: 1; transform: scale(var(--sz, 1)) rotate(130deg); }
+  100% { opacity: 0; transform: scale(0) rotate(200deg); }
+}
+.sparkle-star {
+  position: absolute;
+  pointer-events: none;
+  z-index: 20;
+  animation: sparkle-pop var(--dur, 0.9s) ease-in-out infinite;
+  animation-delay: var(--del, 0s);
 }
 
 /* ── Doodle floaties ─────────────────────────────────────── */

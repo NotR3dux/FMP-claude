@@ -12,6 +12,7 @@ import {
   transitionView,
   initNavScroll,
   initGradientInteractive,
+  initSparkles,
 } from './animations.js';
 
 import { initForm, renderForm, stepNext, stepBack } from './form.js';
@@ -82,4 +83,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardTilt();
   initNavScroll();
   initGradientInteractive();
+  initSparkles();
 });
