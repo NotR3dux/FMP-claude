@@ -34,6 +34,28 @@ window.navTo = navTo;
 window.stepNext = stepNext;
 window.stepBack = stepBack;
 
+// ── Mobile menu ────────────────────────────────────────────
+let menuOpen = false;
+window.toggleMobileMenu = function() {
+  menuOpen = !menuOpen;
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('hamburger');
+  menu.style.display = menuOpen ? 'flex' : 'none';
+  void menu.offsetWidth;
+  menu.classList.toggle('open', menuOpen);
+  btn.classList.toggle('open', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+};
+window.closeMobileMenu = function() {
+  menuOpen = false;
+  const menu = document.getElementById('mobile-menu');
+  const btn  = document.getElementById('hamburger');
+  menu.classList.remove('open');
+  btn.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { menu.style.display = 'none'; }, 300);
+};
+
 // ── Smooth scroll for anchor links ────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {

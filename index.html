@@ -17,38 +17,52 @@
   <div class="blob-tr"></div>
   <div class="blob-bl"></div>
 
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#how"     onclick="closeMobileMenu()" class="nav-a">How It Works</a>
+    <a href="#why"     onclick="closeMobileMenu()" class="nav-a">Why Us</a>
+    <a href="#stories" onclick="closeMobileMenu()" class="nav-a">Stories</a>
+    <button onclick="closeMobileMenu();navTo('status')">Check Status</button>
+    <button onclick="closeMobileMenu();navTo('form')" class="btn-red" style="font-size:16px;padding:14px 36px;">Get Started →</button>
+  </div>
+
   <!-- NAV -->
-  <nav id="main-nav" style="position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:18px 52px;transition:background 0.3s,box-shadow 0.3s,backdrop-filter 0.3s;">
-    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;">
+  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px 52px;transition:background 0.3s,box-shadow 0.3s,backdrop-filter 0.3s;">
+    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:9px;background:none;border:none;cursor:pointer;z-index:100;position:relative;">
       <span style="font-size:26px;line-height:1;" class="cherry-bounce">🍒</span>
       <span class="jk" style="font-weight:800;font-size:16.5px;color:var(--dark);">Find My Partner</span>
     </button>
 
-    <div style="display:flex;align-items:center;gap:30px;">
+    <div class="nav-links" style="display:flex;align-items:center;gap:30px;">
       <a href="#how"     class="nav-a" style="font-size:14.5px;color:#4A4035;font-weight:500;text-decoration:none;">How It Works</a>
       <a href="#why"     class="nav-a" style="font-size:14.5px;color:#4A4035;font-weight:500;text-decoration:none;">Why Us</a>
       <a href="#stories" class="nav-a" style="font-size:14.5px;color:#4A4035;font-weight:500;text-decoration:none;">Stories</a>
     </div>
 
-    <div style="display:flex;align-items:center;gap:18px;">
+    <div class="nav-cta-desktop" style="display:flex;align-items:center;gap:18px;">
       <button onclick="navTo('status')" class="nav-a jk" style="background:none;border:none;font-size:14.5px;color:var(--dark);font-weight:600;cursor:pointer;">Check Status</button>
       <button onclick="navTo('form')" class="btn-red" style="padding:10px 22px;font-size:14px;">Get Started</button>
     </div>
+
+    <!-- Hamburger -->
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
-  <section id="hero-section" style="text-align:center;padding:54px 24px 72px;position:relative;z-index:1;">
+  <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:54px 24px 72px;position:relative;z-index:1;">
     <div class="hero-cherry hero-d0" style="font-size:52px;margin-bottom:14px;line-height:1;filter:drop-shadow(0 4px 12px rgba(200,60,60,0.2));display:inline-block;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);">🍒</div>
 
     <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:6px;background:#E8E2EE;border-radius:9999px;padding:8px 18px;font-size:13px;color:#6A6080;font-weight:500;margin-bottom:26px;">
       <span>✨</span><span>From Instagram, with love and friendship</span>
     </div>
 
-    <h1 class="jk hero-d2" style="font-size:clamp(54px,7.5vw,82px);font-weight:900;line-height:1.04;letter-spacing:-0.035em;color:var(--dark);margin-bottom:22px;">
+    <h1 class="jk hero-d2" style="font-size:clamp(40px,7.5vw,82px);font-weight:900;line-height:1.04;letter-spacing:-0.035em;color:var(--dark);margin-bottom:22px;">
       Find Your <span style="color:var(--brand);">Person</span>
     </h1>
 
-    <p class="hero-d3" style="max-width:560px;margin:0 auto 10px;font-size:17.5px;color:#5A5048;line-height:1.72;">
+    <p class="hero-d3" style="max-width:560px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17.5px);color:#5A5048;line-height:1.72;">
       Whether you're searching for a
       <span style="color:var(--brand);font-weight:600;text-decoration:underline;text-decoration-color:rgba(212,78,39,0.35);text-underline-offset:3px;">romantic partner</span>
       or a
@@ -57,24 +71,24 @@
     </p>
     <p class="hero-d3" style="font-size:13.5px;color:#9A8A80;margin:0 0 36px;">No algorithms. No swiping. Just us, doing the work for you. 🍒</p>
 
-    <div class="hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+    <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
       <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 32px;">Find My Person <span>→</span></button>
       <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" class="btn-outline" style="font-size:16px;padding:14px 32px;">How Does It Work?</button>
     </div>
 
     <!-- Stats -->
-    <div class="hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:480px;margin:52px auto 0;">
-      <div style="flex:1;text-align:center;">
+    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:480px;margin:52px auto 0;">
+      <div class="hero-stats-item" style="flex:1;text-align:center;">
         <div class="jk stat-num" style="font-size:28px;font-weight:800;color:var(--dark);" data-count="2000" data-suffix="+" data-label="K">2K+</div>
         <div style="font-size:12.5px;color:var(--light-muted);margin-top:3px;">Matches Made</div>
       </div>
-      <div style="width:1px;height:36px;background:#DCCEC4;"></div>
-      <div style="flex:1;text-align:center;">
+      <div class="hero-stats-divider" style="width:1px;height:36px;background:#DCCEC4;"></div>
+      <div class="hero-stats-item" style="flex:1;text-align:center;">
         <div class="jk" style="font-size:28px;font-weight:800;color:var(--dark);">50/50</div>
         <div style="font-size:12.5px;color:var(--light-muted);margin-top:3px;">Love &amp; Friendship</div>
       </div>
-      <div style="width:1px;height:36px;background:#DCCEC4;"></div>
-      <div style="flex:1;text-align:center;">
+      <div class="hero-stats-divider" style="width:1px;height:36px;background:#DCCEC4;"></div>
+      <div class="hero-stats-item" style="flex:1;text-align:center;">
         <div class="jk stat-num" style="font-size:28px;font-weight:800;color:var(--dark);" data-count="50000" data-suffix="+" data-label="K">50K+</div>
         <div style="font-size:12.5px;color:var(--light-muted);margin-top:3px;">Instagram Followers</div>
       </div>
@@ -82,13 +96,13 @@
   </section>
 
   <!-- HOW IT WORKS -->
-  <section id="how" style="padding:72px 52px;position:relative;z-index:1;">
+  <section id="how" class="section-pad" style="padding:72px 52px;position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
       <div class="sec-label" style="margin-bottom:10px;">THE PROCESS</div>
-      <h2 class="jk" style="font-size:clamp(34px,5vw,52px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">How It Works</h2>
+      <h2 class="jk" style="font-size:clamp(28px,5vw,52px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">How It Works</h2>
       <p style="color:var(--muted);font-size:16.5px;">Four easy steps. We handle the hard stuff so you don't have to.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;">
+    <div class="grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;">
       <div class="card card-tilt reveal reveal-d1">
         <div style="font-size:30px;margin-bottom:14px;">📝</div>
         <div class="sec-label" style="margin-bottom:7px;">STEP 01</div>
@@ -117,13 +131,13 @@
   </section>
 
   <!-- WHY US -->
-  <section id="why" style="padding:72px 52px;background:linear-gradient(to bottom,#EDE5DC,#E8DFD4);position:relative;z-index:1;">
+  <section id="why" class="section-pad" style="padding:72px 52px;background:linear-gradient(to bottom,#EDE5DC,#E8DFD4);position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
       <div class="sec-label" style="margin-bottom:10px;">WHY US</div>
-      <h2 class="jk" style="font-size:clamp(34px,5vw,56px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">Not Your Typical<br>Matchmaker</h2>
+      <h2 class="jk" style="font-size:clamp(28px,5vw,56px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">Not Your Typical<br>Matchmaker</h2>
       <p style="color:var(--muted);font-size:16.5px;max-width:460px;margin:0 auto;">We're different because we actually care — about who you are and who you end up with.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
+    <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
       <div class="card card-tilt reveal reveal-d1"><div style="font-size:26px;margin-bottom:13px;">🤝</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Human Matchmaking</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">No bots. A real person reads your profile and picks your match with care. It's personal.</p></div>
       <div class="card card-tilt reveal reveal-d2"><div style="font-size:26px;margin-bottom:13px;">🔒</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Safe &amp; Private</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Your info stays between us until both of you say yes. We keep it safe and confidential.</p></div>
       <div class="card card-tilt reveal reveal-d3"><div style="font-size:26px;margin-bottom:13px;">💛</div><h3 class="jk" style="font-weight:800;font-size:16px;margin-bottom:7px;color:var(--dark);">Love OR Friendship</h3><p style="font-size:13.5px;color:var(--muted);line-height:1.64;">Not everyone wants romance — and that's totally fine. We match for deep friendships too.</p></div>
@@ -134,13 +148,13 @@
   </section>
 
   <!-- STORIES -->
-  <section id="stories" style="padding:72px 52px;position:relative;z-index:1;">
+  <section id="stories" class="section-pad" style="padding:72px 52px;position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
       <div class="sec-label" style="margin-bottom:10px;">REAL STORIES</div>
-      <h2 class="jk" style="font-size:clamp(34px,5vw,52px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">People Who Found<br>Their Person</h2>
+      <h2 class="jk" style="font-size:clamp(28px,5vw,52px);font-weight:900;letter-spacing:-0.03em;color:var(--dark);margin-bottom:10px;">People Who Found<br>Their Person</h2>
       <p style="color:var(--muted);font-size:16.5px;">Romance, friendship, or both — we celebrate every kind of connection.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
+    <div class="stories-grid grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
       <div class="story-1 card card-tilt reveal reveal-d1" style="box-shadow:0 2px 14px rgba(212,78,39,0.07);">
         <div class="stars" style="margin-bottom:14px;">★★★★★</div>
         <p style="font-size:14.5px;color:#3A2018;line-height:1.72;margin-bottom:20px;">"We honestly didn't think an Instagram matchmaker could work this well. Six months later we're still going strong. The cherry logo really does bring good luck 🍒"</p>
@@ -178,8 +192,8 @@
   </section>
 
   <!-- CTA BANNER -->
-  <section style="padding:20px 52px 72px;position:relative;z-index:1;">
-    <div class="cta-section reveal" style="border-radius:28px;padding:60px 48px;text-align:center;position:relative;overflow:hidden;max-width:900px;margin:0 auto;">
+  <section class="section-pad" style="padding:20px 52px 72px;position:relative;z-index:1;">
+    <div class="cta-section cta-inner reveal" style="border-radius:28px;padding:60px 48px;text-align:center;position:relative;overflow:hidden;max-width:900px;margin:0 auto;">
       <div class="cta-blob" style="width:110px;height:110px;bottom:-28px;left:-22px;"></div>
       <div class="cta-blob" style="width:80px;height:80px;top:-20px;right:60px;animation-delay:2s;"></div>
       <div class="cta-blob" style="width:55px;height:55px;top:40%;right:-15px;animation-delay:1s;"></div>
@@ -193,7 +207,7 @@
   </section>
 
   <!-- FOOTER -->
-  <footer style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #DCCEC4;position:relative;z-index:1;">
+  <footer class="footer-inner" style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #DCCEC4;position:relative;z-index:1;">
     <div style="display:flex;align-items:center;gap:8px;">
       <span style="font-size:22px;">🍒</span>
       <span class="jk" style="font-weight:800;font-size:14.5px;color:var(--dark);">Find My Partner</span>

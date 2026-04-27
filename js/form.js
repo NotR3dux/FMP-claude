@@ -47,7 +47,7 @@ function renderContent() {
   if (step === 1) {
     el.innerHTML = `
       <div class="card card-tilt fade-up">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
           <div>
             <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Full Name <span style="color:var(--brand);">*</span></label>
             <input type="text" class="finput" placeholder="Your full name">
@@ -57,7 +57,7 @@ function renderContent() {
             <input type="number" class="finput" placeholder="Your age">
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
           <div>
             <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Gender <span style="color:var(--brand);">*</span></label>
             <select class="finput"><option value="">Select gender</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option></select>
@@ -67,7 +67,7 @@ function renderContent() {
             <input type="text" class="finput" placeholder="City or area">
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
           <div>
             <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Email <span style="color:var(--brand);">*</span></label>
             <input type="email" class="finput" placeholder="your@email.com">
@@ -98,7 +98,7 @@ function renderContent() {
           <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Preferred Gender</label>
           <select class="finput"><option value="">Any preference?</option><option>Male</option><option>Female</option><option>Non-binary</option><option>No preference</option></select>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
           <div>
             <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Preferred Age (Min)</label>
             <input type="number" class="finput" value="18" placeholder="18">
