@@ -63,7 +63,10 @@ body {
   position: absolute;
   width: 100%;
   top: 0; left: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.view::-webkit-scrollbar { display: none; }
 .view.active {
   opacity: 1;
   transform: translateY(0);
