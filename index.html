@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find My Partner 🍒</title>
+  <title>Find My Partner</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=6">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=7">
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════
      HOME VIEW
 ═══════════════════════════════════════════════════════════ -->
-<div id="v-home" class="view" style="display:none;overflow-x:hidden;background:var(--cream);">
+<div id="v-home" class="view" style="display:none;overflow-x:hidden;">
   <div class="blob-tr"></div>
   <div class="blob-bl"></div>
 
@@ -27,30 +27,23 @@
   </div>
 
   <!-- NAV -->
-  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 52px;transition:background 0.3s,box-shadow 0.3s;">
+  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 52px;transition:background 0.3s,box-shadow 0.3s;background:rgba(255,252,248,0.82);backdrop-filter:blur(14px);border-bottom:1.5px solid rgba(78,168,92,0.18);">
 
     <!-- Logo -->
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;z-index:100;position:relative;">
-      <!-- Cute logo SVG: two blob characters with faces connected by a sparkle -->
+      <!-- Puzzle piece logo -->
       <div class="logo-bounce" style="display:flex;align-items:center;">
-        <svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Left blob (coral) -->
-          <ellipse cx="13" cy="20" rx="12" ry="12" fill="#E8684A"/>
-          <!-- Left face -->
-          <circle cx="9.5" cy="18.5" r="1.4" fill="#2A180E"/>
-          <circle cx="16.5" cy="18.5" r="1.4" fill="#2A180E"/>
-          <path d="M10 22 Q13 24.5 16 22" stroke="#2A180E" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          <!-- Right blob (blue) -->
-          <ellipse cx="31" cy="20" rx="12" ry="12" fill="#6AADE0"/>
-          <!-- Right face -->
-          <circle cx="27.5" cy="18.5" r="1.4" fill="#2A180E"/>
-          <circle cx="34.5" cy="18.5" r="1.4" fill="#2A180E"/>
-          <path d="M28 22 Q31 24.5 34 22" stroke="#2A180E" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-          <!-- Star/sparkle connector in middle -->
-          <path d="M22 15 L22.6 18.4 L26 19 L22.6 19.6 L22 23 L21.4 19.6 L18 19 L21.4 18.4Z" fill="#FAC740"/>
-          <!-- Sparkles -->
-          <text x="1" y="10" font-size="8" fill="#FAC740">✦</text>
-          <text x="34" y="9" font-size="7" fill="#6BC47A">✦</text>
+        <svg width="48" height="36" viewBox="0 0 52 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8"/>
+          <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="none" stroke="#6AADE0" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="9" cy="18" r="1.3" fill="#2A2A2A"/>
+          <circle cx="14" cy="18" r="1.3" fill="#2A2A2A"/>
+          <path d="M8.5,22 Q11.5,25 14.5,22" stroke="#2A2A2A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8"/>
+          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="none" stroke="#B9A3DC" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="36" cy="18" r="1.3" fill="#2A2A2A"/>
+          <circle cx="41" cy="18" r="1.3" fill="#2A2A2A"/>
+          <path d="M35.5,22 Q38.5,25 41.5,22" stroke="#2A2A2A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);letter-spacing:-0.01em;">Find My Partner</span>
@@ -78,71 +71,68 @@
   <!-- ── HERO ───────────────────────────────────────────────── -->
   <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:52px 24px 68px;position:relative;z-index:1;overflow:hidden;">
 
-    <!-- Big cute logo illustration -->
+    <!-- Big puzzle piece hero illustration -->
     <div class="hero-d0" style="margin-bottom:18px;">
-      <svg width="120" height="100" viewBox="0 0 120 100" fill="none" style="display:inline-block;filter:drop-shadow(0 4px 18px rgba(232,104,74,0.18));">
-        <ellipse cx="38" cy="56" rx="26" ry="26" fill="#E8684A"/>
-        <circle cx="28" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="48" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="29.5" cy="50.5" r="1.2" fill="white"/>
-        <circle cx="49.5" cy="50.5" r="1.2" fill="white"/>
-        <path d="M29 60 Q38 66 47 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <ellipse cx="82" cy="56" rx="26" ry="26" fill="#6AADE0"/>
-        <circle cx="72" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="92" cy="52" r="3.5" fill="#2A180E"/>
-        <circle cx="73.5" cy="50.5" r="1.2" fill="white"/>
-        <circle cx="93.5" cy="50.5" r="1.2" fill="white"/>
-        <path d="M73 60 Q82 66 91 60" stroke="#2A180E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        <path d="M60 26 L61.4 33 L68 34 L61.4 35 L60 42 L58.6 35 L52 34 L58.6 33Z" fill="#FAC740"/>
-        <text x="48" y="13" font-size="13" fill="#FAC740">✦</text>
-        <text x="62" y="10" font-size="9"  fill="#6BC47A">✦</text>
-        <text x="36" y="17" font-size="8"  fill="#6AADE0">✦</text>
+      <svg width="160" height="120" viewBox="0 0 104 76" fill="none" style="display:inline-block;filter:drop-shadow(0 8px 28px rgba(0,0,0,0.22));">
+        <path d="M5,4 L38,4 L38,22 C38,17 54,17 54,22 L54,46 C54,51 38,51 38,46 L38,72 L5,72 Q2,72 2,69 L2,7 Q2,4 5,4 Z" fill="#F5EED8"/>
+        <path d="M5,4 L38,4 L38,22 C38,17 54,17 54,22 L54,46 C54,51 38,51 38,46 L38,72 L5,72 Q2,72 2,69 L2,7 Q2,4 5,4 Z" fill="none" stroke="#6AADE0" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="17" cy="36" r="2.8" fill="#2A2A2A"/>
+        <circle cx="27" cy="36" r="2.8" fill="#2A2A2A"/>
+        <path d="M15,44 Q22,50 29,44" stroke="#2A2A2A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M38,4 L99,4 Q102,4 102,7 L102,69 Q102,72 99,72 L38,72 L38,46 C38,51 54,51 54,46 L54,22 C54,17 38,17 38,22 Z" fill="#F5EED8"/>
+        <path d="M38,4 L99,4 Q102,4 102,7 L102,69 Q102,72 99,72 L38,72 L38,46 C38,51 54,51 54,46 L54,22 C54,17 38,17 38,22 Z" fill="none" stroke="#B9A3DC" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="68" cy="36" r="2.8" fill="#2A2A2A"/>
+        <circle cx="80" cy="36" r="2.8" fill="#2A2A2A"/>
+        <path d="M66,44 Q74,50 82,44" stroke="#2A2A2A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="44" y="18" font-size="14" fill="#F5C840">✦</text>
+        <text x="8"  y="14" font-size="10" fill="rgba(255,255,255,0.8)">✦</text>
+        <text x="88" y="16" font-size="9"  fill="#6BC47A">✦</text>
       </svg>
     </div>
 
     <!-- Badge -->
-    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:white;border:1.5px solid rgba(232,104,74,0.2);border-radius:9999px;padding:8px 20px;font-size:13px;color:var(--coral);font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;box-shadow:0 2px 12px rgba(232,104,74,0.1);">
+    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.22);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.4);border-radius:9999px;padding:8px 20px;font-size:13px;color:#fff;font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;">
       <span>✨</span><span>From Instagram, with love & friendship</span><span>✨</span>
     </div>
 
     <!-- H1 -->
-    <h1 class="jk hero-d2" style="font-size:clamp(40px,7.5vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--dark);margin-bottom:20px;">
-      Find Your <span class="sparkle-text" data-sparkle-colors="#FAC740,#E8684A" data-sparkle-count="10" style="color:var(--coral);position:relative;">Person
-        <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="var(--coral)" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.4"/></svg>
+    <h1 class="fk hero-d2" style="font-size:clamp(44px,8vw,86px);font-weight:400;line-height:1.05;color:#fff;margin-bottom:20px;text-shadow:0 3px 24px rgba(0,0,0,0.22);">
+      Find Your <span class="sparkle-text" data-sparkle-colors="#F5C840,#fff" data-sparkle-count="10" style="color:#F5C840;position:relative;">Person
+        <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="rgba(255,255,255,0.5)" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
       </span>
     </h1>
 
     <!-- Sub -->
-    <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:var(--text);line-height:1.75;">
+    <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:rgba(255,255,255,0.92);line-height:1.75;text-shadow:0 1px 8px rgba(0,0,0,0.15);">
       Whether you're looking for a
-      <span style="color:var(--coral);font-weight:700;background:var(--coral-l);padding:1px 8px;border-radius:6px;">romantic partner</span>
+      <span style="color:#F5C840;font-weight:700;">romantic partner</span>
       or a
-      <span style="color:var(--blue-d);font-weight:700;background:var(--blue-l);padding:1px 8px;border-radius:6px;">new best friend</span>
-      — we personally find the perfect match for you 🍒
+      <span style="color:#A8E4FF;font-weight:700;">new best friend</span>
+      — we personally find the perfect match for you
     </p>
-    <p class="hero-d3 int" style="font-size:13.5px;color:var(--muted);margin:0 0 36px;">No algorithms. No swiping. Just real humans, doing the work for you!</p>
+    <p class="hero-d3 int" style="font-size:13.5px;color:rgba(255,255,255,0.7);margin:0 0 36px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">No algorithms. No swiping. Just real humans, doing the work for you!</p>
 
     <!-- CTAs -->
     <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;">Find My Person →</button>
-      <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" class="btn-outline" style="font-size:16px;padding:14px 34px;">How Does It Work?</button>
+      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.95);color:var(--coral);border-color:rgba(255,255,255,0.5);">Find My Person →</button>
+      <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;border:2.5px solid rgba(255,255,255,0.4);border-radius:9999px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;transition:background 0.2s,transform 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform=''">How Does It Work?</button>
     </div>
 
     <!-- Stats -->
-    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:white;border-radius:24px;padding:22px 28px;border:2px solid rgba(232,104,74,0.1);box-shadow:0 4px 24px rgba(42,24,14,0.06);">
+    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:rgba(255,255,255,0.18);backdrop-filter:blur(12px);border-radius:24px;padding:22px 28px;border:1.5px solid rgba(255,255,255,0.3);">
       <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:var(--coral);" data-count="2000" data-suffix="+" data-label="K">2K+</div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Matches Made</div>
+        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#F5C840;" data-count="2000" data-suffix="+" data-label="K">2K+</div>
+        <div class="int" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;">Matches Made</div>
       </div>
-      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(42,24,14,0.08);"></div>
+      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.3);"></div>
       <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk" style="font-size:30px;font-weight:900;color:var(--green);">50/50</div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Love & Friendship</div>
+        <div class="jk" style="font-size:30px;font-weight:900;color:#A8F0C8;">50/50</div>
+        <div class="int" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;">Love & Friendship</div>
       </div>
-      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(42,24,14,0.08);"></div>
+      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.3);"></div>
       <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:var(--blue);" data-count="50000" data-suffix="+" data-label="K">50K+</div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:2px;">Instagram Followers</div>
+        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#A8E4FF;" data-count="50000" data-suffix="+" data-label="K">50K+</div>
+        <div class="int" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;">Instagram Followers</div>
       </div>
     </div>
   </section>
@@ -151,7 +141,7 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,10 1440,35 L1440,70 L0,70Z" fill="#E4F5E8"/></svg></div>
 
   <!-- ── HOW IT WORKS ──────────────────────────────────────── -->
-  <section id="how" class="section-pad" style="padding:64px 52px 72px;background:#E4F5E8;position:relative;z-index:1;">
+  <section id="how" class="section-pad" style="padding:64px 52px 72px;background:rgba(255,252,248,0.88);backdrop-filter:blur(6px);position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
       <div class="sec-label" style="background:var(--green-l);color:var(--green-d);border-color:rgba(107,196,122,0.3);margin-bottom:14px;">THE PROCESS</div>
       <h2 class="jk sparkle-text" data-sparkle-colors="#6BC47A,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">How It Works 🌿</h2>
@@ -231,7 +221,7 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,35 C360,0 1080,70 1440,35 L1440,70 L0,70Z" fill="#E2F0FB"/></svg></div>
 
   <!-- ── WHY US ─────────────────────────────────────────────── -->
-  <section id="why" class="section-pad" style="padding:64px 52px 72px;background:#E2F0FB;position:relative;z-index:1;">
+  <section id="why" class="section-pad" style="padding:64px 52px 72px;background:rgba(235,248,255,0.88);backdrop-filter:blur(6px);position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
       <div class="sec-label" style="background:var(--blue-l);color:var(--blue-d);border-color:rgba(106,173,224,0.3);margin-bottom:14px;">WHY US</div>
       <h2 class="jk sparkle-text" data-sparkle-colors="#6AADE0,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">Not Your Typical<br>Matchmaker 🌊</h2>
@@ -275,7 +265,7 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,20 C480,70 960,0 1440,40 L1440,70 L0,70Z" fill="var(--cream)"/></svg></div>
 
   <!-- ── STORIES ────────────────────────────────────────────── -->
-  <section id="stories" class="section-pad" style="padding:64px 52px 72px;background:var(--cream);position:relative;z-index:1;">
+  <section id="stories" class="section-pad" style="padding:64px 52px 72px;background:rgba(255,252,248,0.88);backdrop-filter:blur(6px);position:relative;z-index:1;">
 
     <!-- Cute doodle decoration -->
     <div style="text-align:center;margin-bottom:8px;">
@@ -297,7 +287,7 @@
         <!-- Cute quote mark -->
         <div style="font-size:48px;line-height:1;color:var(--coral);opacity:0.25;font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:-8px;">"</div>
         <div class="stars" style="margin-bottom:12px;">★★★★★</div>
-        <p class="int" style="font-size:14px;color:#3A2018;line-height:1.72;margin-bottom:20px;">"We honestly didn't think an Instagram matchmaker could work this well. Six months later we're still going strong. The cherry logo really does bring good luck! 🍒"</p>
+        <p class="int" style="font-size:14px;color:#3A2018;line-height:1.72;margin-bottom:20px;">"We honestly didn't think an Instagram matchmaker could work this well. Six months later we're still going strong. Best decision we ever made! ✨"</p>
         <div style="display:flex;align-items:center;gap:12px;">
           <img src="https://placehold.co/46x46/E8A090/ffffff?text=SJ" alt="Sarah" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(232,104,74,0.3);">
           <div>
@@ -341,7 +331,7 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,40 C360,0 1080,70 1440,30 L1440,70 L0,70Z" fill="#E8684A"/></svg></div>
 
   <!-- ── CTA BANNER ─────────────────────────────────────────── -->
-  <section style="position:relative;z-index:1;background:#E8684A;">
+  <section style="position:relative;z-index:1;background:rgba(38,100,16,0.94);backdrop-filter:blur(6px);">
     <div class="cta-section cta-inner" style="padding:60px 48px;text-align:center;position:relative;overflow:hidden;max-width:960px;margin:0 auto;background:transparent;">
       <div class="cta-blob" style="width:120px;height:120px;bottom:-30px;left:-20px;"></div>
       <div class="cta-blob" style="width:90px;height:90px;top:-18px;right:60px;animation-delay:2s;"></div>
@@ -349,20 +339,15 @@
 
       <!-- Cute CTA illustration -->
       <div class="reveal" style="margin-bottom:16px;">
-        <svg width="90" height="76" viewBox="0 0 90 76" fill="none" style="display:inline-block;">
-          <ellipse cx="28" cy="46" rx="24" ry="24" fill="rgba(255,255,255,0.25)"/>
-          <circle cx="20" cy="42" r="2.8" fill="white"/>
-          <circle cx="36" cy="42" r="2.8" fill="white"/>
-          <path d="M21 50 Q28 55 35 50" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <ellipse cx="62" cy="46" rx="24" ry="24" fill="rgba(255,255,255,0.2)"/>
-          <circle cx="54" cy="42" r="2.8" fill="white"/>
-          <circle cx="70" cy="42" r="2.8" fill="white"/>
-          <path d="M55 50 Q62 55 69 50" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <!-- Star sparkle connector -->
-          <path d="M45 18 L46 23 L51 24 L46 25 L45 30 L44 25 L39 24 L44 23Z" fill="white"/>
-          <text x="6"  y="18" font-size="14" fill="rgba(255,255,255,0.7)">✦</text>
-          <text x="68" y="16" font-size="12" fill="rgba(255,255,255,0.6)">✦</text>
-          <text x="38" y="10" font-size="10" fill="rgba(255,255,255,0.8)">✦</text>
+        <svg width="110" height="82" viewBox="0 0 104 76" fill="none" style="display:inline-block;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.2));">
+          <path d="M5,4 L38,4 L38,22 C38,17 54,17 54,22 L54,46 C54,51 38,51 38,46 L38,72 L5,72 Q2,72 2,69 L2,7 Q2,4 5,4 Z" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="17" cy="36" r="2.5" fill="white"/><circle cx="27" cy="36" r="2.5" fill="white"/>
+          <path d="M15,44 Q22,50 29,44" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <path d="M38,4 L99,4 Q102,4 102,7 L102,69 Q102,72 99,72 L38,72 L38,46 C38,51 54,51 54,46 L54,22 C54,17 38,17 38,22 Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.6)" stroke-width="2.5" stroke-linejoin="round"/>
+          <circle cx="68" cy="36" r="2.5" fill="white"/><circle cx="80" cy="36" r="2.5" fill="white"/>
+          <path d="M66,44 Q74,50 82,44" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <text x="6" y="18" font-size="14" fill="rgba(255,255,255,0.7)">✦</text>
+          <text x="86" y="16" font-size="11" fill="rgba(255,255,255,0.6)">✦</text>
         </svg>
       </div>
 
@@ -375,22 +360,23 @@
   </section>
 
   <!-- ── FOOTER ─────────────────────────────────────────────── -->
-  <footer class="footer-inner" style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:2.5px solid rgba(42,24,14,0.08);background:var(--cream);position:relative;z-index:1;">
+  <footer class="footer-inner" style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:1.5px solid rgba(255,255,255,0.15);background:rgba(26,72,10,0.92);backdrop-filter:blur(6px);position:relative;z-index:1;">
     <div style="display:flex;align-items:center;gap:10px;">
-      <svg width="28" height="24" viewBox="0 0 44 38" fill="none">
-        <ellipse cx="13" cy="20" rx="12" ry="12" fill="#E8684A"/>
-        <ellipse cx="31" cy="20" rx="12" ry="12" fill="#6AADE0"/>
-        <path d="M22 14 L22.8 18.2 L27 19 L22.8 19.8 L22 24 L21.2 19.8 L17 19 L21.2 18.2Z" fill="#FAC740"/>
+      <svg width="36" height="28" viewBox="0 0 52 38" fill="none">
+        <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="#6AADE0" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="9" cy="18" r="1.3" fill="#2A2A2A"/><circle cx="14" cy="18" r="1.3" fill="#2A2A2A"/>
+        <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="#B9A3DC" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="36" cy="18" r="1.3" fill="#2A2A2A"/><circle cx="41" cy="18" r="1.3" fill="#2A2A2A"/>
       </svg>
-      <span class="jk" style="font-weight:900;font-size:15px;color:var(--dark);">Find My Partner</span>
+      <span class="jk" style="font-weight:900;font-size:15px;color:#fff;">Find My Partner</span>
     </div>
-    <div class="int" style="font-size:13px;color:var(--muted);">For everyone looking for their person 🧡</div>
+    <div class="int" style="font-size:13px;color:rgba(255,255,255,0.7);">For everyone looking for their person ✨</div>
     <div style="display:flex;align-items:center;gap:18px;font-size:13px;color:var(--text);">
       <span style="cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700;" class="nav-a">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
         Follow Us
       </span>
-      <span class="int" style="color:var(--muted);">© 2026 Find My Partner</span>
+      <span class="int" style="color:rgba(255,255,255,0.6);">© 2026 Find My Partner</span>
     </div>
   </footer>
 </div>
@@ -403,7 +389,7 @@
   <header class="form-header" style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
       <div style="width:36px;height:36px;background:var(--coral);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--coral-d);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9Z"/></svg>
+        <svg width="22" height="17" viewBox="0 0 52 38" fill="none"><path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
       </div>
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
     </button>
@@ -428,7 +414,7 @@
   <header style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
       <div style="width:36px;height:36px;background:var(--coral);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--coral-d);">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9Z"/></svg>
+        <svg width="22" height="17" viewBox="0 0 52 38" fill="none"><path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
       </div>
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
     </button>
@@ -449,7 +435,7 @@
     </div>
 
     <div id="status-result" style="display:none;" class="card" style="text-align:center;padding:44px 36px;">
-      <div style="font-size:52px;margin-bottom:12px;">🍒</div>
+      <div style="font-size:52px;margin-bottom:12px;">✨</div>
       <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:8px;">We're On It!</h2>
       <p class="int" style="color:var(--muted);font-size:14.5px;line-height:1.65;margin-bottom:26px;text-align:center;">Our team is looking through profiles to find the perfect person for you. Usually 48–72 hours!</p>
       <div style="background:var(--coral-l);border-radius:18px;padding:18px 22px;margin-bottom:22px;text-align:left;border:1.5px solid rgba(232,104,74,0.15);">

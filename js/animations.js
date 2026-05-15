@@ -224,13 +224,13 @@ export function initNavScroll() {
   if (!nav) return;
   window.addEventListener('scroll', () => {
     if (window.scrollY > 20) {
-      nav.style.boxShadow = '0 2px 18px rgba(28,18,8,0.08)';
-      nav.style.background = 'rgba(240,234,226,0.92)';
-      nav.style.backdropFilter = 'blur(12px)';
+      nav.style.boxShadow = '0 2px 18px rgba(0,0,0,0.12)';
+      nav.style.background = 'rgba(255,252,248,0.95)';
+      nav.style.backdropFilter = 'blur(14px)';
     } else {
       nav.style.boxShadow = '';
-      nav.style.background = '';
-      nav.style.backdropFilter = '';
+      nav.style.background = 'rgba(255,252,248,0.82)';
+      nav.style.backdropFilter = 'blur(14px)';
     }
   }, { passive: true });
 }

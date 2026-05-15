@@ -6,24 +6,24 @@
   --coral:    #E8684A;
   --coral-d:  #CF5335;
   --coral-l:  #FDE8E2;
-  --green:    #6BC47A;
-  --green-d:  #4EA85C;
-  --green-l:  #E4F5E8;
-  --blue:     #6AADE0;
-  --blue-d:   #4D90C8;
-  --blue-l:   #E2F0FB;
+  --green:    #5BBB3A;
+  --green-d:  #3E8B28;
+  --green-l:  #E8F5E0;
+  --blue:     #4A96D4;
+  --blue-d:   #3278B8;
+  --blue-l:   #E0EEF8;
   --purple:   #B9A3DC;
   --purple-l: #F0EBF8;
   --pink:     #F9ABBE;
   --pink-l:   #FEF0F5;
-  --yellow:   #FAC740;
+  --yellow:   #F5C840;
   --yellow-l: #FEF8E1;
   --cream:    #FFF8F2;
   --cream-d:  #F5EDE3;
-  --dark:     #2A180E;
-  --text:     #5A3828;
-  --muted:    #8A7068;
-  --light-muted: #A08878;
+  --dark:     #1A320A;
+  --text:     #2A5018;
+  --muted:    #587048;
+  --light-muted: #8AA878;
 
   /* Aliases for JS compatibility */
   --brand:       var(--coral);
@@ -42,14 +42,37 @@ html {
 
 body {
   font-family: 'Nunito', 'Inter', sans-serif;
-  background: var(--cream);
+  background: transparent;
   color: var(--dark);
   overflow-x: hidden;
   max-width: 100%;
   width: 100%;
 }
 
+/* ── Bliss landscape background (fixed) ──────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom,
+    #2F78BE 0%,
+    #4A96D4 22%,
+    #6EB4E6 46%,
+    #9ACCE0 51%,
+    #B0DC90 54%,
+    #74C845 59%,
+    #4EAA28 68%,
+    #388C1C 82%,
+    #266010 100%
+  );
+}
+
+/* Form & status views get opaque cream background */
+#v-form, #v-status { background: var(--cream); }
+
 .jk  { font-family: 'Nunito', sans-serif; }
+.fk  { font-family: 'Fredoka One', cursive; }
 .int { font-family: 'Inter', sans-serif; }
 
 /* ── View transitions ────────────────────────────────────── */
@@ -448,7 +471,7 @@ select.finput {
 
 /* ── CTA section ─────────────────────────────────────────── */
 .cta-section {
-  background: linear-gradient(135deg, var(--coral) 0%, #F0884A 50%, #E87040 100%);
+  background: linear-gradient(135deg, #2E7A14 0%, #3E9820 50%, #347C18 100%);
 }
 .cta-blob {
   position: absolute; border-radius: 50%;
@@ -491,9 +514,8 @@ select.finput {
 }
 .upload-zone:hover { border-color: var(--coral); background: #FDE8E0; transform: scale(1.01); }
 
-/* ── Wavy divider ────────────────────────────────────────── */
-.wave-div { display: block; width: 100%; overflow: hidden; line-height: 0; }
-.wave-div svg { display: block; width: 100%; }
+/* ── Wavy divider (hidden — bliss bg shows through) ─────── */
+.wave-div { display: none; }
 
 /* ── Stars ───────────────────────────────────────────────── */
 .stars { color: var(--yellow); font-size: 18px; letter-spacing: 2px; }
@@ -534,7 +556,7 @@ select.finput {
 .mobile-menu {
   display: none;
   position: fixed; inset: 0;
-  background: rgba(255,248,242,0.97);
+  background: rgba(44,120,20,0.97);
   backdrop-filter: blur(16px);
   z-index: 50;
   flex-direction: column;
@@ -550,7 +572,7 @@ select.finput {
 .mobile-menu a, .mobile-menu button {
   font-family: 'Nunito', sans-serif;
   font-size: 26px; font-weight: 900;
-  color: var(--dark); text-decoration: none;
+  color: #fff; text-decoration: none;
   background: none; border: none; cursor: pointer;
   letter-spacing: -0.01em;
   transition: color 0.18s, transform 0.18s;

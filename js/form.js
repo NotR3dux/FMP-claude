@@ -11,7 +11,7 @@ const stepMeta = {
   1: { title: 'Personal Info ✏️',  sub: 'Tell us a little about yourself!' },
   2: { title: 'Preferences 💛',    sub: 'What kind of connection are you looking for?' },
   3: { title: 'Your Photo 📸',     sub: 'Add a photo so we can find your perfect match' },
-  4: { title: 'Almost There! 🍒',  sub: 'Complete your registration' },
+  4: { title: 'Almost There! ✨',  sub: 'Complete your registration' },
 };
 
 export function initForm() {
@@ -139,7 +139,7 @@ function renderContent() {
         <div style="height:4px;border-radius:2px;background:linear-gradient(to right,#D44E27,#9040C0,#3A78D0);margin-bottom:14px;animation:fadeUp 0.4s both;"></div>
         <div class="card card-tilt">
           <div style="text-align:center;margin-bottom:22px;">
-            <div style="display:inline-flex;align-items:center;gap:6px;background:#FDF0EC;border-radius:9999px;padding:6px 16px;font-size:12.5px;color:var(--brand);font-weight:700;margin-bottom:14px;font-family:'Plus Jakarta Sans',sans-serif;">🍒 One-Time Fee</div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:#FDF0EC;border-radius:9999px;padding:6px 16px;font-size:12.5px;color:var(--brand);font-weight:700;margin-bottom:14px;font-family:'Plus Jakarta Sans',sans-serif;">✨ One-Time Fee</div>
             <div class="jk" style="font-size:52px;font-weight:900;color:var(--dark);line-height:1;">$9.99 <span style="font-size:16px;font-weight:500;color:var(--light-muted);">one-time</span></div>
           </div>
           <div style="margin-bottom:26px;">
@@ -149,7 +149,7 @@ function renderContent() {
                 <span style="font-size:14.5px;color:#3A2820;">${t}</span>
               </div>`).join('')}
           </div>
-          <button onclick="window.completePay()" class="btn-red" style="width:100%;justify-content:center;font-size:15.5px;padding:15px;">🍒 Pay &amp; Find My Person</button>
+          <button onclick="window.completePay()" class="btn-red" style="width:100%;justify-content:center;font-size:15.5px;padding:15px;">✨ Pay &amp; Find My Person</button>
           <div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <span style="font-size:12px;color:#AAA;">Secure payment · Money-back guarantee</span>
