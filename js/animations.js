@@ -223,14 +223,14 @@ export function initNavScroll() {
   const nav = document.querySelector('#main-nav');
   if (!nav) return;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      nav.style.boxShadow = '0 2px 18px rgba(0,0,0,0.12)';
-      nav.style.background = 'rgba(255,252,248,0.95)';
+    if (window.scrollY > 40) {
+      nav.style.boxShadow = '0 2px 18px rgba(0,0,0,0.15)';
+      nav.style.background = 'rgba(30,80,15,0.55)';
       nav.style.backdropFilter = 'blur(14px)';
     } else {
       nav.style.boxShadow = '';
-      nav.style.background = 'rgba(255,252,248,0.82)';
-      nav.style.backdropFilter = 'blur(14px)';
+      nav.style.background = 'transparent';
+      nav.style.backdropFilter = 'none';
     }
   }, { passive: true });
 }

@@ -6,7 +6,7 @@
   <title>Find My Partner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=7">
+  <link rel="stylesheet" href="css/styles.css?v=8">
 </head>
 <body>
 
@@ -27,38 +27,30 @@
   </div>
 
   <!-- NAV -->
-  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 52px;transition:background 0.3s,box-shadow 0.3s;background:rgba(255,252,248,0.82);backdrop-filter:blur(14px);border-bottom:1.5px solid rgba(78,168,92,0.18);">
+  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 52px;transition:background 0.3s,box-shadow 0.3s;background:transparent;">
 
     <!-- Logo -->
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;z-index:100;position:relative;">
-      <!-- Puzzle piece logo -->
       <div class="logo-bounce" style="display:flex;align-items:center;">
-        <svg width="48" height="36" viewBox="0 0 52 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8"/>
-          <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="none" stroke="#6AADE0" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-          <circle cx="9" cy="18" r="1.3" fill="#2A2A2A"/>
-          <circle cx="14" cy="18" r="1.3" fill="#2A2A2A"/>
-          <path d="M8.5,22 Q11.5,25 14.5,22" stroke="#2A2A2A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8"/>
-          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="none" stroke="#B9A3DC" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-          <circle cx="36" cy="18" r="1.3" fill="#2A2A2A"/>
-          <circle cx="41" cy="18" r="1.3" fill="#2A2A2A"/>
-          <path d="M35.5,22 Q38.5,25 41.5,22" stroke="#2A2A2A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <img src="brand_assets/logo.png" alt="Find My Partner" style="height:40px;width:auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <svg style="display:none" width="48" height="36" viewBox="0 0 52 38" fill="none">
+          <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="#6AADE0" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="#B9A3DC" stroke-width="2" stroke-linejoin="round"/>
         </svg>
       </div>
-      <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);letter-spacing:-0.01em;">Find My Partner</span>
+      <span class="jk" style="font-weight:900;font-size:16px;color:#fff;letter-spacing:-0.01em;text-shadow:0 1px 6px rgba(0,0,0,0.2);">Find My Partner</span>
     </button>
 
     <!-- Desktop links -->
     <div class="nav-links" style="display:flex;align-items:center;gap:28px;">
-      <a href="#how"     class="nav-a int" style="font-size:14.5px;color:var(--text);font-weight:600;text-decoration:none;">How It Works</a>
-      <a href="#why"     class="nav-a int" style="font-size:14.5px;color:var(--text);font-weight:600;text-decoration:none;">Why Us</a>
-      <a href="#stories" class="nav-a int" style="font-size:14.5px;color:var(--text);font-weight:600;text-decoration:none;">Stories</a>
+      <a href="#how"     class="nav-a int" style="font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">How It Works</a>
+      <a href="#why"     class="nav-a int" style="font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Why Us</a>
+      <a href="#stories" class="nav-a int" style="font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Stories</a>
     </div>
 
     <!-- Desktop CTA -->
     <div class="nav-cta-desktop" style="display:flex;align-items:center;gap:14px;">
-      <button onclick="navTo('status')" class="nav-a jk" style="background:none;border:none;font-size:14.5px;color:var(--text);font-weight:700;cursor:pointer;">Check Status</button>
+      <button onclick="navTo('status')" class="nav-a jk" style="background:none;border:none;font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:700;cursor:pointer;">Check Status</button>
       <button onclick="navTo('form')" class="btn-red" style="padding:10px 22px;font-size:14px;">Get Started ✨</button>
     </div>
 
@@ -114,7 +106,7 @@
 
     <!-- CTAs -->
     <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.95);color:var(--coral);border-color:rgba(255,255,255,0.5);">Find My Person →</button>
+      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;">Find My Person →</button>
       <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;border:2.5px solid rgba(255,255,255,0.4);border-radius:9999px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;transition:background 0.2s,transform 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform=''">How Does It Work?</button>
     </div>
 
@@ -141,11 +133,11 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,10 1440,35 L1440,70 L0,70Z" fill="#E4F5E8"/></svg></div>
 
   <!-- ── HOW IT WORKS ──────────────────────────────────────── -->
-  <section id="how" class="section-pad" style="padding:64px 52px 72px;background:rgba(255,252,248,0.88);backdrop-filter:blur(6px);position:relative;z-index:1;">
+  <section id="how" class="section-pad" style="padding:64px 52px 72px;position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:var(--green-l);color:var(--green-d);border-color:rgba(107,196,122,0.3);margin-bottom:14px;">THE PROCESS</div>
-      <h2 class="jk sparkle-text" data-sparkle-colors="#6BC47A,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">How It Works 🌿</h2>
-      <p class="int" style="color:var(--text);font-size:16px;">Four easy steps — we handle all the hard stuff!</p>
+      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">THE PROCESS</div>
+      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">How It Works 🌿</h2>
+      <p class="int" style="color:rgba(255,255,255,0.88);font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Four easy steps — we handle all the hard stuff!</p>
     </div>
     <div class="grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;">
 
@@ -221,11 +213,11 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,35 C360,0 1080,70 1440,35 L1440,70 L0,70Z" fill="#E2F0FB"/></svg></div>
 
   <!-- ── WHY US ─────────────────────────────────────────────── -->
-  <section id="why" class="section-pad" style="padding:64px 52px 72px;background:rgba(235,248,255,0.88);backdrop-filter:blur(6px);position:relative;z-index:1;">
+  <section id="why" class="section-pad" style="padding:64px 52px 72px;position:relative;z-index:1;">
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:var(--blue-l);color:var(--blue-d);border-color:rgba(106,173,224,0.3);margin-bottom:14px;">WHY US</div>
-      <h2 class="jk sparkle-text" data-sparkle-colors="#6AADE0,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">Not Your Typical<br>Matchmaker 🌊</h2>
-      <p class="int" style="color:var(--text);font-size:16px;max-width:440px;margin:0 auto;">We actually care about you and who you end up with.</p>
+      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">WHY US</div>
+      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">Not Your Typical<br>Matchmaker 🌿</h2>
+      <p class="int" style="color:rgba(255,255,255,0.88);font-size:16px;max-width:440px;margin:0 auto;text-shadow:0 1px 6px rgba(0,0,0,0.15);">We actually care about you and who you end up with.</p>
     </div>
     <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
       <div class="card card-tilt reveal reveal-d1" style="border-color:rgba(106,173,224,0.25);">
@@ -265,20 +257,19 @@
   <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,20 C480,70 960,0 1440,40 L1440,70 L0,70Z" fill="var(--cream)"/></svg></div>
 
   <!-- ── STORIES ────────────────────────────────────────────── -->
-  <section id="stories" class="section-pad" style="padding:64px 52px 72px;background:rgba(255,252,248,0.88);backdrop-filter:blur(6px);position:relative;z-index:1;">
+  <section id="stories" class="section-pad" style="padding:64px 52px 72px;position:relative;z-index:1;">
 
-    <!-- Cute doodle decoration -->
     <div style="text-align:center;margin-bottom:8px;">
       <svg width="80" height="30" viewBox="0 0 80 30" fill="none">
-        <text x="0"  y="24" font-size="20" fill="#FAC740">✦</text>
-        <text x="28" y="22" font-size="16" fill="#6BC47A">✦</text>
-        <text x="50" y="24" font-size="20" fill="#6AADE0">✦</text>
+        <text x="0"  y="24" font-size="20" fill="rgba(255,255,255,0.7)">✦</text>
+        <text x="28" y="22" font-size="16" fill="rgba(255,255,255,0.5)">✦</text>
+        <text x="50" y="24" font-size="20" fill="rgba(255,255,255,0.7)">✦</text>
       </svg>
     </div>
     <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:var(--purple-l);color:#7050A0;border-color:rgba(185,163,220,0.35);margin-bottom:14px;">REAL STORIES</div>
-      <h2 class="jk sparkle-text" data-sparkle-colors="#B9A3DC,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:var(--dark);margin-bottom:10px;">People Who Found<br>Their Person ✨</h2>
-      <p class="int" style="color:var(--text);font-size:16px;">Romance, friendship, or both — every connection counts!</p>
+      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">REAL STORIES</div>
+      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">People Who Found<br>Their Person ✨</h2>
+      <p class="int" style="color:rgba(255,255,255,0.88);font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Romance, friendship, or both — every connection counts!</p>
     </div>
     <div class="stories-grid grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto;">
 
@@ -353,7 +344,7 @@
 
       <h2 class="jk reveal sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="8" style="font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:14px;position:relative;z-index:1;">Ready to Find Your Person? ✨</h2>
       <p class="int reveal" style="color:rgba(255,255,255,0.88);font-size:16px;margin-bottom:32px;line-height:1.65;position:relative;z-index:1;">Love, friendship, or something in between — sign up and<br>let us do the work. Your match is out there waiting!</p>
-      <button onclick="navTo('form')" class="jk reveal" style="background:#fff;color:var(--coral);border:2.5px solid rgba(255,255,255,0.6);border-radius:9999px;padding:14px 40px;font-size:17px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px;position:relative;z-index:1;box-shadow:0 4px 0 rgba(0,0,0,0.12);transition:transform 0.18s,box-shadow 0.18s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 7px 0 rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 0 rgba(0,0,0,0.12)'">
+      <button onclick="navTo('form')" class="btn-red jk reveal" style="padding:14px 40px;font-size:17px;position:relative;z-index:1;">
         Get Started → ✨
       </button>
     </div>
@@ -362,17 +353,12 @@
   <!-- ── FOOTER ─────────────────────────────────────────────── -->
   <footer class="footer-inner" style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:1.5px solid rgba(255,255,255,0.15);background:rgba(26,72,10,0.92);backdrop-filter:blur(6px);position:relative;z-index:1;">
     <div style="display:flex;align-items:center;gap:10px;">
-      <svg width="36" height="28" viewBox="0 0 52 38" fill="none">
-        <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="#6AADE0" stroke-width="2" stroke-linejoin="round"/>
-        <circle cx="9" cy="18" r="1.3" fill="#2A2A2A"/><circle cx="14" cy="18" r="1.3" fill="#2A2A2A"/>
-        <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="#B9A3DC" stroke-width="2" stroke-linejoin="round"/>
-        <circle cx="36" cy="18" r="1.3" fill="#2A2A2A"/><circle cx="41" cy="18" r="1.3" fill="#2A2A2A"/>
-      </svg>
+      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:32px;width:auto;filter:brightness(1.1);">
       <span class="jk" style="font-weight:900;font-size:15px;color:#fff;">Find My Partner</span>
     </div>
     <div class="int" style="font-size:13px;color:rgba(255,255,255,0.7);">For everyone looking for their person ✨</div>
-    <div style="display:flex;align-items:center;gap:18px;font-size:13px;color:var(--text);">
-      <span style="cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700;" class="nav-a">
+    <div style="display:flex;align-items:center;gap:18px;font-size:13px;color:rgba(255,255,255,0.8);">
+      <span style="cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700;color:rgba(255,255,255,0.8);" class="nav-a">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
         Follow Us
       </span>
@@ -388,9 +374,7 @@
 <div id="v-form" class="view" style="display:none;background:var(--cream);">
   <header class="form-header" style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-      <div style="width:36px;height:36px;background:var(--coral);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--coral-d);">
-        <svg width="22" height="17" viewBox="0 0 52 38" fill="none"><path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
-      </div>
+      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:36px;width:auto;">
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
     </button>
     <button id="form-back-btn" onclick="window.stepBack()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text);font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;transition:color 0.18s,transform 0.18s;" onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'" onmouseout="this.style.color='var(--text)';this.style.transform=''">
@@ -413,9 +397,7 @@
 <div id="v-status" class="view" style="display:none;background:var(--cream);">
   <header style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
     <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-      <div style="width:36px;height:36px;background:var(--coral);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid var(--coral-d);">
-        <svg width="22" height="17" viewBox="0 0 52 38" fill="none"><path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg>
-      </div>
+      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:36px;width:auto;">
       <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
     </button>
     <button onclick="navTo('home')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text);font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;transition:color 0.18s,transform 0.18s;" onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'" onmouseout="this.style.color='var(--text)';this.style.transform=''">
