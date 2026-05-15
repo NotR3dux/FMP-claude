@@ -238,14 +238,14 @@ body {
 
 /* ── Buttons ────────────────────────────────────────────── */
 .btn-red {
-  background: #fff;
-  color: var(--dark);
+  background: #F5C840;
+  color: #1A320A;
   border-radius: 9999px;
   padding: 12px 28px;
   font-weight: 800;
   font-size: 15px;
   font-family: 'Nunito', sans-serif;
-  border: 2.5px solid rgba(255,255,255,0.6);
+  border: 2.5px solid rgba(255,255,255,0.35);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -256,20 +256,20 @@ body {
   transition: background 0.18s,
               transform 0.15s cubic-bezier(0.34,1.56,0.64,1),
               box-shadow 0.18s;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.14),
-              0 6px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 0 rgba(0,0,0,0.18),
+              0 6px 18px rgba(245,200,64,0.35);
 }
 .btn-red:hover {
-  background: rgba(255,255,255,0.9);
+  background: #FADE5A;
   transform: translateY(-3px);
-  box-shadow: 0 7px 0 rgba(0,0,0,0.12),
-              0 12px 22px rgba(0,0,0,0.14);
+  box-shadow: 0 7px 0 rgba(0,0,0,0.14),
+              0 12px 24px rgba(245,200,64,0.4);
 }
 .btn-red:active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.12);
 }
-.btn-red:focus-visible { outline: 3px solid rgba(255,255,255,0.6); outline-offset: 3px; }
+.btn-red:focus-visible { outline: 3px solid rgba(245,200,64,0.7); outline-offset: 3px; }
 
 /* Ripple */
 .ripple {
