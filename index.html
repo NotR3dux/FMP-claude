@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find My Partner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=8">
+  <link rel="stylesheet" href="css/styles.css?v=9">
 </head>
 <body>
 
@@ -14,411 +14,308 @@
      HOME VIEW
 ═══════════════════════════════════════════════════════════ -->
 <div id="v-home" class="view" style="display:none;overflow-x:hidden;">
-  <div class="blob-tr"></div>
-  <div class="blob-bl"></div>
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="#how"     onclick="closeMobileMenu()" class="nav-a">How It Works</a>
-    <a href="#why"     onclick="closeMobileMenu()" class="nav-a">Why Us</a>
-    <a href="#stories" onclick="closeMobileMenu()" class="nav-a">Stories</a>
-    <button onclick="closeMobileMenu();navTo('status')">Check Status</button>
-    <button onclick="closeMobileMenu();navTo('form')" class="btn-red" style="font-size:16px;padding:14px 36px;">Get Started →</button>
+    <a href="#price"    onclick="closeMobileMenu()" class="nav-a">Harga</a>
+    <a href="#daftar"   onclick="closeMobileMenu()" class="nav-a">Daftar</a>
+    <a href="#tes"      onclick="closeMobileMenu()" class="nav-a">Tes Kepribadian</a>
+    <a href="#reviews"  onclick="closeMobileMenu()" class="nav-a">Reviews</a>
+    <button onclick="closeMobileMenu();openRegistration()" class="btn-red" style="font-size:16px;padding:14px 36px;">Daftar Sekarang →</button>
   </div>
 
   <!-- NAV -->
-  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px 52px;transition:background 0.3s,box-shadow 0.3s;background:transparent;">
-
-    <!-- Logo -->
-    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;z-index:100;position:relative;">
+  <nav id="main-nav" style="position:relative;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 52px;transition:background 0.3s,box-shadow 0.3s;background:transparent;">
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;z-index:100;position:relative;">
       <div class="logo-bounce" style="display:flex;align-items:center;">
         <img src="brand_assets/logo.png" alt="Find My Partner" style="height:52px;width:auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <svg style="display:none" width="48" height="36" viewBox="0 0 52 38" fill="none">
-          <path d="M3,2 L20,2 L20,13 C20,9.5 30,9.5 30,13 L30,25 C30,28.5 20,28.5 20,25 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="#6AADE0" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 L20,25 C20,28.5 30,28.5 30,25 L30,13 C30,9.5 20,9.5 20,13 Z" fill="#F5EED8" stroke="#B9A3DC" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M3,2 L20,2 L20,36 L3,36 Q1,36 1,34 L1,4 Q1,2 3,2 Z" fill="#F5EED8" stroke="#6AADE0" stroke-width="2"/>
+          <path d="M20,2 L49,2 Q51,2 51,4 L51,34 Q51,36 49,36 L20,36 Z" fill="#F5EED8" stroke="#B9A3DC" stroke-width="2"/>
         </svg>
       </div>
       <span class="jk" style="font-weight:900;font-size:16px;color:#fff;letter-spacing:-0.01em;text-shadow:0 1px 6px rgba(0,0,0,0.2);">Find My Partner</span>
     </button>
 
-    <!-- Desktop links -->
-    <div class="nav-links" style="display:flex;align-items:center;gap:28px;">
-      <a href="#how"     class="nav-a int" style="font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">How It Works</a>
-      <a href="#why"     class="nav-a int" style="font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Why Us</a>
-      <a href="#stories" class="nav-a int" style="font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Stories</a>
+    <div class="nav-links" style="display:flex;align-items:center;gap:26px;">
+      <a href="#price"   class="nav-a int" style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Harga</a>
+      <a href="#daftar"  class="nav-a int" style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Daftar</a>
+      <a href="#tes"     class="nav-a int" style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Tes Kepribadian</a>
+      <a href="#reviews" class="nav-a int" style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:600;text-decoration:none;">Reviews</a>
     </div>
 
-    <!-- Desktop CTA -->
     <div class="nav-cta-desktop" style="display:flex;align-items:center;gap:14px;">
-      <button onclick="navTo('status')" class="nav-a jk" style="background:none;border:none;font-size:14.5px;color:rgba(255,255,255,0.9);font-weight:700;cursor:pointer;">Check Status</button>
-      <button onclick="navTo('form')" class="btn-red" style="padding:10px 22px;font-size:14px;">Get Started ✨</button>
+      <button onclick="openRegistration()" class="btn-red" style="padding:10px 22px;font-size:14px;">Daftar Sekarang ✨</button>
     </div>
 
-    <!-- Hamburger -->
     <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </nav>
 
-  <!-- ── HERO ───────────────────────────────────────────────── -->
-  <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:52px 24px 68px;position:relative;z-index:1;overflow:hidden;">
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section id="hero-section" class="hero-section-inner" style="text-align:center;padding:40px 24px 60px;position:relative;z-index:1;">
 
-    <!-- Logo as hero illustration -->
-    <div class="hero-d0 logo-bounce" style="margin-bottom:18px;">
-      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:220px;width:auto;filter:drop-shadow(0 8px 28px rgba(0,0,0,0.22));display:inline-block;">
+    <div class="hero-d0 logo-bounce" style="margin-bottom:14px;">
+      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:200px;width:auto;filter:drop-shadow(0 8px 28px rgba(0,0,0,0.22));display:inline-block;">
     </div>
 
-    <!-- Badge -->
-    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.22);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.4);border-radius:9999px;padding:8px 20px;font-size:13px;color:#fff;font-weight:700;margin-bottom:24px;font-family:'Nunito',sans-serif;">
-      <span>✨</span><span>From Instagram, with love & friendship</span><span>✨</span>
+    <div class="badge-pop hero-d1" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.22);backdrop-filter:blur(8px);border:1.5px solid rgba(255,255,255,0.4);border-radius:9999px;padding:8px 20px;font-size:13px;color:#fff;font-weight:700;margin-bottom:20px;font-family:'Nunito',sans-serif;">
+      <span>✨</span><span>Dari Instagram, dengan cinta & persahabatan</span><span>✨</span>
     </div>
 
-    <!-- H1 -->
-    <h1 class="fk hero-d2" style="font-size:clamp(44px,8vw,86px);font-weight:400;line-height:1.05;color:#fff;margin-bottom:20px;text-shadow:0 3px 24px rgba(0,0,0,0.22);">
-      Find Your <span class="sparkle-text" data-sparkle-colors="#F5C840,#fff" data-sparkle-count="10" style="color:#F5C840;position:relative;">Person
+    <h1 class="fk hero-d2" style="font-size:clamp(40px,7vw,82px);font-weight:400;line-height:1.05;color:#fff;margin-bottom:16px;text-shadow:0 3px 24px rgba(0,0,0,0.22);">
+      Find My <span class="sparkle-text" data-sparkle-colors="#F5C840,#fff" data-sparkle-count="10" style="color:#F5C840;position:relative;">Partner
         <svg style="position:absolute;bottom:-6px;left:0;width:100%;" viewBox="0 0 200 12" preserveAspectRatio="none"><path d="M2,8 Q50,2 100,8 Q150,14 198,6" stroke="rgba(255,255,255,0.5)" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>
       </span>
     </h1>
 
-    <!-- Sub -->
-    <p class="hero-d3 int" style="max-width:540px;margin:0 auto 10px;font-size:clamp(15px,2.5vw,17px);color:rgba(255,255,255,0.92);line-height:1.75;text-shadow:0 1px 8px rgba(0,0,0,0.15);">
-      Whether you're looking for a
-      <span style="color:#F5C840;font-weight:700;">romantic partner</span>
-      or a
-      <span style="color:#A8E4FF;font-weight:700;">new best friend</span>
-      — we personally find the perfect match for you
-    </p>
-    <p class="hero-d3 int" style="font-size:13.5px;color:rgba(255,255,255,0.7);margin:0 0 36px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">No algorithms. No swiping. Just real humans, doing the work for you!</p>
+    <p class="hero-d3 jk" style="font-size:clamp(17px,2.8vw,22px);color:rgba(255,255,255,0.95);margin-bottom:8px;font-weight:900;text-shadow:0 1px 8px rgba(0,0,0,0.15);">Jodoh atau Bestie — kami bantu cariin! 🌿</p>
+    <p class="hero-d3 int" style="max-width:520px;margin:0 auto 36px;font-size:clamp(14px,2vw,16px);color:rgba(255,255,255,0.82);line-height:1.7;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Matchmaking personal dari Instagram. Kami bantu kamu ketemu orang yang beneran cocok — untuk romansa maupun persahabatan. No bots, no algoritma — manusia sungguhan yang cariin buat kamu.</p>
 
-    <!-- CTAs -->
-    <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-      <button onclick="navTo('form')" class="btn-red" style="font-size:16px;padding:14px 34px;">Find My Person →</button>
-      <button onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;border:2.5px solid rgba(255,255,255,0.4);border-radius:9999px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;transition:background 0.2s,transform 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.25)';this.style.transform='translateY(-3px)'" onmouseout="this.style.background='rgba(255,255,255,0.15)';this.style.transform=''">How Does It Work?</button>
+    <div class="hero-btns hero-d4" style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:44px;">
+      <button onclick="openRegistration()" class="btn-red" style="font-size:16px;padding:14px 34px;">Daftar Sekarang →</button>
+      <a href="#price" style="font-size:16px;padding:14px 34px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);color:#fff;border:2.5px solid rgba(255,255,255,0.4);border-radius:9999px;font-family:'Nunito',sans-serif;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">Lihat Harga 💰</a>
     </div>
 
-    <!-- Stats -->
-    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:500px;margin:52px auto 0;background:rgba(255,255,255,0.18);backdrop-filter:blur(12px);border-radius:24px;padding:22px 28px;border:1.5px solid rgba(255,255,255,0.3);">
-      <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#F5C840;" data-count="2000" data-suffix="+" data-label="K">2K+</div>
-        <div class="int" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;">Matches Made</div>
+    <div class="hero-stats hero-d5" style="display:flex;align-items:center;justify-content:center;max-width:480px;margin:0 auto;background:rgba(255,255,255,0.18);backdrop-filter:blur(12px);border-radius:20px;padding:18px 24px;border:1.5px solid rgba(255,255,255,0.3);">
+      <div style="flex:1;text-align:center;">
+        <div class="jk stat-num" style="font-size:26px;font-weight:900;color:#F5C840;" data-count="2000" data-suffix="+" data-label="K">2K+</div>
+        <div class="int" style="font-size:11px;color:rgba(255,255,255,0.8);margin-top:1px;">Matches Made</div>
       </div>
-      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.3);"></div>
-      <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk" style="font-size:30px;font-weight:900;color:#A8F0C8;">50/50</div>
-        <div class="int" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;">Love & Friendship</div>
+      <div class="hero-stats-divider" style="width:1.5px;height:34px;background:rgba(255,255,255,0.3);"></div>
+      <div style="flex:1;text-align:center;">
+        <div class="jk" style="font-size:26px;font-weight:900;color:#A8F0C8;">50/50</div>
+        <div class="int" style="font-size:11px;color:rgba(255,255,255,0.8);margin-top:1px;">Love & Friendship</div>
       </div>
-      <div class="hero-stats-divider" style="width:1.5px;height:38px;background:rgba(255,255,255,0.3);"></div>
-      <div class="hero-stats-item" style="flex:1;text-align:center;">
-        <div class="jk stat-num" style="font-size:30px;font-weight:900;color:#A8E4FF;" data-count="50000" data-suffix="+" data-label="K">50K+</div>
-        <div class="int" style="font-size:12px;color:rgba(255,255,255,0.8);margin-top:2px;">Instagram Followers</div>
+      <div class="hero-stats-divider" style="width:1.5px;height:34px;background:rgba(255,255,255,0.3);"></div>
+      <div style="flex:1;text-align:center;">
+        <div class="jk stat-num" style="font-size:26px;font-weight:900;color:#A8E4FF;" data-count="50000" data-suffix="+" data-label="K">50K+</div>
+        <div class="int" style="font-size:11px;color:rgba(255,255,255,0.8);margin-top:1px;">IG Followers</div>
       </div>
     </div>
   </section>
 
-  <!-- Wave divider → green section -->
-  <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,35 C240,70 480,0 720,35 C960,70 1200,10 1440,35 L1440,70 L0,70Z" fill="#E4F5E8"/></svg></div>
+  <!-- ── BENEFITS STRIP ───────────────────────────────────── -->
+  <div class="benefits-strip reveal">
+    <div class="benefit-chip">🤝 Human Matchmaking — No Bots</div>
+    <div class="benefit-chip">🔒 Safe &amp; Private</div>
+    <div class="benefit-chip">⚡ Hasil dalam 48–72 Jam</div>
+    <div class="benefit-chip">💛 Romansa atau Persahabatan</div>
+  </div>
 
-  <!-- ── HOW IT WORKS ──────────────────────────────────────── -->
-  <section id="how" class="section-pad" style="padding:64px 52px 72px;position:relative;z-index:1;">
-    <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">THE PROCESS</div>
-      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">How It Works 🌿</h2>
-      <p class="int" style="color:rgba(255,255,255,0.88);font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Four easy steps — we handle all the hard stuff!</p>
+  <!-- ── PRICE LIST ────────────────────────────────────────── -->
+  <section id="price" class="price-section">
+    <div style="text-align:center;margin-bottom:40px;" class="reveal">
+      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">HARGA</div>
+      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="6" style="font-size:clamp(28px,5vw,48px);font-weight:900;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">Price List 💰</h2>
+      <p class="int" style="color:rgba(255,255,255,0.88);font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">One-time fee — bayar sekali, kami yang urus semuanya.</p>
     </div>
-    <div class="grid-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;">
 
-      <div class="card card-tilt reveal reveal-d1" style="text-align:center;border-color:rgba(107,196,122,0.3);">
-        <div class="cute-icon" style="background:var(--coral-l);border-color:rgba(232,104,74,0.2);margin:0 auto 16px;">
-          <!-- Cute notepad with face -->
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-            <rect x="5" y="4" width="24" height="26" rx="5" fill="#E8684A"/>
-            <rect x="8" y="8" width="18" height="2.5" rx="1.5" fill="white" opacity="0.7"/>
-            <rect x="8" y="12.5" width="14" height="2.5" rx="1.5" fill="white" opacity="0.7"/>
-            <circle cx="12" cy="21" r="1.5" fill="white"/>
-            <circle cx="22" cy="21" r="1.5" fill="white"/>
-            <path d="M13 25 Q17 27.5 21 25" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <div class="price-main-card card-tilt reveal">
+      <div class="price-badge">PRICE LIST</div>
+
+      <div class="price-row">
+        <div class="price-icon-wrap" style="background:#EEF5FF;">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <circle cx="13" cy="9" r="5" fill="#6AADE0"/>
+            <path d="M4,24 C4,18.5 8.5,15 13,15 C17.5,15 22,18.5 22,24" stroke="#6AADE0" stroke-width="2.5" stroke-linecap="round" fill="none"/>
           </svg>
         </div>
-        <div class="sec-label" style="margin-bottom:8px;font-size:10px;">STEP 01</div>
-        <h3 class="jk" style="font-weight:900;font-size:16px;margin-bottom:8px;color:var(--dark);">Tell Us About You</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Fill out your profile — your vibe, interests, and what kind of connection you're after. Upload a photo too!</p>
+        <span class="price-label-text">Solo</span>
+        <span class="price-amount">20k</span>
       </div>
 
-      <div class="card card-tilt reveal reveal-d2" style="text-align:center;border-color:rgba(107,196,122,0.3);">
-        <div class="cute-icon" style="background:var(--blue-l);border-color:rgba(106,173,224,0.25);margin:0 auto 16px;">
-          <!-- Cute magnifying glass with face -->
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-            <circle cx="15" cy="15" r="10" fill="#6AADE0"/>
-            <circle cx="12" cy="13" r="1.4" fill="white"/>
-            <circle cx="18" cy="13" r="1.4" fill="white"/>
-            <path d="M12.5 18 Q15 20.5 17.5 18" stroke="white" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-            <line x1="22.5" y1="22.5" x2="30" y2="30" stroke="#6AADE0" stroke-width="4" stroke-linecap="round"/>
-            <line x1="22.5" y1="22.5" x2="30" y2="30" stroke="#4D90C8" stroke-width="2.5" stroke-linecap="round"/>
+      <div class="price-row">
+        <div class="price-icon-wrap" style="background:#F0EBF8;">
+          <svg width="30" height="26" viewBox="0 0 30 26" fill="none">
+            <circle cx="10" cy="8" r="4.5" fill="#B9A3DC"/>
+            <path d="M2,23 C2,18 5.5,15 10,15 C12,15 13.8,15.8 15,17" stroke="#B9A3DC" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <circle cx="21" cy="8" r="4.5" fill="#B9A3DC" opacity="0.7"/>
+            <path d="M28,23 C28,18 24.5,15 21,15" stroke="#B9A3DC" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.7"/>
           </svg>
         </div>
-        <div class="sec-label" style="margin-bottom:8px;font-size:10px;background:var(--blue-l);color:var(--blue-d);border-color:rgba(106,173,224,0.3);">STEP 02</div>
-        <h3 class="jk" style="font-weight:900;font-size:16px;margin-bottom:8px;color:var(--dark);">We Do The Work</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Our team personally looks through profiles and handpicks someone who matches your energy. No bots, ever!</p>
+        <span class="price-label-text">2 orang</span>
+        <span class="price-amount">35k</span>
       </div>
 
-      <div class="card card-tilt reveal reveal-d3" style="text-align:center;border-color:rgba(107,196,122,0.3);">
-        <div class="cute-icon" style="background:var(--yellow-l);border-color:rgba(250,199,64,0.3);margin:0 auto 16px;">
-          <!-- Cute cherry with face -->
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-            <circle cx="12" cy="22" r="7" fill="#E8684A"/>
-            <circle cx="22" cy="22" r="7" fill="#CF5335"/>
-            <path d="M12 15 Q17 4 22 15" stroke="#6BC47A" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <circle cx="10" cy="20.5" r="1.2" fill="white"/>
-            <circle cx="14" cy="20.5" r="1.2" fill="white"/>
-            <path d="M10.5 24 Q12 25.5 13.5 24" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <div class="price-row">
+        <div class="price-icon-wrap" style="background:#E8F5E0;">
+          <svg width="34" height="26" viewBox="0 0 34 26" fill="none">
+            <circle cx="8" cy="8"  r="4" fill="#6BC47A"/>
+            <circle cx="17" cy="7" r="4.5" fill="#6BC47A"/>
+            <circle cx="26" cy="8" r="4"   fill="#6BC47A" opacity="0.7"/>
+            <path d="M1,23 C1,18.5 4,16 8,16" stroke="#6BC47A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M33,23 C33,18.5 30,16 26,16" stroke="#6BC47A" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <path d="M8,23 C8,17.5 12,14.5 17,14.5 C22,14.5 26,17.5 26,23" stroke="#6BC47A" stroke-width="2.2" stroke-linecap="round" fill="none"/>
           </svg>
         </div>
-        <div class="sec-label" style="margin-bottom:8px;font-size:10px;background:var(--yellow-l);color:#B88800;border-color:rgba(250,199,64,0.35);">STEP 03</div>
-        <h3 class="jk" style="font-weight:900;font-size:16px;margin-bottom:8px;color:var(--dark);">Meet Your Match</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">We reveal your match and you decide — feeling it? Accept or pass, totally your call. No awkwardness!</p>
+        <span class="price-label-text">3 orang</span>
+        <span class="price-amount">50k</span>
       </div>
 
-      <div class="card card-tilt reveal reveal-d4" style="text-align:center;border-color:rgba(107,196,122,0.3);">
-        <div class="cute-icon" style="background:var(--pink-l);border-color:rgba(249,171,190,0.3);margin:0 auto 16px;">
-          <!-- Cute chat bubble with face -->
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
-            <path d="M4 6 Q4 3 7 3 L27 3 Q30 3 30 6 L30 20 Q30 23 27 23 L14 23 L8 30 L8 23 L7 23 Q4 23 4 20Z" fill="#F9ABBE"/>
-            <circle cx="12" cy="13" r="1.4" fill="white"/>
-            <circle cx="17" cy="13" r="1.4" fill="white"/>
-            <circle cx="22" cy="13" r="1.4" fill="white"/>
-          </svg>
-        </div>
-        <div class="sec-label" style="margin-bottom:8px;font-size:10px;background:var(--pink-l);color:#C06080;border-color:rgba(249,171,190,0.35);">STEP 04</div>
-        <h3 class="jk" style="font-weight:900;font-size:16px;margin-bottom:8px;color:var(--dark);">Connect & Go!</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">If you're both in, we'll introduce you privately so the connection can bloom — date or friendship!</p>
-      </div>
+      <p class="price-note">* Harga per orang. Daftar bareng teman = lebih hemat!<br>Pembayaran diinfo setelah form diterima.</p>
     </div>
   </section>
 
-  <!-- Wave divider → cream -->
-  <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,35 C360,0 1080,70 1440,35 L1440,70 L0,70Z" fill="#E2F0FB"/></svg></div>
-
-  <!-- ── WHY US ─────────────────────────────────────────────── -->
-  <section id="why" class="section-pad" style="padding:64px 52px 72px;position:relative;z-index:1;">
-    <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">WHY US</div>
-      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">Not Your Typical<br>Matchmaker 🌿</h2>
-      <p class="int" style="color:rgba(255,255,255,0.88);font-size:16px;max-width:440px;margin:0 auto;text-shadow:0 1px 6px rgba(0,0,0,0.15);">We actually care about you and who you end up with.</p>
+  <!-- ── PENDAFTARAN ───────────────────────────────────────── -->
+  <section id="daftar" class="reg-section">
+    <div style="text-align:center;margin-bottom:36px;" class="reveal">
+      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">PENDAFTARAN</div>
+      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="6" style="font-size:clamp(26px,5vw,46px);color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">Siap Ketemu Match-mu? 🌿</h2>
+      <p class="int" style="color:rgba(255,255,255,0.88);font-size:15px;max-width:480px;margin:0 auto;line-height:1.7;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Isi form pendaftaran kami! Cerita tentang dirimu, preferensimu, dan apa yang kamu cari — kami yang urus sisanya.</p>
     </div>
-    <div class="grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto;">
-      <div class="card card-tilt reveal reveal-d1" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">🤝</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Human Matchmaking</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">No bots. A real person reads your profile and picks your match with care. It's personal!</p>
-      </div>
-      <div class="card card-tilt reveal reveal-d2" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">🔒</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Safe & Private</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Your info stays between us until both say yes. We keep everything safe and confidential.</p>
-      </div>
-      <div class="card card-tilt reveal reveal-d3" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">🌟</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Romance OR Friendship</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Not everyone wants romance — totally fine! We match for deep friendships too.</p>
-      </div>
-      <div class="card card-tilt reveal reveal-d4" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">✅</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Verified Profiles</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Every profile is manually reviewed. Real people, real photos. No fakes allowed!</p>
-      </div>
-      <div class="card card-tilt reveal reveal-d5" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">⚡</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Fast Turnaround</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Most matches found within 48–72 hours. We don't leave you hanging!</p>
-      </div>
-      <div class="card card-tilt reveal reveal-d6" style="border-color:rgba(106,173,224,0.25);">
-        <div style="font-size:36px;margin-bottom:12px;">📸</div>
-        <h3 class="jk" style="font-weight:900;font-size:15.5px;margin-bottom:7px;color:var(--dark);">Instagram Native</h3>
-        <p class="int" style="font-size:13px;color:var(--text);line-height:1.65;">Born on Instagram and proud of it! Follow us for stories, updates and BTS content.</p>
-      </div>
+
+    <div class="reveal" style="text-align:center;margin-bottom:52px;">
+      <button onclick="openRegistration()" class="btn-red" style="font-size:17px;padding:16px 44px;display:inline-flex;align-items:center;gap:10px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Daftar via Google Form →
+      </button>
+      <p class="int" style="color:rgba(255,255,255,0.65);font-size:12.5px;margin-top:12px;">Gratis & aman — info kamu hanya dipakai untuk proses matchmaking</p>
     </div>
-  </section>
 
-  <!-- Wave divider → cream -->
-  <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,20 C480,70 960,0 1440,40 L1440,70 L0,70Z" fill="var(--cream)"/></svg></div>
+    <!-- Personality tests -->
+    <div id="tes" style="text-align:center;">
+      <div class="reveal" style="margin-bottom:24px;">
+        <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">TES KEPRIBADIAN</div>
+        <h3 class="jk" style="font-size:clamp(20px,3.5vw,34px);color:#fff;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">Kenali Dirimu Dulu! 🧠</h3>
+        <p class="int" style="color:rgba(255,255,255,0.85);font-size:14.5px;max-width:460px;margin:0 auto;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Lengkapi tes kepribadian ini sebelum daftar — makin lengkap profilmu, makin akurat match-nya!</p>
+      </div>
 
-  <!-- ── STORIES ────────────────────────────────────────────── -->
-  <section id="stories" class="section-pad" style="padding:64px 52px 72px;position:relative;z-index:1;">
-
-    <div style="text-align:center;margin-bottom:8px;">
-      <svg width="80" height="30" viewBox="0 0 80 30" fill="none">
-        <text x="0"  y="24" font-size="20" fill="rgba(255,255,255,0.7)">✦</text>
-        <text x="28" y="22" font-size="16" fill="rgba(255,255,255,0.5)">✦</text>
-        <text x="50" y="24" font-size="20" fill="rgba(255,255,255,0.7)">✦</text>
-      </svg>
-    </div>
-    <div style="text-align:center;margin-bottom:44px;" class="reveal">
-      <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">REAL STORIES</div>
-      <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="7" style="font-size:clamp(28px,5vw,50px);font-weight:900;letter-spacing:-0.025em;color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">People Who Found<br>Their Person ✨</h2>
-      <p class="int" style="color:rgba(255,255,255,0.88);font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Romance, friendship, or both — every connection counts!</p>
-    </div>
-    <div class="stories-grid grid-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto;">
-
-      <!-- Story 1 -->
-      <div class="card card-tilt reveal reveal-d1" style="background:linear-gradient(135deg,#FDE8E2,#FFF0F5);border-color:rgba(232,104,74,0.18);">
-        <!-- Cute quote mark -->
-        <div style="font-size:48px;line-height:1;color:var(--coral);opacity:0.25;font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:-8px;">"</div>
-        <div class="stars" style="margin-bottom:12px;">★★★★★</div>
-        <p class="int" style="font-size:14px;color:#3A2018;line-height:1.72;margin-bottom:20px;">"We honestly didn't think an Instagram matchmaker could work this well. Six months later we're still going strong. Best decision we ever made! ✨"</p>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <img src="https://placehold.co/46x46/E8A090/ffffff?text=SJ" alt="Sarah" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(232,104,74,0.3);">
-          <div>
-            <div class="jk" style="font-weight:900;font-size:14px;color:var(--dark);">Sarah & James</div>
-            <div class="int" style="font-size:12px;color:var(--coral);">✨ Romantic Match</div>
+      <div class="test-links reveal">
+        <a href="https://5lovelanguages.com/quizzes/love-language" target="_blank" rel="noopener" class="test-link-btn card-tilt">
+          <span class="tl-icon" style="background:#FDE8E2;">💛</span>
+          <div style="text-align:left;">
+            <div style="font-size:13.5px;font-weight:800;color:var(--dark);">5 Love Languages</div>
+            <div style="font-size:11.5px;color:var(--muted);font-weight:600;font-family:'Inter',sans-serif;">Cara kamu menerima cinta</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Story 2 -->
-      <div class="card card-tilt reveal reveal-d2" style="background:linear-gradient(135deg,#E2F0FB,#EEF5FF);border-color:rgba(106,173,224,0.2);">
-        <div style="font-size:48px;line-height:1;color:var(--blue);opacity:0.25;font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:-8px;">"</div>
-        <div class="stars" style="margin-bottom:12px;">★★★★★</div>
-        <p class="int" style="font-size:14px;color:#182038;line-height:1.72;margin-bottom:20px;">"I moved cities and knew nobody. Within a week I met Tasha and now she's my ride-or-die. This isn't just for romance — the friendship matching is SO real! 🧡"</p>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <img src="https://placehold.co/46x46/8AAAD4/ffffff?text=MT" alt="Mia" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(106,173,224,0.3);">
-          <div>
-            <div class="jk" style="font-weight:900;font-size:14px;color:var(--dark);">Mia & Tasha</div>
-            <div class="int" style="font-size:12px;color:var(--blue-d);">🧡 New Best Friends</div>
+        </a>
+        <a href="https://personalitylingo.com/free-communication-style-quiz/" target="_blank" rel="noopener" class="test-link-btn card-tilt">
+          <span class="tl-icon" style="background:#E0EEF8;">💬</span>
+          <div style="text-align:left;">
+            <div style="font-size:13.5px;font-weight:800;color:var(--dark);">Communication Style</div>
+            <div style="font-size:11.5px;color:var(--muted);font-weight:600;font-family:'Inter',sans-serif;">Cara kamu berkomunikasi</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Story 3 -->
-      <div class="card card-tilt reveal reveal-d3" style="background:linear-gradient(135deg,#F0EBF8,#F8F0FF);border-color:rgba(185,163,220,0.25);">
-        <div style="font-size:48px;line-height:1;color:var(--purple);opacity:0.3;font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:-8px;">"</div>
-        <div class="stars" style="margin-bottom:12px;">★★★★★</div>
-        <p class="int" style="font-size:14px;color:#2A1830;line-height:1.72;margin-bottom:20px;">"A real human picked my match. That made all the difference. It felt so intentional and genuine — not some random swipe into the void. 💜"</p>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <img src="https://placehold.co/46x46/C0A0C8/ffffff?text=AJ" alt="Alex" style="width:46px;height:46px;border-radius:50%;object-fit:cover;border:2.5px solid rgba(185,163,220,0.35);">
-          <div>
-            <div class="jk" style="font-weight:900;font-size:14px;color:var(--dark);">Alex & Jordan</div>
-            <div class="int" style="font-size:12px;color:#8A60A0;">✨ Romantic Match</div>
+        </a>
+        <a href="https://www.16personalities.com/id/tes-kepribadian" target="_blank" rel="noopener" class="test-link-btn card-tilt">
+          <span class="tl-icon" style="background:#F0EBF8;">🧩</span>
+          <div style="text-align:left;">
+            <div style="font-size:13.5px;font-weight:800;color:var(--dark);">MBTI Test</div>
+            <div style="font-size:11.5px;color:var(--muted);font-weight:600;font-family:'Inter',sans-serif;">Tipe kepribadianmu</div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Wave divider → CTA -->
-  <div class="wave-div"><svg viewBox="0 0 1440 70" preserveAspectRatio="none" style="height:70px;"><path d="M0,40 C360,0 1080,70 1440,30 L1440,70 L0,70Z" fill="#E8684A"/></svg></div>
+  <!-- ── REVIEWS ───────────────────────────────────────────── -->
+  <section id="reviews" class="reviews-section">
+    <div class="reviews-section-inner">
+      <div class="reveal" style="margin-bottom:8px;">
+        <div class="sec-label" style="background:rgba(255,255,255,0.25);color:#fff;border-color:rgba(255,255,255,0.3);margin-bottom:14px;">REVIEWS</div>
+        <h2 class="jk sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="6" style="font-size:clamp(26px,5vw,46px);color:#fff;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">Kata Mereka 💬</h2>
+        <p class="int" style="color:rgba(255,255,255,0.88);font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,0.15);">Romansa, persahabatan, atau keduanya — setiap koneksi berharga!</p>
+      </div>
+    </div>
 
-  <!-- ── CTA BANNER ─────────────────────────────────────────── -->
-  <section style="position:relative;z-index:1;background:rgba(38,100,16,0.94);backdrop-filter:blur(6px);">
-    <div class="cta-section cta-inner" style="padding:60px 48px;text-align:center;position:relative;overflow:hidden;max-width:960px;margin:0 auto;background:transparent;">
+    <div class="reviews-scroll-wrap">
+      <div class="reviews-container" id="reviews-container">
+        <!-- Rendered by reviews.js -->
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:32px;" class="reveal">
+      <button onclick="openReviewModal()" class="btn-red" style="font-size:15px;padding:13px 32px;display:inline-flex;align-items:center;gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tulis Ulasanmu
+      </button>
+      <p class="int" style="color:rgba(255,255,255,0.65);font-size:12px;margin-top:10px;">Review akan dikurasi tim kami sebelum tayang ✨</p>
+    </div>
+  </section>
+
+  <!-- ── CTA BANNER ────────────────────────────────────────── -->
+  <section style="position:relative;z-index:1;background:rgba(38,100,16,0.94);">
+    <div style="padding:56px 48px;text-align:center;position:relative;overflow:hidden;max-width:900px;margin:0 auto;">
       <div class="cta-blob" style="width:120px;height:120px;bottom:-30px;left:-20px;"></div>
       <div class="cta-blob" style="width:90px;height:90px;top:-18px;right:60px;animation-delay:2s;"></div>
-      <div class="cta-blob" style="width:60px;height:60px;top:40%;right:-15px;animation-delay:1s;"></div>
 
-      <!-- Logo illustration -->
-      <div class="reveal logo-bounce" style="margin-bottom:16px;">
-        <img src="brand_assets/logo.png" alt="Find My Partner" style="height:120px;width:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.25));display:inline-block;">
+      <div class="reveal logo-bounce" style="margin-bottom:14px;">
+        <img src="brand_assets/logo.png" alt="Find My Partner" style="height:110px;width:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.25));display:inline-block;">
       </div>
 
-      <h2 class="jk reveal sparkle-text" data-sparkle-colors="#fff,#FAC740" data-sparkle-count="8" style="font-size:clamp(26px,4vw,44px);font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:14px;position:relative;z-index:1;">Ready to Find Your Person? ✨</h2>
-      <p class="int reveal" style="color:rgba(255,255,255,0.88);font-size:16px;margin-bottom:32px;line-height:1.65;position:relative;z-index:1;">Love, friendship, or something in between — sign up and<br>let us do the work. Your match is out there waiting!</p>
-      <button onclick="navTo('form')" class="btn-red jk reveal" style="padding:14px 40px;font-size:17px;position:relative;z-index:1;">
-        Get Started → ✨
+      <h2 class="jk reveal" style="font-size:clamp(24px,4vw,40px);font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:12px;">Siap Ketemu Orang yang Tepat? ✨</h2>
+      <p class="int reveal" style="color:rgba(255,255,255,0.88);font-size:15px;margin-bottom:28px;line-height:1.65;">Jodoh atau bestie — kami bantu cariin. Daftar sekarang dan biarkan tim kami yang bekerja!</p>
+      <button onclick="openRegistration()" class="btn-red jk reveal" style="padding:14px 40px;font-size:17px;">
+        Daftar Sekarang → ✨
       </button>
     </div>
   </section>
 
   <!-- ── FOOTER ─────────────────────────────────────────────── -->
-  <footer class="footer-inner" style="padding:24px 52px;display:flex;align-items:center;justify-content:space-between;border-top:1.5px solid rgba(255,255,255,0.15);background:rgba(26,72,10,0.92);backdrop-filter:blur(6px);position:relative;z-index:1;">
+  <footer class="footer-inner" style="padding:22px 52px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border-top:1.5px solid rgba(255,255,255,0.15);background:rgba(26,72,10,0.92);position:relative;z-index:1;">
     <div style="display:flex;align-items:center;gap:10px;">
       <img src="brand_assets/logo.png" alt="Find My Partner" style="height:32px;width:auto;filter:brightness(1.1);">
       <span class="jk" style="font-weight:900;font-size:15px;color:#fff;">Find My Partner</span>
     </div>
     <div class="int" style="font-size:13px;color:rgba(255,255,255,0.7);">For everyone looking for their person ✨</div>
-    <div style="display:flex;align-items:center;gap:18px;font-size:13px;color:rgba(255,255,255,0.8);">
-      <span style="cursor:pointer;display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700;color:rgba(255,255,255,0.8);" class="nav-a">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="https://instagram.com/" target="_blank" style="display:flex;align-items:center;gap:5px;font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;color:rgba(255,255,255,0.8);text-decoration:none;" class="nav-a">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
         Follow Us
-      </span>
-      <span class="int" style="color:rgba(255,255,255,0.6);">© 2026 Find My Partner</span>
+      </a>
+      <span class="int" style="color:rgba(255,255,255,0.6);font-size:13px;">© 2026 Find My Partner</span>
     </div>
   </footer>
 </div>
 
+<!-- ── FLOATING IG BUTTON ────────────────────────────────── -->
+<a href="https://instagram.com/" target="_blank" rel="noopener" class="ig-float" title="Follow kami di Instagram!">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+  </svg>
+</a>
 
-<!-- ═══════════════════════════════════════════════════════════
-     FORM VIEW
-═══════════════════════════════════════════════════════════ -->
-<div id="v-form" class="view" style="display:none;background:var(--cream);">
-  <header class="form-header" style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
-    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:36px;width:auto;">
-      <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
-    </button>
-    <button id="form-back-btn" onclick="window.stepBack()" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text);font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;transition:color 0.18s,transform 0.18s;" onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'" onmouseout="this.style.color='var(--text)';this.style.transform=''">
-      ← Back
-    </button>
-  </header>
+<!-- ── REVIEW MODAL ──────────────────────────────────────── -->
+<div id="review-modal" class="review-modal" onclick="if(event.target===this)closeReviewModal()">
+  <div class="review-modal-card">
+    <button class="modal-close" onclick="closeReviewModal()">✕</button>
+    <h3>Tulis Ulasanmu 💬</h3>
+    <p>Ceritain pengalamanmu bareng Find My Partner!</p>
 
-  <div style="display:flex;justify-content:center;padding:28px 0 0;">
-    <div id="stepper" style="display:flex;align-items:center;gap:0;width:270px;"></div>
-  </div>
-  <div id="step-title" style="text-align:center;padding:18px 0 0;"></div>
-  <div id="step-content" style="max-width:580px;margin:20px auto 0;padding:0 20px;"></div>
-  <div id="step-nav"     style="max-width:580px;margin:0 auto;padding:16px 20px 52px;display:flex;align-items:center;justify-content:space-between;"></div>
-</div>
-
-
-<!-- ═══════════════════════════════════════════════════════════
-     STATUS VIEW
-═══════════════════════════════════════════════════════════ -->
-<div id="v-status" class="view" style="display:none;background:var(--cream);">
-  <header style="padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid rgba(42,24,14,0.08);background:rgba(255,248,242,0.94);backdrop-filter:blur(12px);position:sticky;top:0;z-index:20;">
-    <button onclick="navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;transition:opacity 0.18s;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:36px;width:auto;">
-      <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
-    </button>
-    <button onclick="navTo('home')" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--text);font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;transition:color 0.18s,transform 0.18s;" onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'" onmouseout="this.style.color='var(--text)';this.style.transform=''">
-      ← Home
-    </button>
-  </header>
-
-  <div style="max-width:520px;margin:48px auto;padding:0 20px;">
-    <div id="status-check" class="card fade-up status-card" style="text-align:center;padding:44px 36px;transition:opacity 0.28s,transform 0.28s;">
-      <div style="width:80px;height:80px;background:var(--coral-l);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:2.5px solid rgba(232,104,74,0.2);">
-        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </div>
-      <h2 class="jk" style="font-size:22px;font-weight:900;color:var(--dark);margin-bottom:8px;">Check Your Status 🔍</h2>
-      <p class="int" style="color:var(--muted);font-size:14.5px;line-height:1.65;margin-bottom:26px;">Enter your Instagram handle or email to see where you are in the matchmaking process.</p>
-      <input type="text" id="status-inp" class="finput" placeholder="@yourusername or email" style="text-align:center;margin-bottom:14px;">
-      <button onclick="window.showStatusResult()" class="btn-red" style="width:100%;justify-content:center;padding:13px;">Check My Status ✨</button>
-    </div>
-
-    <div id="status-result" style="display:none;" class="card" style="text-align:center;padding:44px 36px;">
-      <div style="font-size:52px;margin-bottom:12px;">✨</div>
-      <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:8px;">We're On It!</h2>
-      <p class="int" style="color:var(--muted);font-size:14.5px;line-height:1.65;margin-bottom:26px;text-align:center;">Our team is looking through profiles to find the perfect person for you. Usually 48–72 hours!</p>
-      <div style="background:var(--coral-l);border-radius:18px;padding:18px 22px;margin-bottom:22px;text-align:left;border:1.5px solid rgba(232,104,74,0.15);">
-        <div style="display:flex;align-items:center;gap:11px;margin-bottom:13px;">
-          <div style="width:40px;height:40px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:2px solid rgba(232,104,74,0.2);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--coral)"><path d="M12 2 L13.5 9 L20 12 L13.5 15 L12 22 L10.5 15 L4 12 L10.5 9Z"/></svg>
-          </div>
-          <div>
-            <div class="jk" style="font-weight:900;font-size:14.5px;color:var(--dark);" id="status-uname">@yourhandle</div>
-            <div class="int" style="font-size:12px;color:var(--muted);">Looking for: romantic partner</div>
-          </div>
+    <div id="review-form-wrap">
+      <form id="review-submit-form">
+        <div style="margin-bottom:14px;">
+          <label style="font-size:12.5px;font-weight:700;color:var(--dark);display:block;margin-bottom:5px;">Nama <span style="color:var(--green-d);">*</span></label>
+          <input id="rv-name" type="text" class="finput" placeholder="Nama atau inisial kamu" required>
         </div>
-        <div class="pbar-track"><div class="pbar-fill" id="pbar" style="width:0%;"></div></div>
-        <div class="int" style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Searching for your perfect match... ✨</div>
-      </div>
-      <button onclick="document.getElementById('status-result').style.display='none';document.getElementById('status-check').style.display='block';document.getElementById('status-check').style.opacity='1';document.getElementById('status-check').style.transform='';"
-        style="background:none;border:none;cursor:pointer;color:var(--coral);font-size:13.5px;font-weight:700;font-family:'Nunito',sans-serif;transition:opacity 0.18s;"
-        onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-        ← Check Again
-      </button>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:12.5px;font-weight:700;color:var(--dark);display:block;margin-bottom:5px;">Tipe Match</label>
+          <select id="rv-type" class="finput">
+            <option value="Best Friends">Best Friends 🧡</option>
+            <option value="Romantic Match">Romantic Match ✨</option>
+          </select>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="font-size:12.5px;font-weight:700;color:var(--dark);display:block;margin-bottom:5px;">Ulasan <span style="color:var(--green-d);">*</span></label>
+          <textarea id="rv-text" class="finput" rows="4" placeholder="Ceritain pengalamanmu..." style="resize:vertical;" required></textarea>
+        </div>
+        <button type="submit" class="btn-red" style="width:100%;justify-content:center;font-size:15px;padding:13px;background:var(--green-d);color:#fff;border-color:var(--green);">
+          Kirim Ulasan ✨
+        </button>
+        <p style="font-size:11.5px;color:var(--muted);text-align:center;margin-top:10px;">Review akan dikurasi tim kami sebelum tayang di website 💙</p>
+      </form>
+    </div>
+
+    <div id="review-success" class="review-success" style="display:none;">
+      <div class="success-icon">🎉</div>
+      <h4>Makasih banget!</h4>
+      <p>Review kamu udah kami terima dan lagi dikurasi sama tim. Ditunggu ya! 💙</p>
     </div>
   </div>
 </div>
 
-<script type="module" src="js/app.js?v=3"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>

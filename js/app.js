@@ -9,32 +9,21 @@ import {
   initStatCounters,
   initHeroParallax,
   initCardTilt,
-  transitionView,
   initNavScroll,
-  initGradientInteractive,
   initSparkles,
 } from './animations.js';
 
-import { initForm, renderForm, stepNext, stepBack } from './form.js';
-import { showStatusResult, completePay } from './status.js';
+import { initReviews, openReviewModal, closeReviewModal } from './reviews.js';
 
-// ── Current active view ────────────────────────────────────
-let currentView = 'home';
+const GFORM_REGISTRATION = 'https://forms.gle/UvcQABcBJvJbK4H28';
 
-// ── Navigation ─────────────────────────────────────────────
-function navTo(view) {
-  if (view === currentView) return;
-  const fromEl = document.getElementById('v-' + currentView);
-  const toEl   = document.getElementById('v-' + view);
-  currentView  = view;
-  transitionView(fromEl, toEl);
-  if (view === 'form') initForm();
-}
-window.navTo = navTo;
+// ── External links ────────────────────────────────────────
+window.openRegistration = function() {
+  window.open(GFORM_REGISTRATION, '_blank');
+};
 
-// ── Back button alias used by form ─────────────────────────
-window.stepNext = stepNext;
-window.stepBack = stepBack;
+window.openReviewModal  = openReviewModal;
+window.closeReviewModal = closeReviewModal;
 
 // ── Mobile menu ────────────────────────────────────────────
 let menuOpen = false;
@@ -58,18 +47,17 @@ window.closeMobileMenu = function() {
   setTimeout(() => { menu.style.display = 'none'; }, 300);
 };
 
-// ── Smooth scroll for anchor links ────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth' });
-  });
+// ── Smooth scroll ─────────────────────────────────────────
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  e.preventDefault();
+  const t = document.querySelector(a.getAttribute('href'));
+  if (t) t.scrollIntoView({ behavior: 'smooth' });
 });
 
 // ── Boot ───────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  // Show home view immediately
   const homeEl = document.getElementById('v-home');
   homeEl.style.display = 'block';
   void homeEl.offsetWidth;
@@ -82,6 +70,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroParallax();
   initCardTilt();
   initNavScroll();
-  initGradientInteractive();
   initSparkles();
+  initReviews();
 });
