@@ -3,27 +3,46 @@
    ============================================================ */
 
 import {
-  initReveal,
-  initRipple,
-  initMagneticButtons,
-  initStatCounters,
-  initHeroParallax,
-  initCardTilt,
-  initNavScroll,
-  initSparkles,
+  initReveal, initRipple, initMagneticButtons,
+  initStatCounters, initHeroParallax, initCardTilt,
+  initNavScroll, initSparkles,
 } from './animations.js';
 
 import { initReviews, openReviewModal, closeReviewModal } from './reviews.js';
+import { initForm, renderForm, stepNext, stepBack } from './form.js';
+import { supabase } from './supabase.js';
 
-const GFORM_REGISTRATION = 'https://forms.gle/UvcQABcBJvJbK4H28';
+// ── View navigation ────────────────────────────────────────
+let currentView = 'home';
 
-// ── External links ────────────────────────────────────────
-window.openRegistration = function() {
-  window.open(GFORM_REGISTRATION, '_blank');
+window.navTo = function(view) {
+  if (view === currentView) return;
+  const fromEl = document.getElementById('v-' + currentView);
+  const toEl   = document.getElementById('v-' + view);
+  if (!fromEl || !toEl) return;
+
+  fromEl.classList.remove('active');
+  fromEl.classList.add('exit');
+  setTimeout(() => {
+    fromEl.style.display = 'none';
+    fromEl.classList.remove('exit');
+    toEl.style.display = 'block';
+    void toEl.offsetWidth;
+    toEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 360);
+
+  currentView = view;
+  if (view === 'form') initForm();
 };
+
+// ── Registration ───────────────────────────────────────────
+window.openRegistration = function() { window.navTo('form'); };
 
 window.openReviewModal  = openReviewModal;
 window.closeReviewModal = closeReviewModal;
+window.stepNext = stepNext;
+window.stepBack = stepBack;
 
 // ── Mobile menu ────────────────────────────────────────────
 let menuOpen = false;
@@ -56,6 +75,22 @@ document.addEventListener('click', e => {
   if (t) t.scrollIntoView({ behavior: 'smooth' });
 });
 
+// ── Load prices from Supabase ──────────────────────────────
+async function loadPrices() {
+  const { data, error } = await supabase
+    .from('prices')
+    .select('*')
+    .order('sort_order');
+
+  if (error || !data) return;
+
+  const map = { 'Solo': 'price-solo', '2 Orang': 'price-duo', '3 Orang': 'price-trio' };
+  data.forEach(p => {
+    const el = document.getElementById(map[p.package_name]);
+    if (el) el.textContent = p.price_text;
+  });
+}
+
 // ── Boot ───────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const homeEl = document.getElementById('v-home');
@@ -72,4 +107,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
   initSparkles();
   initReviews();
+  loadPrices();
 });

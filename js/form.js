@@ -1,23 +1,23 @@
 /* ============================================================
-   FIND MY PARTNER — Multi-Step Form
+   FIND MY PARTNER — Registration Form (Supabase)
    ============================================================ */
 
-import { initReveal, initMagneticButtons, initCardTilt } from './animations.js';
+import { supabase } from './supabase.js';
 
+const formData = { package: null, transactionId: null, persons: [] };
 let step = 1;
-const STEPS = 4;
+let selectedPackage = null;
+const STEPS = 5;
 
 const stepMeta = {
-  1: { title: 'Personal Info ✏️',  sub: 'Tell us a little about yourself!' },
-  2: { title: 'Preferences 💛',    sub: 'What kind of connection are you looking for?' },
-  3: { title: 'Your Photo 📸',     sub: 'Add a photo so we can find your perfect match' },
-  4: { title: 'Almost There! ✨',  sub: 'Complete your registration' },
+  1: { title: 'Syarat & Ketentuan ✏️',   sub: '' },
+  2: { title: '💎 Pilih Paket 💎',         sub: 'Pilih paket yang sesuai kebutuhanmu' },
+  3: { title: 'Info Personal 📝',          sub: 'Ceritain sedikit tentang dirimu!' },
+  4: { title: 'Konfirmasi ✔️',             sub: 'Pastikan semua data sudah benar' },
+  5: { title: 'Terima Kasih! 🎉',          sub: 'Pendaftaran berhasil!' },
 };
 
-export function initForm() {
-  step = 1;
-  renderForm();
-}
+export function initForm() { step = 1; selectedPackage = null; formData.persons = []; renderForm(); }
 
 function renderStepper() {
   let html = '';
@@ -25,10 +25,7 @@ function renderStepper() {
     const cls   = i < step ? 'done' : i === step ? 'cur' : 'todo';
     const inner = i < step ? '✓' : i;
     html += `<div class="step-dot ${cls}">${inner}</div>`;
-    if (i < STEPS) {
-      const lc = i < step ? 'done' : 'todo';
-      html += `<div class="step-line ${lc}"></div>`;
-    }
+    if (i < STEPS) html += `<div class="step-line ${i < step ? 'done' : 'todo'}"></div>`;
   }
   document.getElementById('stepper').innerHTML = html;
 }
@@ -36,178 +33,241 @@ function renderStepper() {
 function renderTitle() {
   const { title, sub } = stepMeta[step];
   document.getElementById('step-title').innerHTML = `
-    <h2 class="jk fade-up" style="font-size:26px;font-weight:900;color:var(--dark);margin-bottom:5px;letter-spacing:-0.02em;">${title}</h2>
-    <p class="fade-up int" style="color:var(--muted);font-size:14.5px;animation-delay:0.06s;">${sub}</p>
+    <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:4px;">${title}</h2>
+    ${sub ? `<p class="int" style="color:var(--muted);font-size:14px;">${sub}</p>` : ''}
   `;
 }
 
-function renderContent() {
+async function renderContent() {
   const el = document.getElementById('step-content');
 
   if (step === 1) {
     el.innerHTML = `
-      <div class="card card-tilt fade-up">
-        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Full Name <span style="color:var(--brand);">*</span></label>
-            <input type="text" class="finput" placeholder="Your full name">
-          </div>
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Age <span style="color:var(--brand);">*</span></label>
-            <input type="number" class="finput" placeholder="Your age">
-          </div>
-        </div>
-        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Gender <span style="color:var(--brand);">*</span></label>
-            <select class="finput"><option value="">Select gender</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Prefer not to say</option></select>
-          </div>
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Location</label>
-            <input type="text" class="finput" placeholder="City or area">
-          </div>
-        </div>
-        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Email <span style="color:var(--brand);">*</span></label>
-            <input type="email" class="finput" placeholder="your@email.com">
-          </div>
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Phone</label>
-            <input type="tel" class="finput" placeholder="Your phone number">
-          </div>
-        </div>
-        <div style="margin-bottom:14px;">
-          <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Instagram Handle</label>
-          <input type="text" class="finput" placeholder="@yourusername">
-        </div>
-        <div>
-          <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">About You</label>
-          <textarea class="finput" rows="4" placeholder="Tell us a bit about yourself — your personality, hobbies, what makes you you..." style="resize:vertical;"></textarea>
-        </div>
+      <div class="fcard">
+        <h3 style="font-size:17px;font-weight:700;color:var(--dark);margin-bottom:12px;">📌 Sebelum mengisi, perhatikan hal berikut:</h3>
+        <ul style="font-size:13.5px;color:var(--muted);line-height:1.75;list-style:disc;padding-left:18px;margin-bottom:16px;">
+          <li>Find My Partner menjunjung tinggi rasa aman, nyaman, dan saling menghargai.</li>
+          <li>Segala bentuk rasisme, diskriminasi, pelecehan, ujaran kebencian dilarang keras.</li>
+          <li>Platform ini untuk membangun relasi positif — teman maupun hubungan lebih serius.</li>
+          <li>Pelanggaran ketentuan = partisipasi dibatalkan, biaya tidak dikembalikan.</li>
+        </ul>
+        <h3 style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:8px;">🔒 Privasi & Kerahasiaan Data</h3>
+        <p style="font-size:13.5px;color:var(--muted);line-height:1.75;margin-bottom:16px;">
+          Semua data yang kamu berikan dijaga kerahasiaannya dan hanya digunakan untuk proses matching oleh tim Find My Partner. Isi form dengan jujur agar hasil matching lebih optimal!
+        </p>
+        <label style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--dark);cursor:pointer;padding:14px;background:#f0f8ee;border-radius:12px;border:2px solid var(--green);">
+          <input type="checkbox" id="tos-agree" style="width:18px;height:18px;accent-color:var(--green-d);cursor:pointer;">
+          Saya telah membaca dan menyetujui ketentuan Find My Partner.
+        </label>
       </div>`;
 
   } else if (step === 2) {
     el.innerHTML = `
-      <div class="card card-tilt fade-up">
-        <div style="margin-bottom:14px;">
-          <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">What are you looking for? <span style="color:var(--brand);">*</span></label>
-          <select class="finput"><option value="">Choose one</option><option>Romantic Partner</option><option>New Best Friend</option><option>Either / Open to Both</option></select>
+      <div class="fcard">
+        <p class="int" style="font-size:13px;color:var(--muted);margin-bottom:18px;text-align:center;">Harga promo presale — pilih paket yang sesuai:</p>
+        <div style="display:flex;flex-direction:column;gap:12px;" id="pkg-list">
+          ${[
+            { value: 'Solo',     label: '🧍 Solo',     price: '15k', sub: '1 orang', color: '#6AADE0' },
+            { value: '2 Person', label: '👫 2 Orang',  price: '25k', sub: '2 orang', color: '#B9A3DC' },
+            { value: '3 Person', label: '👨‍👩‍👧 3 Orang', price: '35k', sub: '3 orang', color: '#6BC47A' },
+          ].map(pkg => `
+            <label style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:14px;border:2.5px solid #e8e8e8;cursor:pointer;transition:border-color 0.2s,background 0.2s;background:#fff;" class="pkg-label">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <input type="radio" name="package" value="${pkg.value}" style="width:18px;height:18px;accent-color:var(--green-d);">
+                <div>
+                  <div style="font-size:15px;font-weight:800;color:var(--dark);font-family:'Nunito',sans-serif;">${pkg.label}</div>
+                  <div style="font-size:12px;color:var(--muted);">${pkg.sub}</div>
+                </div>
+              </div>
+              <div style="font-size:22px;font-weight:900;color:${pkg.color};font-family:'Nunito',sans-serif;">${pkg.price}</div>
+            </label>
+          `).join('')}
         </div>
-        <div style="margin-bottom:14px;">
-          <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Preferred Gender</label>
-          <select class="finput"><option value="">Any preference?</option><option>Male</option><option>Female</option><option>Non-binary</option><option>No preference</option></select>
-        </div>
-        <div class="form-grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Preferred Age (Min)</label>
-            <input type="number" class="finput" value="18" placeholder="18">
-          </div>
-          <div>
-            <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Preferred Age (Max)</label>
-            <input type="number" class="finput" value="35" placeholder="35">
-          </div>
-        </div>
-        <div>
-          <label style="font-size:12.5px;font-weight:600;color:var(--dark);display:block;margin-bottom:5px;">Your Interests &amp; Hobbies</label>
-          <input type="text" class="finput" placeholder="e.g. Music, Hiking, Cooking, Gaming, Travel...">
-          <p style="font-size:12px;color:var(--light-muted);margin-top:5px;">Separate with commas — this helps us find a better match!</p>
-        </div>
+        <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px;">* Pembayaran diinfo setelah form diterima.</p>
       </div>`;
 
   } else if (step === 3) {
-    el.innerHTML = `
-      <div class="card card-tilt fade-up">
-        <p style="font-size:14.5px;color:#4A4035;text-align:center;line-height:1.65;margin-bottom:22px;">Upload a clear photo of yourself. This helps us find a great match and verify your profile.</p>
-        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('photo-file').click()">
-          <input type="file" id="photo-file" accept="image/*" style="display:none;" onchange="window.previewPhoto(this)">
-          <div id="photo-inner">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C8A09A" stroke-width="1.5" style="display:block;margin:0 auto 10px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <div style="font-size:14.5px;font-weight:600;color:#C8A09A;">Click to upload</div>
-            <div style="font-size:12.5px;color:#D0A89A;margin-top:4px;">JPG, PNG · up to 10 MB</div>
-          </div>
-        </div>
-        <div style="background:#FDF0EC;border-radius:12px;padding:13px 17px;font-size:13px;color:#8A6A60;line-height:1.5;text-align:center;">
-          📸 Tips: Use a recent, clear photo of just you. Avoid sunglasses or group photos. Smile!
-        </div>
-      </div>`;
+    let count = selectedPackage === '2 Person' ? 2 : selectedPackage === '3 Person' ? 3 : 1;
+    el.innerHTML = Array.from({ length: count }, (_, i) => renderPersonForm(i + 1)).join('');
 
   } else if (step === 4) {
+    const persons = formData.persons;
+    if (!persons || persons.length === 0) {
+      el.innerHTML = `<div class="fcard"><p style="color:red;">Data tidak ditemukan. Kembali ke langkah sebelumnya.</p></div>`;
+      return;
+    }
     el.innerHTML = `
-      <div class="fade-up">
-        <p style="text-align:center;font-size:14.5px;color:var(--muted);margin-bottom:14px;">One-time payment to activate your matchmaking profile.</p>
-        <div style="height:4px;border-radius:2px;background:linear-gradient(to right,#D44E27,#9040C0,#3A78D0);margin-bottom:14px;animation:fadeUp 0.4s both;"></div>
-        <div class="card card-tilt">
-          <div style="text-align:center;margin-bottom:22px;">
-            <div style="display:inline-flex;align-items:center;gap:6px;background:#FDF0EC;border-radius:9999px;padding:6px 16px;font-size:12.5px;color:var(--brand);font-weight:700;margin-bottom:14px;font-family:'Plus Jakarta Sans',sans-serif;">✨ One-Time Fee</div>
-            <div class="jk" style="font-size:52px;font-weight:900;color:var(--dark);line-height:1;">$9.99 <span style="font-size:16px;font-weight:500;color:var(--light-muted);">one-time</span></div>
+      <div class="fcard">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Pastikan semua informasi sudah benar sebelum submit.</p>
+        ${persons.map((p, i) => `
+          <div class="confirm-card">
+            <h3 style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:10px;">Person ${i + 1}</h3>
+            ${Object.entries({
+              'Nama': p.fullName, 'Gender': p.gender, 'Tgl Lahir': p.birth,
+              'Universitas': p.university, 'Fakultas': p.faculty, 'NIM': p.studentId,
+              'Agama': p.religion, 'TB/BB': p.heightWeight, 'Suku': p.ethnicity,
+              'Zodiak': p.zodiac, 'Tujuan': p.purpose, 'Hobi': p.hobby,
+              'Tipe Ideal': p.idealType, 'Instagram': p.socialMedia, 'No. HP': p.phone,
+              'MBTI': p.surveyPersonality, 'Love Language': p.surveyLoveLanguage,
+              'Communication Style': p.surveyCommunication
+            }).filter(([,v]) => v).map(([k,v]) => `
+              <div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
+                <span style="font-weight:700;color:var(--dark);min-width:140px;">${k}:</span>
+                <span style="color:var(--muted);">${v}</span>
+              </div>
+            `).join('')}
+            <div style="display:flex;gap:8px;padding:5px 0;font-size:13px;"><span style="font-weight:700;color:var(--dark);min-width:140px;">Foto:</span><span style="color:var(--green-d);">✅ Uploaded</span></div>
+            <div style="display:flex;gap:8px;padding:5px 0;font-size:13px;"><span style="font-weight:700;color:var(--dark);min-width:140px;">Bukti Bayar:</span><span style="color:var(--green-d);">✅ Uploaded</span></div>
           </div>
-          <div style="margin-bottom:26px;">
-            ${['Personal human matchmaking','Handpicked connection — love or friendship','Profile verification included',"Private intro if you're both in","100% your choice — no pressure"].map(t => `
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;animation:fadeUp 0.4s both;">
-                <span style="color:var(--brand);font-size:15px;font-weight:700;">✓</span>
-                <span style="font-size:14.5px;color:#3A2820;">${t}</span>
-              </div>`).join('')}
-          </div>
-          <button onclick="window.completePay()" class="btn-red" style="width:100%;justify-content:center;font-size:15.5px;padding:15px;">✨ Pay &amp; Find My Person</button>
-          <div style="display:flex;align-items:center;justify-content:center;gap:5px;margin-top:12px;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#AAA" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span style="font-size:12px;color:#AAA;">Secure payment · Money-back guarantee</span>
-          </div>
-        </div>
+        `).join('')}
+      </div>`;
+
+  } else if (step === 5) {
+    el.innerHTML = `
+      <div class="fcard" style="text-align:center;">
+        <img src="/images/goodbye.jpeg" alt="Terima kasih" style="max-width:100%;border-radius:14px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
+        <h2 class="jk" style="font-size:22px;font-weight:900;color:var(--dark);margin-bottom:12px;">Terima Kasih Sudah Mendaftar! 🎉</h2>
+        <p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:12px;">Tim Find My Partner akan hubungi kamu via DM Instagram kalau kamu dapat match. Pastikan DM terbuka! 💌✨</p>
+        <a href="https://drive.google.com/file/d/14ddH5QZEXpkbta6kBT6Kg83DVK4wcXl8/view?usp=sharing" target="_blank" style="color:var(--green-d);font-weight:700;text-decoration:underline;font-size:14px;">Baca panduan Find My Partner →</a>
       </div>`;
   }
+}
 
-  // Re-init tilt on newly rendered cards
-  setTimeout(() => {
-    initCardTilt();
-    initMagneticButtons();
-  }, 50);
+function renderPersonForm(index) {
+  return `
+    <div class="fcard person-card" style="margin-bottom:20px;">
+      <h3 class="jk" style="font-size:17px;font-weight:900;color:var(--dark);margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #f0f0f0;">
+        ${index > 1 ? `👤 Person ${index}` : '👤 Data Diri'}
+      </h3>
+      <div class="frow">
+        <div class="fgroup"><label>Nama Lengkap *</label><input type="text" name="fullName" placeholder="Nama lengkap"></div>
+        <div class="fgroup"><label>Gender *</label><select name="gender" required><option value="">Pilih</option><option>Male</option><option>Female</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label>Tempat, Tgl Lahir *</label><input type="text" name="birth" placeholder="Kota, DD/MM/YYYY"></div>
+        <div class="fgroup"><label>Zodiak *</label><select name="zodiac" required><option value="">Pilih</option><option>Aquarius</option><option>Pisces</option><option>Aries</option><option>Taurus</option><option>Gemini</option><option>Cancer</option><option>Leo</option><option>Virgo</option><option>Libra</option><option>Scorpio</option><option>Sagitarius</option><option>Capricorn</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label>Universitas *</label><select name="university" required><option value="">Pilih</option><option>Universitas Airlangga</option><option>Universitas Negeri Surabaya</option><option>Institut Teknologi Sepuluh Nopember</option><option>Universitas Surabaya</option><option>Universitas Kristen Petra</option><option>Universitas Ciputra</option><option>Universitas Katolik Widya Mandala</option></select></div>
+        <div class="fgroup"><label>Fakultas *</label><select name="faculty" required><option value="">Pilih</option><option>Farmasi</option><option>Hukum</option><option>Bisnis dan Ekonomika</option><option>Psikologi</option><option>Teknik</option><option>Kedokteran</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label>NIM *</label><input type="text" name="studentId" placeholder="Nomor induk mahasiswa"></div>
+        <div class="fgroup"><label>Agama *</label><select name="religion" required><option value="">Pilih</option><option>Islam</option><option>Kristen/Protestan</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label>Tinggi / Berat Badan *</label><input type="text" name="heightWeight" placeholder="170cm / 60kg"></div>
+        <div class="fgroup"><label>Suku *</label><select name="ethnicity" required><option value="">Pilih</option><option>Jawa</option><option>Tionghoa</option><option>Batak</option><option>Sunda</option><option>Bali</option><option>Madura</option></select></div>
+      </div>
+      <div class="frow">
+        <div class="fgroup"><label>Tujuan *</label><select name="purpose" required><option value="">Cari apa?</option><option value="Teman">🤝 Teman / Bestie</option><option value="Pasangan">💕 Pasangan / Jodoh</option></select></div>
+        <div class="fgroup"><label>No. HP / WhatsApp *</label><input type="tel" name="phone" placeholder="08xxxxxxxxxx"></div>
+      </div>
+      <div class="fgroup"><label>Hobi *</label><input type="text" name="hobby" placeholder="Contoh: nonton film, hiking, masak..."></div>
+      <div class="fgroup"><label>Tipe Ideal * <small style="color:var(--muted);font-weight:400;">(TB, suku, agama, love language, sifat, communication style)</small></label><input type="text" name="idealType" placeholder="Deskripsikan tipe ideal kamu"></div>
+      <div class="fgroup"><label>Instagram *</label><input type="text" name="socialMedia" placeholder="@username"></div>
+      <div class="frow">
+        <div class="fgroup"><label>Foto Full Body * <small style="color:var(--muted);font-weight:400;">(kepala sampai kaki)</small></label><input type="file" name="fullBodyPhoto" accept="image/*"></div>
+        <div class="fgroup"><label>Bukti Pembayaran *</label><input type="file" name="transactionProof" accept="image/*"></div>
+      </div>
+      <div class="fgroup">
+        <label>Hasil MBTI * — <a href="https://www.16personalities.com/id/tes-kepribadian" target="_blank" style="color:var(--green-d);font-weight:600;font-size:12px;">Tes di sini</a></label>
+        <input type="text" name="surveyPersonality" placeholder="Contoh: ENFP, ISTJ, dll">
+      </div>
+      <div class="fgroup">
+        <label>Hasil Love Language * — <a href="https://5lovelanguages.com/quizzes/love-language" target="_blank" style="color:var(--green-d);font-weight:600;font-size:12px;">Tes di sini</a></label>
+        <textarea name="surveyLoveLanguage" rows="2" placeholder="Contoh: (1) Physical Touch, (2) Words of Affirmation..."></textarea>
+      </div>
+      <div class="fgroup">
+        <label>Hasil Communication Style * — <a href="https://personalitylingo.com/free-communication-style-quiz/" target="_blank" style="color:var(--green-d);font-weight:600;font-size:12px;">Tes di sini</a></label>
+        <textarea name="surveyCommunication" rows="2" placeholder="Contoh: Planner Style Communication, dll"></textarea>
+      </div>
+    </div>
+  `;
 }
 
 function renderNav() {
   const el = document.getElementById('step-nav');
   const isFirst = step === 1;
+  const isLast  = step === STEPS;
+
+  let continueBtn = !isLast ? `
+    <button id="continue-btn" onclick="window.stepNext()"
+      class="btn-red" style="padding:12px 30px;font-size:14px;"
+      ${isFirst ? 'disabled' : ''}>Lanjut →</button>` : '';
+
   el.innerHTML = `
     <button onclick="${isFirst ? "window.navTo('home')" : 'window.stepBack()'}"
-      class="fade-up"
-      style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;
-             color:${isFirst ? '#C0B0A8' : 'var(--dark)'};font-size:14.5px;font-weight:600;
-             font-family:'Inter',sans-serif;transition:color 0.18s,transform 0.18s;
-             animation-delay:0.08s;"
-      onmouseover="this.style.color='var(--dark)';this.style.transform='translateX(-3px)'"
-      onmouseout="this.style.color='${isFirst ? '#C0B0A8' : 'var(--dark)'}'
-;this.style.transform=''">
-      ← Back
+      style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;font-family:'Inter',sans-serif;padding:12px 0;">
+      ← Kembali
     </button>
-    ${step < STEPS
-      ? `<button onclick="window.stepNext()" class="btn-red fade-up" style="padding:12px 30px;font-size:14.5px;animation-delay:0.12s;">Continue →</button>`
-      : ''}
+    ${continueBtn}
+    ${isLast ? `<button onclick="window.navTo('home')" class="btn-red" style="padding:12px 30px;font-size:14px;">Selesai ✨</button>` : ''}
   `;
+
+  if (isFirst) {
+    const cb = document.getElementById('tos-agree');
+    const btn = document.getElementById('continue-btn');
+    cb.addEventListener('change', () => { btn.disabled = !cb.checked; });
+  }
+
+  if (step === 2) {
+    const btn = document.getElementById('continue-btn');
+    btn.disabled = true;
+    document.querySelectorAll('input[name="package"]').forEach(radio => {
+      radio.addEventListener('change', async () => {
+        selectedPackage = radio.value;
+        formData.package = selectedPackage;
+        btn.disabled = false;
+        document.querySelectorAll('.pkg-label').forEach(l => { l.style.borderColor = '#e8e8e8'; l.style.background = '#fff'; });
+        radio.closest('.pkg-label').style.borderColor = 'var(--green-d)';
+        radio.closest('.pkg-label').style.background = '#f0f9ee';
+        const { data, error } = await supabase.from('transactions').insert([{ package: selectedPackage }]).select();
+        if (!error && data) formData.transactionId = data[0].id;
+      });
+    });
+  }
+
+  if (step === 3) {
+    const btn = document.getElementById('continue-btn');
+    btn.disabled = true;
+    const inputs = document.querySelectorAll('.person-card input, .person-card select, .person-card textarea');
+    const validate = () => {
+      btn.disabled = ![...inputs].every(inp => inp.type === 'file' ? inp.files?.length > 0 : inp.value.trim() !== '');
+    };
+    inputs.forEach(inp => { inp.addEventListener('input', validate); inp.addEventListener('change', validate); });
+
+    btn.onclick = async () => {
+      btn.disabled = true; btn.textContent = 'Menyimpan...';
+      formData.persons = [];
+      for (let i = 0; i < document.querySelectorAll('.person-card').length; i++) {
+        const card = document.querySelectorAll('.person-card')[i];
+        const get  = n => card.querySelector(`[name="${n}"]`);
+        const photoFile = get('fullBodyPhoto').files[0];
+        const proofFile = get('transactionProof').files[0];
+        let photoPath = null, proofPath = null;
+        if (photoFile) { const { data } = await supabase.storage.from('uploads').upload(`photo-${Date.now()}-${i}.jpg`, photoFile); if (data) photoPath = data.path; }
+        if (proofFile) { const { data } = await supabase.storage.from('uploads').upload(`proof-${Date.now()}-${i}.jpg`, proofFile); if (data) proofPath = data.path; }
+        const p = { fullName: get('fullName').value, gender: get('gender').value, birth: get('birth').value, university: get('university').value, faculty: get('faculty').value, studentId: get('studentId').value, religion: get('religion').value, heightWeight: get('heightWeight').value, ethnicity: get('ethnicity').value, zodiac: get('zodiac').value, purpose: get('purpose').value, hobby: get('hobby').value, idealType: get('idealType').value, socialMedia: get('socialMedia').value, phone: get('phone').value, surveyPersonality: get('surveyPersonality').value, surveyLoveLanguage: get('surveyLoveLanguage').value, surveyCommunication: get('surveyCommunication').value };
+        await supabase.from('persons').insert([{ transaction_id: formData.transactionId, full_name: p.fullName, gender: p.gender, birth: p.birth, university: p.university, faculty: p.faculty, student_id: p.studentId, religion: p.religion, height_weight: p.heightWeight, ethnicity: p.ethnicity, zodiac: p.zodiac, purpose: p.purpose, hobby: p.hobby, ideal_type: p.idealType, social_media: p.socialMedia, phone: p.phone, survey_personality: p.surveyPersonality, survey_love_language: p.surveyLoveLanguage, survey_communication: p.surveyCommunication, full_body_photo_url: photoPath, transaction_proof_url: proofPath }]);
+        formData.persons.push(p);
+      }
+      step = 4; renderForm();
+    };
+  }
+
+  if (step === 4) {
+    document.getElementById('continue-btn').onclick = () => { step = 5; renderForm(); };
+  }
 }
 
 export function renderForm() {
   renderStepper();
   renderTitle();
-  renderContent();
-  renderNav();
+  renderContent().then(() => renderNav());
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
-
 export function stepNext() { if (step < STEPS) { step++; renderForm(); } }
 export function stepBack() { if (step > 1)     { step--; renderForm(); } }
-
 window.stepNext = stepNext;
 window.stepBack = stepBack;
-
-window.previewPhoto = function(inp) {
-  if (!inp.files[0]) return;
-  const r = new FileReader();
-  r.onload = e => {
-    document.getElementById('photo-inner').innerHTML = `
-      <img src="${e.target.result}" style="width:120px;height:120px;border-radius:14px;object-fit:cover;margin:0 auto 10px;display:block;animation:fadeUp 0.3s both;">
-      <div style="font-size:13px;color:var(--brand);font-weight:600;">Photo ready ✓</div>
-    `;
-  };
-  r.readAsDataURL(inp.files[0]);
-};

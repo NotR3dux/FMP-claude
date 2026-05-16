@@ -164,7 +164,7 @@
           </svg>
         </div>
         <span class="price-label-text">Solo</span>
-        <span class="price-amount">15k</span>
+        <span class="price-amount" id="price-solo">15k</span>
       </div>
 
       <div class="price-row">
@@ -177,7 +177,7 @@
           </svg>
         </div>
         <span class="price-label-text">2 orang</span>
-        <span class="price-amount">25k</span>
+        <span class="price-amount" id="price-duo">25k</span>
       </div>
 
       <div class="price-row">
@@ -192,7 +192,7 @@
           </svg>
         </div>
         <span class="price-label-text">3 orang</span>
-        <span class="price-amount">35k</span>
+        <span class="price-amount" id="price-trio">35k</span>
       </div>
 
       <p class="price-note">* Harga per orang. Daftar bareng teman = lebih hemat!<br>Pembayaran diinfo setelah form diterima.</p>
@@ -313,6 +313,30 @@
       <span class="int" style="color:rgba(255,255,255,0.6);font-size:13px;">© 2026 Find My Partner</span>
     </div>
   </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FORM VIEW
+═══════════════════════════════════════════════════════════ -->
+<div id="v-form" class="view" style="display:none;">
+
+  <!-- NAV -->
+  <nav id="form-nav" style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 52px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1.5px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+    <button onclick="window.navTo('home')" style="display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;">
+      <img src="brand_assets/logo.png" alt="Find My Partner" style="height:40px;width:auto;">
+      <span class="jk" style="font-weight:900;font-size:16px;color:var(--dark);">Find My Partner</span>
+    </button>
+    <button onclick="window.navTo('home')" style="background:none;border:none;cursor:pointer;font-size:14px;font-weight:600;color:var(--muted);font-family:'Inter',sans-serif;display:flex;align-items:center;gap:5px;">
+      ← Kembali ke Beranda
+    </button>
+  </nav>
+
+  <div class="form-wrap">
+    <div id="stepper"></div>
+    <div id="step-title"></div>
+    <div id="step-content"></div>
+    <div id="step-nav"></div>
+  </div>
 </div>
 
 <!-- ── FLOATING IG BUTTON ────────────────────────────────── -->

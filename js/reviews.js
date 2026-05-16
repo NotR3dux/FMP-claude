@@ -1,21 +1,30 @@
 /* ============================================================
-   FIND MY PARTNER — Reviews Module
+   FIND MY PARTNER — Reviews Module (Supabase-powered)
    ============================================================ */
 
-import { reviews } from './reviews-data.js';
+import { supabase } from './supabase.js';
+import { reviews as fallbackReviews } from './reviews-data.js';
 
 export function initReviews() {
-  renderReviews();
+  loadReviews();
   initReviewModal();
 }
 
-function renderReviews() {
+async function loadReviews() {
   const container = document.getElementById('reviews-container');
   if (!container) return;
 
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('*')
+    .eq('status', 'approved')
+    .order('created_at', { ascending: false });
+
+  const reviews = (!error && data && data.length > 0) ? data : fallbackReviews;
+
   container.innerHTML = reviews.map((r, i) => `
-    <div class="review-card" style="background:${r.color};animation-delay:${i * 0.08}s;">
-      <div class="review-stars">${'★'.repeat(r.stars)}</div>
+    <div class="review-card" style="background:${r.color || '#FEF0F5'};animation-delay:${i * 0.08}s;">
+      <div class="review-stars">${'★'.repeat(r.stars || 5)}</div>
       <p class="review-text">"${r.text}"</p>
       <div class="review-footer">
         <div class="review-avatar" style="background:${avatarColor(i)}">${initials(r.name)}</div>
@@ -32,35 +41,26 @@ function initReviewModal() {
   const form = document.getElementById('review-submit-form');
   if (!form) return;
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const name = document.getElementById('rv-name').value.trim();
     const text = document.getElementById('rv-text').value.trim();
     const type = document.getElementById('rv-type').value;
     if (!name || !text) return;
 
-    // Add review to DOM optimistically
-    const container = document.getElementById('reviews-container');
-    const card = document.createElement('div');
-    card.className = 'review-card new-review';
-    card.style.background = '#FEF0F5';
-    card.innerHTML = `
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">"${text}"</p>
-      <div class="review-footer">
-        <div class="review-avatar" style="background:#E8684A">${initials(name)}</div>
-        <div>
-          <div class="review-name">${name}</div>
-          <div class="review-type">${typeIcon(type)} ${type}</div>
-        </div>
-      </div>
-    `;
-    container.prepend(card);
+    const colorMap = { 'Best Friends': '#FEF0F5', 'Romantic Match': '#E8F5E0' };
 
-    // Show success state
+    await supabase.from('reviews').insert([{
+      name,
+      text,
+      type,
+      stars: 5,
+      status: 'pending',
+      color: colorMap[type] || '#FEF0F5'
+    }]);
+
     document.getElementById('review-form-wrap').style.display = 'none';
     document.getElementById('review-success').style.display = 'block';
-
     setTimeout(() => closeReviewModal(), 3000);
   });
 }
@@ -68,12 +68,10 @@ function initReviewModal() {
 function initials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 }
-
 function avatarColor(i) {
   const colors = ['#E8684A','#6BC47A','#6AADE0','#B9A3DC','#F5C840','#F9ABBE'];
   return colors[i % colors.length];
 }
-
 function typeIcon(type) {
   if (type === 'Romantic Match' || type === 'romantic') return '✨';
   return '🧡';
