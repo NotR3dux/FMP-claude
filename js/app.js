@@ -37,7 +37,8 @@ window.navTo = function(view) {
 };
 
 // ── Registration ───────────────────────────────────────────
-window.openRegistration = function() { window.navTo('form'); };
+const GFORM_REGISTRATION = 'https://forms.gle/UvcQABcBJvJbK4H28';
+window.openRegistration = function() { window.open(GFORM_REGISTRATION, '_blank'); };
 
 window.openReviewModal  = openReviewModal;
 window.closeReviewModal = closeReviewModal;
