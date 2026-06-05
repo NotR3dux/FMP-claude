@@ -161,12 +161,14 @@ function renderPersonForm(index) {
         <div class="fgroup"><label>Gender *</label><select name="gender" required><option value="">Pilih</option><option>Male</option><option>Female</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>Tempat Lahir *</label><input type="text" name="birthPlace" placeholder="Kota lahir"></div>
-        <div class="fgroup"><label>Tanggal Lahir *</label><input type="date" name="birthDate" style="color:var(--dark);" max="2008-12-31" min="1990-01-01"></div>
-      </div>
-      <div class="frow">
+        <div class="fgroup">
+          <label>Tempat, Tgl Lahir *</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" name="birthPlace" placeholder="Kota lahir" style="flex:1;">
+            <input type="date" name="birthDate" style="flex:1;color:var(--dark);" max="2008-12-31" min="1990-01-01">
+          </div>
+        </div>
         <div class="fgroup"><label>Zodiak *</label><select name="zodiac" required><option value="">Pilih</option><option>Aquarius</option><option>Pisces</option><option>Aries</option><option>Taurus</option><option>Gemini</option><option>Cancer</option><option>Leo</option><option>Virgo</option><option>Libra</option><option>Scorpio</option><option>Sagitarius</option><option>Capricorn</option></select></div>
-        <div class="fgroup"><label>&nbsp;</label><div style="height:44px;"></div></div>
       </div>
       <div class="frow">
         <div class="fgroup"><label>Universitas *</label><select name="university" required><option value="">Pilih</option><option>Universitas Airlangga</option><option>Universitas Negeri Surabaya</option><option>Institut Teknologi Sepuluh Nopember</option><option>Universitas Surabaya</option><option>Universitas Kristen Petra</option><option>Universitas Ciputra</option><option>Universitas Katolik Widya Mandala</option></select></div>
