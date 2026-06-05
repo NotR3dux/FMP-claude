@@ -107,9 +107,8 @@ async function renderContent() {
           <div class="confirm-card">
             <h3 style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:10px;">Person ${i + 1}</h3>
             ${Object.entries({
-              'Nama': p.fullName, 'Gender': p.gender, 'Tgl Lahir': p.birth,
-              'Universitas': p.university, 'Fakultas': p.faculty, 'NIM': p.studentId,
-              'Agama': p.religion, 'TB/BB': p.heightWeight, 'Suku': p.ethnicity,
+              'Nama': p.fullName, 'Jenis Kelamin': p.gender, 'Tempat, Tgl Lahir': p.birth,
+              'Universitas': p.university, 'Agama': p.religion, 'TB/BB': p.heightWeight, 'Etnis': p.ethnicity,
               'Zodiak': p.zodiac, 'Tujuan': p.purpose, 'Hobi': p.hobby,
               'Tipe Ideal': p.idealType, 'Instagram': p.socialMedia, 'No. HP': p.phone,
               'MBTI': p.surveyPersonality, 'Love Language': p.surveyLoveLanguage,
@@ -158,54 +157,32 @@ function renderPersonForm(index) {
       </h3>
       <div class="frow">
         <div class="fgroup"><label>Nama Lengkap *</label><input type="text" name="fullName" placeholder="Nama lengkap"></div>
-        <div class="fgroup"><label>Gender *</label><select name="gender" required><option value="">Pilih</option><option>Male</option><option>Female</option></select></div>
+        <div class="fgroup"><label>Jenis Kelamin *</label><select name="gender" required><option value="">Pilih</option><option>Laki-laki</option><option>Perempuan</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup">
-          <label>Tempat, Tgl Lahir *</label>
-          <div style="display:flex;gap:8px;">
-            <input type="text" name="birthPlace" placeholder="Kota lahir" style="flex:1;">
-            <input type="date" name="birthDate" style="flex:1;color:var(--dark);" max="2008-12-31" min="1990-01-01">
-          </div>
-        </div>
+        <div class="fgroup"><label>Tempat, Tgl Lahir *</label><input type="text" name="birth" placeholder="Contoh: Surabaya, 10 Januari 2005"></div>
         <div class="fgroup"><label>Zodiak *</label><select name="zodiac" required><option value="">Pilih</option><option>Aquarius</option><option>Pisces</option><option>Aries</option><option>Taurus</option><option>Gemini</option><option>Cancer</option><option>Leo</option><option>Virgo</option><option>Libra</option><option>Scorpio</option><option>Sagitarius</option><option>Capricorn</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>Universitas *</label><select name="university" required><option value="">Pilih</option><option>Universitas Airlangga</option><option>Universitas Negeri Surabaya</option><option>Institut Teknologi Sepuluh Nopember</option><option>Universitas Surabaya</option><option>Universitas Kristen Petra</option><option>Universitas Ciputra</option><option>Universitas Katolik Widya Mandala</option></select></div>
-        <div class="fgroup"><label>Fakultas *</label><select name="faculty" required><option value="">Pilih</option><option>Farmasi</option><option>Hukum</option><option>Bisnis dan Ekonomika</option><option>Psikologi</option><option>Teknik</option><option>Kedokteran</option></select></div>
+        <div class="fgroup"><label>Asal Universitas *</label><select name="university" required><option value="">Pilih</option><option>Universitas Airlangga</option><option>Universitas Negeri Surabaya</option><option>Institut Teknologi Sepuluh Nopember</option><option>Universitas Surabaya</option><option>Universitas Kristen Petra</option><option>Universitas Ciputra</option><option>Universitas Katolik Widya Mandala</option><option>Lainnya</option></select></div>
+        <div class="fgroup"><label>Agama *</label><select name="religion" required><option value="">Pilih</option><option>Islam</option><option>Kristen Protestan</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>NIM *</label><input type="text" name="studentId" placeholder="Nomor induk mahasiswa"></div>
-        <div class="fgroup"><label>Agama *</label><select name="religion" required><option value="">Pilih</option><option>Islam</option><option>Kristen/Protestan</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
+        <div class="fgroup"><label>TB/BB saat ini *</label><input type="text" name="heightWeight" placeholder="Contoh: 180cm/65kg"></div>
+        <div class="fgroup"><label>Etnis *</label><select name="ethnicity" required><option value="">Pilih</option><option>Jawa</option><option>Tionghoa</option><option>Batak</option><option>Sunda</option><option>Bali</option><option>Madura</option><option>Lainnya</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup">
-          <label>Tinggi / Berat Badan *</label>
-          <div style="display:flex;gap:8px;">
-            <div style="flex:1;position:relative;">
-              <input type="number" name="height" placeholder="Tinggi" min="100" max="250" style="width:100%;padding-right:34px;box-sizing:border-box;">
-              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none;">cm</span>
-            </div>
-            <div style="flex:1;position:relative;">
-              <input type="number" name="weight" placeholder="Berat" min="30" max="200" style="width:100%;padding-right:34px;box-sizing:border-box;">
-              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none;">kg</span>
-            </div>
-          </div>
-        </div>
-        <div class="fgroup"><label>Suku *</label><select name="ethnicity" required><option value="">Pilih</option><option>Jawa</option><option>Tionghoa</option><option>Batak</option><option>Sunda</option><option>Bali</option><option>Madura</option></select></div>
-      </div>
-      <div class="frow">
-        <div class="fgroup"><label>Tujuan *</label><select name="purpose" required><option value="">Cari apa?</option><option value="Teman">🤝 Teman / Bestie</option><option value="Pasangan">💕 Pasangan / Jodoh</option></select></div>
-        <div class="fgroup"><label>No. HP / WhatsApp *</label><input type="tel" name="phone" placeholder="08xxxxxxxxxx"></div>
+        <div class="fgroup"><label>Apa yang kamu cari? *</label><select name="purpose" required><option value="">Pilih</option><option value="Teman">🤝 Teman / Bestie</option><option value="Pasangan">💕 Pasangan / Jodoh</option></select></div>
+        <div class="fgroup"><label>No. WA Aktif *</label><input type="tel" name="phone" placeholder="08xxxxxxxxxx"></div>
       </div>
       <div class="fgroup"><label>Hobi *</label><input type="text" name="hobby" placeholder="Contoh: nonton film, hiking, masak..."></div>
       <div class="fgroup">
-        <label>Tipe Ideal * <small style="color:var(--muted);font-weight:400;">(TB, suku, agama, love language, sifat, communication style)</small></label>
+        <label>Tipe Ideal * <small style="color:var(--muted);font-weight:400;">Tuliskan: Tinggi badan, Etnis, Agama, love language, sifat, dan communication style</small></label>
         <input type="text" name="idealType" placeholder="Deskripsikan tipe ideal kamu">
       </div>
-      <div class="fgroup"><label>Instagram *</label><input type="text" name="socialMedia" placeholder="@username"></div>
+      <div class="fgroup"><label>Media Sosial (Instagram) *</label><input type="text" name="socialMedia" placeholder="@username"></div>
       <div class="fgroup">
-        <label>Foto Full Body * <small style="color:var(--muted);font-weight:400;">(kepala sampai kaki, tidak disebarluaskan)</small></label>
+        <label>Foto KTM Aktif * <small style="color:var(--muted);font-weight:400;">(tidak akan disebarluaskan, hanya untuk verifikasi)</small></label>
         <input type="file" name="fullBodyPhoto" accept="image/*">
       </div>
       <div class="fgroup">
@@ -305,16 +282,13 @@ function renderNav() {
           if (data) photoPath = data.path;
         }
 
-        const birthDateRaw = get('birthDate').value;
-        const [by, bm, bd] = birthDateRaw ? birthDateRaw.split('-') : ['', '', ''];
-        const birthFormatted = birthDateRaw ? `${bd}/${bm}/${by}` : '';
         const p = {
           fullName: get('fullName').value, gender: get('gender').value,
-          birth: get('birthPlace').value + (birthFormatted ? ', ' + birthFormatted : ''),
+          birth: get('birth').value,
           university: get('university').value,
-          faculty: get('faculty').value, studentId: get('studentId').value,
+          faculty: '', studentId: '',
           religion: get('religion').value,
-          heightWeight: get('height').value + 'cm / ' + get('weight').value + 'kg',
+          heightWeight: get('heightWeight').value,
           ethnicity: get('ethnicity').value, zodiac: get('zodiac').value,
           purpose: get('purpose').value, hobby: get('hobby').value,
           idealType: get('idealType').value, socialMedia: get('socialMedia').value,
