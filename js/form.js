@@ -244,7 +244,7 @@ function renderNav() {
     </button>
     ${isLast
       ? `<button onclick="window.navTo('home')" class="btn-red" style="padding:12px 30px;font-size:14px;">Kembali ke Beranda 🏠</button>`
-      : `<button id="continue-btn" class="btn-red" style="padding:12px 30px;font-size:14px;" ${isFirst ? 'disabled' : ''}>
+      : `<button id="continue-btn" onclick="window.stepNext()" class="btn-red" style="padding:12px 30px;font-size:14px;" ${isFirst ? 'disabled' : ''}>
            Lanjut →
          </button>`
     }
