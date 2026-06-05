@@ -10,6 +10,7 @@ import {
 
 import { initReviews, openReviewModal, closeReviewModal } from './reviews.js';
 import { initForm, stepNext, stepBack } from './form.js';
+import { supabase } from './supabase.js';
 
 // ── View navigation ────────────────────────────────────────
 let currentView = 'home';
@@ -74,6 +75,20 @@ document.addEventListener('click', e => {
   if (t) t.scrollIntoView({ behavior: 'smooth' });
 });
 
+// ── Load prices from Supabase ──────────────────────────────
+async function loadPrices() {
+  const { data, error } = await supabase
+    .from('prices')
+    .select('*')
+    .order('sort_order');
+  if (error || !data) return;
+  const map = { 'Solo': 'price-solo', '2 Orang': 'price-duo', '3 Orang': 'price-trio' };
+  data.forEach(p => {
+    const el = document.getElementById(map[p.package_name]);
+    if (el) el.textContent = p.price_text;
+  });
+}
+
 // ── Boot ───────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const homeEl = document.getElementById('v-home');
@@ -90,4 +105,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavScroll();
   initSparkles();
   initReviews();
+  loadPrices();
 });

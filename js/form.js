@@ -1,30 +1,26 @@
 /* ============================================================
-   FIND MY PARTNER — Registration Form → Google Sheets
+   FIND MY PARTNER — Registration Form (Supabase)
    ============================================================ */
 
-// Ganti dengan URL Google Apps Script kamu setelah deploy
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQI3ZE878fYwHLxn_GssczNWJpzCL1Oy_WmOd1sfWpIRtQ3Yi3EjmTg1RkrJzgSPZ60w/exec';
+import { supabase } from './supabase.js';
 
-const PRICES = { 'Solo': 15000, '2 Person': 25000, '3 Person': 35000 };
-const PRICE_LABELS = { 'Solo': 'Rp 15.000', '2 Person': 'Rp 25.000', '3 Person': 'Rp 35.000' };
-
-const formData = { package: null, persons: [], namaTransfer: '', proofBase64: null, photoBase64s: [] };
+const formData = { package: null, transactionId: null, persons: [] };
 let step = 1;
 let selectedPackage = null;
 const STEPS = 5;
 
 const stepMeta = {
-  1: { title: 'Syarat & Ketentuan ✏️',  sub: '' },
-  2: { title: '💎 Pilih Paket',          sub: 'Pilih paket yang sesuai kebutuhanmu' },
-  3: { title: 'Info Personal 📝',        sub: 'Ceritain sedikit tentang dirimu!' },
-  4: { title: 'Pembayaran 💳',           sub: 'Transfer via QRIS lalu upload bukti' },
-  5: { title: 'Pendaftaran Dikirim! 🎉', sub: '' },
+  1: { title: 'Syarat & Ketentuan ✏️',   sub: '' },
+  2: { title: '💎 Pilih Paket',           sub: 'Pilih paket yang sesuai kebutuhanmu' },
+  3: { title: 'Info Personal 📝',         sub: 'Ceritain sedikit tentang dirimu!' },
+  4: { title: 'Konfirmasi ✔️',            sub: 'Pastikan semua data sudah benar' },
+  5: { title: 'Terima Kasih! 🎉',         sub: 'Pendaftaran berhasil!' },
 };
 
 export function initForm() {
   step = 1;
   selectedPackage = null;
-  Object.assign(formData, { package: null, persons: [], namaTransfer: '', proofBase64: null, photoBase64s: [] });
+  Object.assign(formData, { package: null, transactionId: null, persons: [] });
   renderForm();
 }
 
@@ -52,7 +48,6 @@ function renderTitle() {
 async function renderContent() {
   const el = document.getElementById('step-content');
 
-  // STEP 1 — Terms
   if (step === 1) {
     el.innerHTML = `
       <div class="fcard">
@@ -74,7 +69,6 @@ async function renderContent() {
         </label>
       </div>`;
 
-  // STEP 2 — Pilih Paket
   } else if (step === 2) {
     el.innerHTML = `
       <div class="fcard">
@@ -100,75 +94,56 @@ async function renderContent() {
         <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:14px;">* Pembayaran diinfo setelah form diterima.</p>
       </div>`;
 
-  // STEP 3 — Info Personal
   } else if (step === 3) {
     const count = selectedPackage === '2 Person' ? 2 : selectedPackage === '3 Person' ? 3 : 1;
     el.innerHTML = Array.from({ length: count }, (_, i) => renderPersonForm(i + 1)).join('');
 
-  // STEP 4 — QRIS + Bukti Bayar
   } else if (step === 4) {
-    const amount = PRICE_LABELS[selectedPackage] || '';
+    const persons = formData.persons;
     el.innerHTML = `
-      <div class="fcard" style="text-align:center;">
-        <div style="display:inline-block;background:#f0f9ee;border-radius:16px;padding:10px 24px;margin-bottom:20px;">
-          <span style="font-size:13px;color:var(--muted);font-weight:600;">Total Pembayaran</span><br>
-          <span class="jk" style="font-size:32px;font-weight:900;color:var(--green-d);">${amount}</span>
-        </div>
-
-        <p style="font-size:13.5px;color:var(--muted);margin-bottom:18px;line-height:1.6;">
-          Scan QRIS di bawah ini lalu transfer sesuai nominal. Setelah transfer, isi nama dan upload screenshot bukti bayar.
-        </p>
-
-        <div style="display:inline-block;border:3px solid #e8e8e8;border-radius:16px;padding:12px;margin-bottom:20px;background:#fff;">
-          <img src="/brand_assets/qris.png" alt="QRIS Find My Partner"
-            style="width:220px;height:220px;object-fit:contain;border-radius:8px;"
-            onerror="this.parentElement.innerHTML='<div style=\'width:220px;height:220px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;\'><span style=\'font-size:40px;\'>📱</span><span style=\'font-size:12px;color:#999;\'>QRIS belum diupload</span></div>'">
-        </div>
-
-        <div style="text-align:left;">
-          <div class="fgroup">
-            <label>Nama Rekening / Akun yang Transfer *</label>
-            <input type="text" id="nama-transfer" placeholder="Nama sesuai akun bank/e-wallet" value="${formData.namaTransfer || ''}">
+      <div class="fcard">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Pastikan semua informasi sudah benar sebelum submit.</p>
+        ${(persons || []).map((p, i) => `
+          <div class="confirm-card">
+            <h3 style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:10px;">Person ${i + 1}</h3>
+            ${Object.entries({
+              'Nama': p.fullName, 'Gender': p.gender, 'Tgl Lahir': p.birth,
+              'Universitas': p.university, 'Fakultas': p.faculty, 'NIM': p.studentId,
+              'Agama': p.religion, 'TB/BB': p.heightWeight, 'Suku': p.ethnicity,
+              'Zodiak': p.zodiac, 'Tujuan': p.purpose, 'Hobi': p.hobby,
+              'Tipe Ideal': p.idealType, 'Instagram': p.socialMedia, 'No. HP': p.phone,
+              'MBTI': p.surveyPersonality, 'Love Language': p.surveyLoveLanguage,
+              'Communication Style': p.surveyCommunication,
+            }).filter(([,v]) => v).map(([k,v]) => `
+              <div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
+                <span style="font-weight:700;color:var(--dark);min-width:140px;">${k}:</span>
+                <span style="color:var(--muted);">${v}</span>
+              </div>
+            `).join('')}
+            <div style="display:flex;gap:8px;padding:5px 0;font-size:13px;"><span style="font-weight:700;color:var(--dark);min-width:140px;">Foto:</span><span style="color:var(--green-d);">✅ Uploaded</span></div>
+            <div style="display:flex;gap:8px;padding:5px 0;font-size:13px;"><span style="font-weight:700;color:var(--dark);min-width:140px;">Bukti Bayar:</span><span style="color:var(--green-d);">✅ Uploaded</span></div>
           </div>
-          <div class="fgroup">
-            <label>Screenshot Bukti Transfer *</label>
-            <small style="color:var(--muted);font-size:12px;margin-bottom:6px;display:block;">Upload screenshot dari aplikasi bank atau e-wallet kamu.</small>
-            <input type="file" id="proof-upload" accept="image/*">
-            <div id="proof-preview" style="margin-top:10px;"></div>
-          </div>
-        </div>
+        `).join('')}
       </div>`;
 
-    document.getElementById('proof-upload').addEventListener('change', async function() {
-      const file = this.files[0];
-      if (!file) return;
-      const preview = document.getElementById('proof-preview');
-      preview.innerHTML = `<p style="font-size:12px;color:var(--muted);">Mengompres gambar...</p>`;
-      formData.proofBase64 = await compressImage(file);
-      preview.innerHTML = `<img src="${formData.proofBase64}" style="max-width:100%;border-radius:10px;border:2px solid var(--green);">`;
-    });
-
-  // STEP 5 — Thank You
   } else if (step === 5) {
     el.innerHTML = `
       <div class="fcard" style="text-align:center;padding:40px 24px;">
         <div style="font-size:64px;margin-bottom:16px;">🎉</div>
-        <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px;">Pendaftaran Terkirim!</h2>
+        <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px;">Pendaftaran Berhasil!</h2>
         <p style="font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:16px;">
-          Data kamu sudah kami terima! Tim FMP akan verifikasi bukti transfer kamu.<br>
-          Kalau sudah diverifikasi dan kamu dapat match, kami akan hubungi via <strong>DM Instagram</strong>. 💌
+          Tim Find My Partner akan hubungi kamu via <strong>DM Instagram</strong> kalau kamu dapat match.
+          Pastikan DM terbuka dan cek notifikasi secara berkala. 💌✨
         </p>
         <div style="background:#f0f9ee;border-radius:12px;padding:16px;margin-bottom:20px;border:1.5px solid var(--green);">
-          <p style="font-size:13px;color:var(--green-d);font-weight:700;margin-bottom:4px;">Pastikan:</p>
           <ul style="font-size:13px;color:var(--muted);text-align:left;list-style:disc;padding-left:18px;line-height:1.8;">
-            <li>DM Instagram kamu terbuka</li>
+            <li>Pastikan DM Instagram kamu terbuka</li>
             <li>Follow <a href="https://www.instagram.com/_findmypartner/" target="_blank" style="color:var(--green-d);font-weight:700;">@_findmypartner</a></li>
             <li>Cek notifikasi secara berkala</li>
           </ul>
         </div>
         <a href="https://drive.google.com/file/d/14ddH5QZEXpkbta6kBT6Kg83DVK4wcXl8/view?usp=sharing"
-          target="_blank"
-          style="display:inline-block;font-size:14px;color:var(--green-d);font-weight:700;text-decoration:underline;">
+          target="_blank" style="font-size:14px;color:var(--green-d);font-weight:700;text-decoration:underline;">
           Baca panduan Find My Partner →
         </a>
       </div>`;
@@ -233,48 +208,46 @@ function renderPersonForm(index) {
 
 // ── Nav buttons ────────────────────────────────────────────
 function renderNav() {
-  const el = document.getElementById('step-nav');
+  const el      = document.getElementById('step-nav');
   const isFirst = step === 1;
   const isLast  = step === STEPS;
 
   el.innerHTML = `
     <button onclick="${isFirst ? "window.navTo('home')" : 'window.stepBack()'}"
-      style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;font-family:'Inter',sans-serif;padding:12px 0;display:flex;align-items:center;gap:4px;">
+      style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;font-family:'Inter',sans-serif;padding:12px 0;">
       ← Kembali
     </button>
     ${isLast
       ? `<button onclick="window.navTo('home')" class="btn-red" style="padding:12px 30px;font-size:14px;">Kembali ke Beranda 🏠</button>`
-      : `<button id="continue-btn" onclick="window.stepNext()" class="btn-red" style="padding:12px 30px;font-size:14px;" ${isFirst ? 'disabled' : ''}>
-           Lanjut →
-         </button>`
+      : `<button id="continue-btn" onclick="window.stepNext()" class="btn-red" style="padding:12px 30px;font-size:14px;" ${isFirst ? 'disabled' : ''}>Lanjut →</button>`
     }
   `;
 
   if (isLast) return;
   const btn = document.getElementById('continue-btn');
 
-  // Step 1 — TOS checkbox
   if (step === 1) {
-    const cb = document.getElementById('tos-agree');
-    cb.addEventListener('change', () => { btn.disabled = !cb.checked; });
+    document.getElementById('tos-agree').addEventListener('change', e => {
+      btn.disabled = !e.target.checked;
+    });
   }
 
-  // Step 2 — Pilih paket
   if (step === 2) {
     btn.disabled = true;
     document.querySelectorAll('input[name="package"]').forEach(radio => {
-      radio.addEventListener('change', () => {
+      radio.addEventListener('change', async () => {
         selectedPackage = radio.value;
         formData.package = selectedPackage;
         btn.disabled = false;
         document.querySelectorAll('.pkg-label').forEach(l => { l.style.borderColor = '#e8e8e8'; l.style.background = '#fff'; });
         radio.closest('.pkg-label').style.borderColor = 'var(--green-d)';
         radio.closest('.pkg-label').style.background = '#f0f9ee';
+        const { data, error } = await supabase.from('transactions').insert([{ package: selectedPackage }]).select();
+        if (!error && data) formData.transactionId = data[0].id;
       });
     });
   }
 
-  // Step 3 — Validasi personal info + kumpulkan foto
   if (step === 3) {
     btn.disabled = true;
     const inputs = document.querySelectorAll('.person-card input, .person-card select, .person-card textarea');
@@ -287,20 +260,21 @@ function renderNav() {
 
     btn.onclick = async () => {
       btn.disabled = true;
-      btn.textContent = 'Memproses foto...';
+      btn.textContent = 'Menyimpan...';
       formData.persons = [];
-      formData.photoBase64s = [];
 
-      const cards = document.querySelectorAll('.person-card');
-      for (const card of cards) {
+      for (const card of document.querySelectorAll('.person-card')) {
         const get = n => card.querySelector(`[name="${n}"]`);
         const photoFile = get('fullBodyPhoto').files[0];
+        const proofFile = null;
 
-        let photoB64 = null;
-        if (photoFile) photoB64 = await compressImage(photoFile);
-        formData.photoBase64s.push(photoB64);
+        let photoPath = null;
+        if (photoFile) {
+          const { data } = await supabase.storage.from('uploads').upload(`photo-${Date.now()}.jpg`, photoFile);
+          if (data) photoPath = data.path;
+        }
 
-        formData.persons.push({
+        const p = {
           fullName: get('fullName').value, gender: get('gender').value,
           birth: get('birth').value, university: get('university').value,
           faculty: get('faculty').value, studentId: get('studentId').value,
@@ -312,87 +286,33 @@ function renderNav() {
           surveyPersonality: get('surveyPersonality').value,
           surveyLoveLanguage: get('surveyLoveLanguage').value,
           surveyCommunication: get('surveyCommunication').value,
-        });
+        };
+
+        await supabase.from('persons').insert([{
+          transaction_id: formData.transactionId,
+          full_name: p.fullName, gender: p.gender, birth: p.birth,
+          university: p.university, faculty: p.faculty, student_id: p.studentId,
+          religion: p.religion, height_weight: p.heightWeight, ethnicity: p.ethnicity,
+          zodiac: p.zodiac, purpose: p.purpose, hobby: p.hobby,
+          ideal_type: p.idealType, social_media: p.socialMedia, phone: p.phone,
+          survey_personality: p.surveyPersonality,
+          survey_love_language: p.surveyLoveLanguage,
+          survey_communication: p.surveyCommunication,
+          full_body_photo_url: photoPath,
+        }]);
+
+        formData.persons.push(p);
       }
-      step = 4; renderForm();
-    };
-  }
-
-  // Step 4 — Validasi bukti bayar lalu submit
-  if (step === 4) {
-    btn.disabled = true;
-    btn.textContent = 'Kirim Pendaftaran →';
-
-    const checkReady = () => {
-      const nama  = document.getElementById('nama-transfer')?.value?.trim();
-      const proof = formData.proofBase64;
-      btn.disabled = !nama || !proof;
-    };
-
-    document.getElementById('nama-transfer')?.addEventListener('input', checkReady);
-    document.getElementById('proof-upload')?.addEventListener('change', () => {
-      setTimeout(checkReady, 500);
-    });
-
-    btn.onclick = async () => {
-      formData.namaTransfer = document.getElementById('nama-transfer').value.trim();
-
-      btn.disabled = true;
-      btn.textContent = 'Mengirim data...';
-
-      await submitToSheets();
-      step = 5;
+      step = 4;
       renderForm();
     };
   }
-}
 
-// ── Submit ke Google Sheets via Apps Script ────────────────
-async function submitToSheets() {
-  const payload = {
-    package:      formData.package,
-    persons:      formData.persons,
-    namaTransfer: formData.namaTransfer,
-    proofBase64:  formData.proofBase64,
-    photoBase64s: formData.photoBase64s,
-  };
-
-  try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode:   'no-cors', // Apps Script CORS workaround
-      body:   JSON.stringify(payload),
-    });
-  } catch (err) {
-    console.warn('Submit note:', err);
-    // no-cors mode always throws — data still sent
+  if (step === 4) {
+    btn.onclick = () => { step = 5; renderForm(); };
   }
 }
 
-// ── Compress image sebelum kirim ───────────────────────────
-function compressImage(file, maxDim = 1200, quality = 0.75) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        let { width, height } = img;
-        if (width > maxDim || height > maxDim) {
-          if (width > height) { height = Math.round(height * maxDim / width); width = maxDim; }
-          else                { width  = Math.round(width  * maxDim / height); height = maxDim; }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = width; canvas.height = height;
-        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL('image/jpeg', quality));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// ── Render ─────────────────────────────────────────────────
 export function renderForm() {
   renderStepper();
   renderTitle();
