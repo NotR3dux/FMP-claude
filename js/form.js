@@ -161,8 +161,12 @@ function renderPersonForm(index) {
         <div class="fgroup"><label>Gender *</label><select name="gender" required><option value="">Pilih</option><option>Male</option><option>Female</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>Tempat, Tgl Lahir *</label><input type="text" name="birth" placeholder="Kota, DD/MM/YYYY"></div>
+        <div class="fgroup"><label>Tempat Lahir *</label><input type="text" name="birthPlace" placeholder="Kota lahir"></div>
+        <div class="fgroup"><label>Tanggal Lahir *</label><input type="date" name="birthDate" style="color:var(--dark);" max="2008-12-31" min="1990-01-01"></div>
+      </div>
+      <div class="frow">
         <div class="fgroup"><label>Zodiak *</label><select name="zodiac" required><option value="">Pilih</option><option>Aquarius</option><option>Pisces</option><option>Aries</option><option>Taurus</option><option>Gemini</option><option>Cancer</option><option>Leo</option><option>Virgo</option><option>Libra</option><option>Scorpio</option><option>Sagitarius</option><option>Capricorn</option></select></div>
+        <div class="fgroup"><label>&nbsp;</label><div style="height:44px;"></div></div>
       </div>
       <div class="frow">
         <div class="fgroup"><label>Universitas *</label><select name="university" required><option value="">Pilih</option><option>Universitas Airlangga</option><option>Universitas Negeri Surabaya</option><option>Institut Teknologi Sepuluh Nopember</option><option>Universitas Surabaya</option><option>Universitas Kristen Petra</option><option>Universitas Ciputra</option><option>Universitas Katolik Widya Mandala</option></select></div>
@@ -173,7 +177,19 @@ function renderPersonForm(index) {
         <div class="fgroup"><label>Agama *</label><select name="religion" required><option value="">Pilih</option><option>Islam</option><option>Kristen/Protestan</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>Tinggi / Berat Badan *</label><input type="text" name="heightWeight" placeholder="170cm / 60kg"></div>
+        <div class="fgroup">
+          <label>Tinggi / Berat Badan *</label>
+          <div style="display:flex;gap:8px;">
+            <div style="flex:1;position:relative;">
+              <input type="number" name="height" placeholder="Tinggi" min="100" max="250" style="width:100%;padding-right:34px;box-sizing:border-box;">
+              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none;">cm</span>
+            </div>
+            <div style="flex:1;position:relative;">
+              <input type="number" name="weight" placeholder="Berat" min="30" max="200" style="width:100%;padding-right:34px;box-sizing:border-box;">
+              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none;">kg</span>
+            </div>
+          </div>
+        </div>
         <div class="fgroup"><label>Suku *</label><select name="ethnicity" required><option value="">Pilih</option><option>Jawa</option><option>Tionghoa</option><option>Batak</option><option>Sunda</option><option>Bali</option><option>Madura</option></select></div>
       </div>
       <div class="frow">
@@ -251,27 +267,25 @@ function renderNav() {
   if (step === 3) {
     btn.disabled = true;
     const inputs = document.querySelectorAll('.person-card input, .person-card select, .person-card textarea');
+    const isEmpty = inp => inp.type === 'file' ? !inp.files?.length : !inp.value.trim();
     const validate = () => {
-      const allFilled = [...inputs].every(inp =>
-        inp.type === 'file' ? inp.files?.length > 0 : inp.value.trim() !== ''
-      );
-      btn.disabled = !allFilled;
-      // Reset border warna
-      inputs.forEach(inp => { inp.style.borderColor = ''; });
+      btn.disabled = [...inputs].some(isEmpty);
     };
-    // Highlight field kosong saat hover/focus button yang disabled
+    const markField = inp => {
+      inp.style.borderColor = isEmpty(inp) ? '#ef4444' : '';
+    };
     btn.addEventListener('click', () => {
       if (btn.disabled) {
-        inputs.forEach(inp => {
-          const empty = inp.type === 'file' ? !inp.files?.length : !inp.value.trim();
-          inp.style.borderColor = empty ? '#ef4444' : '';
-        });
-        // Scroll ke field pertama yang kosong
-        const first = [...inputs].find(inp => inp.type === 'file' ? !inp.files?.length : !inp.value.trim());
+        inputs.forEach(markField);
+        const first = [...inputs].find(isEmpty);
         if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }, true);
-    inputs.forEach(inp => { inp.addEventListener('input', validate); inp.addEventListener('change', validate); });
+    inputs.forEach(inp => {
+      inp.addEventListener('input',  () => { validate(); if (!isEmpty(inp)) inp.style.borderColor = ''; });
+      inp.addEventListener('change', () => { validate(); markField(inp); });
+      inp.addEventListener('blur',   () => { if (isEmpty(inp)) inp.style.borderColor = '#ef4444'; });
+    });
 
     btn.onclick = async () => {
       btn.disabled = true;
@@ -289,11 +303,16 @@ function renderNav() {
           if (data) photoPath = data.path;
         }
 
+        const birthDateRaw = get('birthDate').value;
+        const [by, bm, bd] = birthDateRaw ? birthDateRaw.split('-') : ['', '', ''];
+        const birthFormatted = birthDateRaw ? `${bd}/${bm}/${by}` : '';
         const p = {
           fullName: get('fullName').value, gender: get('gender').value,
-          birth: get('birth').value, university: get('university').value,
+          birth: get('birthPlace').value + (birthFormatted ? ', ' + birthFormatted : ''),
+          university: get('university').value,
           faculty: get('faculty').value, studentId: get('studentId').value,
-          religion: get('religion').value, heightWeight: get('heightWeight').value,
+          religion: get('religion').value,
+          heightWeight: get('height').value + 'cm / ' + get('weight').value + 'kg',
           ethnicity: get('ethnicity').value, zodiac: get('zodiac').value,
           purpose: get('purpose').value, hobby: get('hobby').value,
           idealType: get('idealType').value, socialMedia: get('socialMedia').value,
