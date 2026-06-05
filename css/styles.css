@@ -270,6 +270,7 @@ body {
   box-shadow: 0 2px 0 rgba(0,0,0,0.12);
 }
 .btn-red:focus-visible { outline: 3px solid rgba(245,200,64,0.7); outline-offset: 3px; }
+.btn-red:disabled { background: #ccc; color: #888; border-color: #ccc; box-shadow: none; cursor: not-allowed; transform: none; }
 
 /* Ripple */
 .ripple {

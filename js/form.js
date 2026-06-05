@@ -252,10 +252,25 @@ function renderNav() {
     btn.disabled = true;
     const inputs = document.querySelectorAll('.person-card input, .person-card select, .person-card textarea');
     const validate = () => {
-      btn.disabled = ![...inputs].every(inp =>
+      const allFilled = [...inputs].every(inp =>
         inp.type === 'file' ? inp.files?.length > 0 : inp.value.trim() !== ''
       );
+      btn.disabled = !allFilled;
+      // Reset border warna
+      inputs.forEach(inp => { inp.style.borderColor = ''; });
     };
+    // Highlight field kosong saat hover/focus button yang disabled
+    btn.addEventListener('click', () => {
+      if (btn.disabled) {
+        inputs.forEach(inp => {
+          const empty = inp.type === 'file' ? !inp.files?.length : !inp.value.trim();
+          inp.style.borderColor = empty ? '#ef4444' : '';
+        });
+        // Scroll ke field pertama yang kosong
+        const first = [...inputs].find(inp => inp.type === 'file' ? !inp.files?.length : !inp.value.trim());
+        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, true);
     inputs.forEach(inp => { inp.addEventListener('input', validate); inp.addEventListener('change', validate); });
 
     btn.onclick = async () => {
