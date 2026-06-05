@@ -160,7 +160,13 @@ function renderPersonForm(index) {
         <div class="fgroup"><label>Jenis Kelamin *</label><select name="gender" required><option value="">Pilih</option><option>Laki-laki</option><option>Perempuan</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>Tempat, Tgl Lahir *</label><input type="text" name="birth" placeholder="Contoh: Surabaya, 10 Januari 2005"></div>
+        <div class="fgroup">
+          <label>Tempat, Tgl Lahir *</label>
+          <div style="display:flex;gap:8px;">
+            <input type="text" name="birthPlace" placeholder="Kota lahir" style="flex:1;">
+            <input type="date" name="birthDate" style="flex:1;color:var(--dark);" max="2008-12-31" min="1990-01-01">
+          </div>
+        </div>
         <div class="fgroup"><label>Zodiak *</label><select name="zodiac" required><option value="">Pilih</option><option>Aquarius</option><option>Pisces</option><option>Aries</option><option>Taurus</option><option>Gemini</option><option>Cancer</option><option>Leo</option><option>Virgo</option><option>Libra</option><option>Scorpio</option><option>Sagitarius</option><option>Capricorn</option></select></div>
       </div>
       <div class="frow">
@@ -168,7 +174,19 @@ function renderPersonForm(index) {
         <div class="fgroup"><label>Agama *</label><select name="religion" required><option value="">Pilih</option><option>Islam</option><option>Kristen Protestan</option><option>Katolik</option><option>Hindu</option><option>Buddha</option><option>Konghucu</option></select></div>
       </div>
       <div class="frow">
-        <div class="fgroup"><label>TB/BB saat ini *</label><input type="text" name="heightWeight" placeholder="Contoh: 180cm/65kg"></div>
+        <div class="fgroup">
+          <label>TB/BB saat ini *</label>
+          <div style="display:flex;gap:8px;">
+            <div style="flex:1;position:relative;">
+              <input type="number" name="height" placeholder="Tinggi" min="100" max="250" style="width:100%;padding-right:34px;box-sizing:border-box;">
+              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none;">cm</span>
+            </div>
+            <div style="flex:1;position:relative;">
+              <input type="number" name="weight" placeholder="Berat" min="30" max="200" style="width:100%;padding-right:34px;box-sizing:border-box;">
+              <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none;">kg</span>
+            </div>
+          </div>
+        </div>
         <div class="fgroup"><label>Etnis *</label><select name="ethnicity" required><option value="">Pilih</option><option>Jawa</option><option>Tionghoa</option><option>Batak</option><option>Sunda</option><option>Bali</option><option>Madura</option><option>Lainnya</option></select></div>
       </div>
       <div class="frow">
@@ -282,13 +300,16 @@ function renderNav() {
           if (data) photoPath = data.path;
         }
 
+        const birthDateRaw = get('birthDate').value;
+        const [by, bm, bd] = birthDateRaw ? birthDateRaw.split('-') : ['', '', ''];
+        const birthFormatted = birthDateRaw ? `${bd}/${bm}/${by}` : '';
         const p = {
           fullName: get('fullName').value, gender: get('gender').value,
-          birth: get('birth').value,
+          birth: get('birthPlace').value + (birthFormatted ? ', ' + birthFormatted : ''),
           university: get('university').value,
           faculty: '', studentId: '',
           religion: get('religion').value,
-          heightWeight: get('heightWeight').value,
+          heightWeight: get('height').value + 'cm / ' + get('weight').value + 'kg',
           ethnicity: get('ethnicity').value, zodiac: get('zodiac').value,
           purpose: get('purpose').value, hobby: get('hobby').value,
           idealType: get('idealType').value, socialMedia: get('socialMedia').value,
