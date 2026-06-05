@@ -3,7 +3,7 @@
    ============================================================ */
 
 // Ganti dengan URL Google Apps Script kamu setelah deploy
-const APPS_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQI3ZE878fYwHLxn_GssczNWJpzCL1Oy_WmOd1sfWpIRtQ3Yi3EjmTg1RkrJzgSPZ60w/exec';
 
 const PRICES = { 'Solo': 15000, '2 Person': 25000, '3 Person': 35000 };
 const PRICE_LABELS = { 'Solo': 'Rp 15.000', '2 Person': 'Rp 25.000', '3 Person': 'Rp 35.000' };
