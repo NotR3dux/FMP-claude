@@ -439,33 +439,35 @@ function renderNav() {
       btn.disabled = true;
       btn.textContent = 'Menyimpan...';
 
+      const uploadFile = async (file, prefix, idx = '') => {
+        const mime = file.type || 'image/jpeg';
+        const extFromMime = mime === 'image/heic' || mime === 'image/heif' ? 'heic'
+          : mime === 'image/png' ? 'png' : 'jpg';
+        const extFromName = (file.name.split('.').pop() || '').toLowerCase();
+        const ext = extFromName.length <= 5 && extFromName.length > 0 ? extFromName : extFromMime;
+        const path = `${prefix}-${Date.now()}${idx}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const { data, error } = await supabase.storage.from('uploads').upload(path, file, {
+          contentType: mime,
+          upsert: false,
+        });
+        if (error) {
+          console.error(`Upload failed (${prefix}):`, error.message, error);
+          return null;
+        }
+        return data?.path || null;
+      };
+
       // Upload proof
-      let proofPath = null;
-      const proofFile = proofInput.files[0];
-      if (proofFile) {
-        const ext = (proofFile.name.split('.').pop() || 'jpg').toLowerCase();
-        const { data, error } = await supabase.storage.from('uploads').upload(
-          `proof-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`,
-          proofFile,
-          { contentType: proofFile.type }
-        );
-        if (error) console.error('Proof upload error:', error);
-        else if (data) proofPath = data.path;
-      }
+      const proofPath = proofInput.files[0]
+        ? await uploadFile(proofInput.files[0], 'proof')
+        : null;
 
       // Upload each person's photo + insert record
       for (const [idx, p] of formData.persons.entries()) {
-        let photoPath = null;
-        if (p._photoFile) {
-          const ext = (p._photoFile.name.split('.').pop() || 'jpg').toLowerCase();
-          const { data, error } = await supabase.storage.from('uploads').upload(
-            `photo-${Date.now()}-${idx}-${Math.random().toString(36).slice(2)}.${ext}`,
-            p._photoFile,
-            { contentType: p._photoFile.type }
-          );
-          if (error) console.error('Photo upload error:', error);
-          else if (data) photoPath = data.path;
-        }
+        const photoPath = p._photoFile
+          ? await uploadFile(p._photoFile, 'photo', `-${idx}`)
+          : null;
+
         await supabase.from('persons').insert([{
           transaction_id: formData.transactionId,
           full_name: p.fullName, gender: p.gender, birth: p.birth,
