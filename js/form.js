@@ -250,6 +250,7 @@ async function renderContent() {
           <input type="file" id="proof-upload" accept="image/*">
           <small style="color:var(--muted);font-size:12px;margin-top:4px;display:block;">Upload screenshot bukti transfer dari aplikasi banking kamu</small>
         </div>
+        <div id="upload-error-msg" style="display:none;background:#fee2e2;border:1px solid #fca5a5;color:#b91c1c;border-radius:8px;padding:10px 14px;font-size:13px;margin-top:8px;word-break:break-all;"></div>
       </div>`;
 
   } else if (step === 5) {
@@ -484,6 +485,7 @@ function renderNav() {
       btn.disabled = true;
       btn.textContent = 'Menyimpan...';
 
+      let uploadError = null;
       const uploadFile = async (file, prefix, idx = '') => {
         if (!file) return null;
         const prepared = await prepareImage(file);
@@ -491,7 +493,11 @@ function renderNav() {
         const { data, error } = await supabase.storage.from('uploads').upload(path, prepared, {
           contentType: 'image/jpeg', upsert: false,
         });
-        if (error) { console.error(`Upload failed (${prefix}):`, error.message, error); return null; }
+        if (error) {
+          console.error(`Upload failed (${prefix}):`, error.message, error);
+          uploadError = `Upload error: ${error.message}`;
+          return null;
+        }
         return data?.path || null;
       };
 
@@ -502,7 +508,7 @@ function renderNav() {
       for (const [idx, p] of formData.persons.entries()) {
         const photoPath = await uploadFile(p._photoFile || null, 'photo', `-${idx}`);
 
-        await supabase.from('persons').insert([{
+        const { error: insertErr } = await supabase.from('persons').insert([{
           transaction_id: formData.transactionId,
           full_name: p.fullName, gender: p.gender, birth: p.birth,
           university: p.university, faculty: p.faculty, student_id: p.studentId,
@@ -515,6 +521,15 @@ function renderNav() {
           full_body_photo_url: photoPath,
           transaction_proof_url: proofPath,
         }]);
+        if (insertErr) uploadError = (uploadError ? uploadError + ' | ' : '') + `DB error: ${insertErr.message}`;
+      }
+
+      if (uploadError) {
+        btn.disabled = false;
+        btn.textContent = 'Coba Lagi';
+        const errDiv = document.getElementById('upload-error-msg');
+        if (errDiv) { errDiv.textContent = uploadError; errDiv.style.display = 'block'; }
+        return;
       }
 
       clearDraft();
