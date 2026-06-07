@@ -23,7 +23,7 @@ async function loadReviews() {
   const reviews = error ? fallbackReviews : (data || []);
 
   if (reviews.length === 0) {
-    container.innerHTML = `<p style="text-align:center;color:var(--muted);font-size:14px;padding:32px 0;">Belum ada ulasan. Jadilah yang pertama! 💌</p>`;
+    container.innerHTML = `<p style="text-align:center;color:rgba(255,255,255,0.75);font-size:14px;padding:32px 0;width:100%;">Belum ada ulasan. Jadilah yang pertama! 💌</p>`;
     return;
   }
 
@@ -46,23 +46,28 @@ function initReviewModal() {
   const form = document.getElementById('review-submit-form');
   if (!form) return;
 
+  // Star rating interaction
+  const starEls   = document.querySelectorAll('.rv-star');
+  const starInput = document.getElementById('rv-stars');
+  const paintStars = (n) => starEls.forEach((s, i) => { s.style.color = i < n ? '#F5C840' : '#ddd'; });
+
+  starEls.forEach(star => {
+    star.addEventListener('mouseover', () => paintStars(parseInt(star.dataset.val)));
+    star.addEventListener('click', () => { starInput.value = star.dataset.val; paintStars(parseInt(star.dataset.val)); });
+  });
+  document.getElementById('star-rating').addEventListener('mouseleave', () => paintStars(parseInt(starInput.value) || 0));
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const name = document.getElementById('rv-name').value.trim();
-    const text = document.getElementById('rv-text').value.trim();
-    const type = document.getElementById('rv-type').value;
+    const name  = document.getElementById('rv-name').value.trim();
+    const text  = document.getElementById('rv-text').value.trim();
+    const type  = document.getElementById('rv-type').value;
+    const stars = parseInt(document.getElementById('rv-stars').value) || 0;
     if (!name || !text) return;
+    if (!stars) { alert('Pilih rating bintang dulu ya!'); return; }
 
     const colorMap = { 'Best Friends': '#FEF0F5', 'Romantic Match': '#E8F5E0' };
-
-    await supabase.from('reviews').insert([{
-      name,
-      text,
-      type,
-      stars: 5,
-      status: 'pending',
-      color: colorMap[type] || '#FEF0F5'
-    }]);
+    await supabase.from('reviews').insert([{ name, text, type, stars, status: 'pending', color: colorMap[type] || '#FEF0F5' }]);
 
     document.getElementById('review-form-wrap').style.display = 'none';
     document.getElementById('review-success').style.display = 'block';
@@ -87,8 +92,10 @@ export function openReviewModal() {
   if (!modal) return;
   document.getElementById('review-form-wrap').style.display = 'block';
   document.getElementById('review-success').style.display = 'none';
-  document.getElementById('rv-name').value = '';
-  document.getElementById('rv-text').value = '';
+  document.getElementById('rv-name').value  = '';
+  document.getElementById('rv-text').value  = '';
+  document.getElementById('rv-stars').value = '0';
+  document.querySelectorAll('.rv-star').forEach(s => { s.style.color = '#ddd'; });
   modal.style.display = 'flex';
   void modal.offsetWidth;
   modal.classList.add('open');
