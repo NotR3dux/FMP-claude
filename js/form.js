@@ -371,10 +371,18 @@ function renderNav() {
   }
 }
 
+function applySelectStyles(root = document) {
+  root.querySelectorAll('.fgroup select').forEach(sel => {
+    const update = () => sel.classList.toggle('is-placeholder', sel.value === '');
+    update();
+    sel.addEventListener('change', update);
+  });
+}
+
 export function renderForm() {
   renderStepper();
   renderTitle();
-  renderContent().then(() => renderNav());
+  renderContent().then(() => { renderNav(); applySelectStyles(); });
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 export function stepNext() { if (step < STEPS) { step++; renderForm(); } }

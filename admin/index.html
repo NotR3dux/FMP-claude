@@ -100,7 +100,7 @@
                 <th class="px-4 py-3 text-left">No HP</th>
                 <th class="px-4 py-3 text-left">MBTI</th>
                 <th class="px-4 py-3 text-left">Foto</th>
-                <th class="px-4 py-3 text-left">Detail</th>
+                <th class="px-4 py-3 text-left">Aksi</th>
               </tr>
             </thead>
             <tbody id="reg-tbody" class="divide-y divide-gray-100"></tbody>
@@ -116,6 +116,27 @@
 
     <!-- ── REVIEWS ─────────────────────────────────────────── -->
     <div id="tab-reviews" class="hidden">
+      <!-- Add review manually -->
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-6 max-w-lg">
+        <h2 class="jk font-black text-base text-gray-800 mb-4">➕ Tambah Review Manual</h2>
+        <div class="flex flex-col gap-3">
+          <input id="rv-add-name" type="text" placeholder="Nama" class="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition">
+          <textarea id="rv-add-text" rows="3" placeholder="Isi ulasan..." class="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition resize-none"></textarea>
+          <div class="flex gap-3">
+            <select id="rv-add-type" class="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition">
+              <option value="Best Friends">🧡 Best Friends</option>
+              <option value="Romantic Match">✨ Romantic Match</option>
+            </select>
+            <select id="rv-add-stars" class="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition">
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★</option>
+              <option value="3">★★★</option>
+            </select>
+          </div>
+          <button onclick="addReviewManual()" class="bg-green-700 hover:bg-green-800 text-white py-2.5 rounded-xl font-bold text-sm jk transition">Tambah & Publish</button>
+        </div>
+      </div>
+
       <div class="grid md:grid-cols-2 gap-6">
         <div>
           <h2 class="jk font-black text-lg text-gray-800 mb-4">⏳ Pending <span id="pending-count" class="text-yellow-600 text-sm"></span></h2>
@@ -261,10 +282,14 @@ function renderRegTable() {
           <td class="px-4 py-3 text-gray-600 text-xs">${p.phone || '-'}</td>
           <td class="px-4 py-3 text-gray-600 text-xs">${p.survey_personality || '-'}</td>
           <td class="px-4 py-3">${photoCell}</td>
-          <td class="px-4 py-3">
+          <td class="px-4 py-3 flex gap-1.5">
             <button onclick="showDetail(${JSON.stringify(p).replace(/"/g,'&quot;')})"
               class="px-3 py-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold rounded-lg transition">
               Detail
+            </button>
+            <button onclick="deleteReg('${p.id}','${p.transaction_id}')"
+              class="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition">
+              Hapus
             </button>
           </td>
         </tr>`;
@@ -355,8 +380,8 @@ function reviewCard(r, isPending) {
         <div class="flex gap-2">
           ${isPending
             ? `<button onclick="approveReview('${r.id}')" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg">✅ Approve</button>
-               <button onclick="rejectReview('${r.id}')"  class="px-3 py-1 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold rounded-lg">✕ Tolak</button>`
-            : `<button onclick="rejectReview('${r.id}')"  class="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold rounded-lg">Batalkan</button>`
+               <button onclick="deleteReview('${r.id}')"  class="px-3 py-1 bg-red-100 hover:bg-red-200 text-red-700 text-xs font-bold rounded-lg">🗑 Hapus</button>`
+            : `<button onclick="deleteReview('${r.id}')"  class="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg">🗑 Hapus</button>`
           }
         </div>
       </div>
@@ -364,7 +389,30 @@ function reviewCard(r, isPending) {
 }
 
 window.approveReview = async id => { await supabase.from('reviews').update({ status: 'approved' }).eq('id', id); loadReviews(); };
-window.rejectReview  = async id => { await supabase.from('reviews').update({ status: 'rejected' }).eq('id', id); loadReviews(); };
+window.deleteReview  = async id => {
+  if (!confirm('Hapus review ini permanen?')) return;
+  await supabase.from('reviews').delete().eq('id', id);
+  loadReviews();
+};
+window.addReviewManual = async () => {
+  const name  = document.getElementById('rv-add-name').value.trim();
+  const text  = document.getElementById('rv-add-text').value.trim();
+  const type  = document.getElementById('rv-add-type').value;
+  const stars = parseInt(document.getElementById('rv-add-stars').value);
+  if (!name || !text) { alert('Nama dan ulasan wajib diisi.'); return; }
+  const colorMap = { 'Best Friends': '#FEF0F5', 'Romantic Match': '#E8F5E0' };
+  await supabase.from('reviews').insert([{ name, text, type, stars, status: 'approved', color: colorMap[type] || '#FEF0F5' }]);
+  document.getElementById('rv-add-name').value = '';
+  document.getElementById('rv-add-text').value = '';
+  loadReviews();
+};
+window.deleteReg = async (personId, txId) => {
+  if (!confirm('Hapus pendaftar ini? Data tidak bisa dikembalikan.')) return;
+  await supabase.from('persons').delete().eq('id', personId);
+  const { data } = await supabase.from('persons').select('id').eq('transaction_id', txId);
+  if (!data || data.length === 0) await supabase.from('transactions').delete().eq('id', txId);
+  await loadRegistrations();
+};
 
 // ── Prices ─────────────────────────────────────────────────
 let priceData = [];

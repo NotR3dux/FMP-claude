@@ -20,7 +20,12 @@ async function loadReviews() {
     .eq('status', 'approved')
     .order('created_at', { ascending: false });
 
-  const reviews = (!error && data && data.length > 0) ? data : fallbackReviews;
+  const reviews = error ? fallbackReviews : (data || []);
+
+  if (reviews.length === 0) {
+    container.innerHTML = `<p style="text-align:center;color:var(--muted);font-size:14px;padding:32px 0;">Belum ada ulasan. Jadilah yang pertama! 💌</p>`;
+    return;
+  }
 
   container.innerHTML = reviews.map((r, i) => `
     <div class="review-card" style="background:${r.color || '#FEF0F5'};animation-delay:${i * 0.08}s;">
