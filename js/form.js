@@ -425,7 +425,7 @@ function renderNav() {
     btn.onclick = async () => {
       // TEST BYPASS: name "test999" skips validation + auto-increments in DB
       const firstNameInput = document.querySelector('.person-card [name="fullName"]');
-      if (firstNameInput?.value === 'test999') { await handleTestBypass(); return; }
+      if (firstNameInput?.value.trim().toLowerCase() === 'test999') { await handleTestBypass(); return; }
 
       // Validate all — mark empties red
       inputs.forEach(markField);
