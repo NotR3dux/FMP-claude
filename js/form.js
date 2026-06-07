@@ -409,28 +409,55 @@ function renderNav() {
   // ── Step 3: personal info (always-on btn + validate on click) ──
   if (step === 3) {
     const handleTestBypass = async () => {
-      // If a KTM photo is attached to the first card, upload it so the photo pipeline can be tested
-      const testPhotoFile = document.querySelector('.person-card [name="fullBodyPhoto"]')?.files[0] || null;
-      let testPhotoPath = null;
-      if (testPhotoFile) {
-        btn.disabled = true; btn.textContent = 'Mengupload foto...';
-        const { path } = await uploadFile(testPhotoFile, 'photo', '-test');
-        testPhotoPath = path;
-        btn.disabled = false; btn.textContent = 'Lanjut →';
-      }
+      // Smart bypass: use any field the user actually filled, default the rest.
       const { data } = await supabase.from('persons').select('full_name').ilike('full_name', 'test%');
       const nums = (data || []).map(r => parseInt(r.full_name.replace(/^test/i, ''))).filter(n => !isNaN(n) && n > 0);
       const nextNum = nums.length > 0 ? Math.max(...nums) + 1 : 1;
-      const count = selectedPackage === '2 Person' ? 2 : selectedPackage === '3 Person' ? 3 : 1;
-      formData.persons = Array.from({ length: count }, (_, i) => ({
-        fullName: `test${nextNum + i}`, gender: 'Laki-laki', birth: 'Jakarta, 01/01/2000',
-        university: 'Universitas Airlangga', faculty: 'FEB', studentId: '123456',
-        religion: 'Islam', heightWeight: '170cm / 65kg', ethnicity: 'Jawa', zodiac: 'Aries',
-        purpose: 'Pasangan', hobby: 'Test hobby', idealType: 'Test ideal type',
-        socialMedia: '@test', phone: '08123456789', surveyPersonality: 'ENFP',
-        surveyLoveLanguage: 'Words of Affirmation', surveyCommunication: 'Test',
-        _photoPath: i === 0 ? testPhotoPath : null, _isTest: true,
-      }));
+
+      btn.disabled = true; btn.textContent = 'Memproses...';
+      const cards = [...document.querySelectorAll('.person-card')];
+      formData.persons = [];
+      for (const [i, card] of cards.entries()) {
+        const get = n => card.querySelector(`[name="${n}"]`);
+        const v = (n, def) => { const el = get(n); const val = el?.value?.trim(); return val ? val : def; };
+
+        // birth: combine place + date if given, else default
+        const bp = get('birthPlace')?.value.trim() || '';
+        const bdRaw = get('birthDate')?.value || '';
+        let birth = 'Jakarta, 01/01/2000';
+        if (bp || bdRaw) {
+          const [by, bm, bd] = bdRaw ? bdRaw.split('-') : ['', '', ''];
+          const bf = bdRaw ? `${bd}/${bm}/${by}` : '';
+          birth = (bp || 'Jakarta') + (bf ? ', ' + bf : '');
+        }
+        // height/weight
+        const h = get('height')?.value.trim() || '';
+        const w = get('weight')?.value.trim() || '';
+        const heightWeight = (h || w) ? `${h || '170'}cm / ${w || '65'}kg` : '170cm / 65kg';
+
+        // KTM photo: upload if attached
+        let photoPath = null;
+        const photoFile = get('fullBodyPhoto')?.files[0] || null;
+        if (photoFile) {
+          btn.textContent = 'Mengupload foto...';
+          photoPath = (await uploadFile(photoFile, 'photo', `-${i}`)).path;
+          btn.textContent = 'Memproses...';
+        }
+
+        formData.persons.push({
+          fullName: `test${nextNum + i}`,  // name always auto-incremented
+          gender: v('gender', 'Laki-laki'), birth,
+          university: v('university', 'Universitas Airlangga'), faculty: 'FEB', studentId: '123456',
+          religion: v('religion', 'Islam'), heightWeight,
+          ethnicity: v('ethnicity', 'Jawa'), zodiac: v('zodiac', 'Aries'),
+          purpose: v('purpose', 'Pasangan'), hobby: v('hobby', 'Test hobby'),
+          idealType: v('idealType', 'Test ideal type'), socialMedia: v('socialMedia', '@test'),
+          phone: v('phone', '08123456789'), surveyPersonality: v('surveyPersonality', 'ENFP'),
+          surveyLoveLanguage: v('surveyLoveLanguage', 'Words of Affirmation'),
+          surveyCommunication: v('surveyCommunication', 'Test'),
+          _photoPath: photoPath, _isTest: true,
+        });
+      }
       step = 4; renderForm();
     };
     // Restore draft data now that DOM is ready
