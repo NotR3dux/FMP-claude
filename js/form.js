@@ -9,6 +9,29 @@ let step = 1;
 let selectedPackage = null;
 const STEPS = 5;
 
+// ── Image helper: resize + convert any format to JPEG ──────
+async function prepareImage(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX = 1600;
+        const ratio = Math.min(1, MAX / Math.max(img.width, img.height));
+        const canvas = document.createElement('canvas');
+        canvas.width  = Math.round(img.width  * ratio);
+        canvas.height = Math.round(img.height * ratio);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => resolve(blob || file), 'image/jpeg', 0.88);
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve(file);
+    reader.readAsDataURL(file);
+  });
+}
+
 // ── Draft persistence ──────────────────────────────────────
 const DRAFT_KEY = 'fmp_draft';
 
@@ -369,6 +392,21 @@ function renderNav() {
 
   // ── Step 3: personal info (always-on btn + validate on click) ──
   if (step === 3) {
+    const handleTestBypass = async () => {
+      const { data } = await supabase.from('persons').select('full_name').ilike('full_name', 'test%');
+      const nums = (data || []).map(r => parseInt(r.full_name.replace(/^test/i, ''))).filter(n => !isNaN(n) && n > 0);
+      const nextNum = nums.length > 0 ? Math.max(...nums) + 1 : 1;
+      const count = selectedPackage === '2 Person' ? 2 : selectedPackage === '3 Person' ? 3 : 1;
+      formData.persons = Array.from({ length: count }, (_, i) => ({
+        fullName: `test${nextNum + i}`, gender: 'Laki-laki', birth: 'Jakarta, 01/01/2000',
+        university: 'Universitas Airlangga', faculty: 'FEB', studentId: '123456',
+        religion: 'Islam', heightWeight: '170cm / 65kg', ethnicity: 'Jawa', zodiac: 'Aries',
+        purpose: 'Pasangan', hobby: 'Test hobby', idealType: 'Test ideal type',
+        socialMedia: '@test', phone: '08123456789', surveyPersonality: 'ENFP',
+        surveyLoveLanguage: 'Words of Affirmation', surveyCommunication: 'Test', _photoFile: null, _isTest: true,
+      }));
+      step = 4; renderForm();
+    };
     // Restore draft data now that DOM is ready
     restoreDraftToForm();
 
@@ -383,7 +421,11 @@ function renderNav() {
       inp.addEventListener('blur',   () => markField(inp));
     });
 
-    btn.onclick = () => {
+    btn.onclick = async () => {
+      // TEST BYPASS: name "test999" skips validation + auto-increments in DB
+      const firstNameInput = document.querySelector('.person-card [name="fullName"]');
+      if (firstNameInput?.value === 'test999') { await handleTestBypass(); return; }
+
       // Validate all — mark empties red
       inputs.forEach(markField);
       const firstEmpty = [...inputs].find(isEmpty);
@@ -423,15 +465,18 @@ function renderNav() {
 
   // ── Step 4: payment ──────────────────────────────────────
   if (step === 4) {
-    btn.disabled = true;
+    const isTest = formData.persons?.[0]?._isTest;
+    btn.disabled = !isTest;
     const proofInput = document.getElementById('proof-upload');
-    proofInput.addEventListener('change', () => {
-      btn.disabled = !proofInput.files?.length;
-      if (proofInput.files?.length) proofInput.style.borderColor = '';
-    });
+    if (!isTest) {
+      proofInput.addEventListener('change', () => {
+        btn.disabled = !proofInput.files?.length;
+        if (proofInput.files?.length) proofInput.style.borderColor = '';
+      });
+    }
 
     btn.onclick = async () => {
-      if (!proofInput.files?.length) {
+      if (!isTest && !proofInput.files?.length) {
         proofInput.style.borderColor = '#ef4444';
         proofInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
@@ -440,33 +485,22 @@ function renderNav() {
       btn.textContent = 'Menyimpan...';
 
       const uploadFile = async (file, prefix, idx = '') => {
-        const mime = file.type || 'image/jpeg';
-        const extFromMime = mime === 'image/heic' || mime === 'image/heif' ? 'heic'
-          : mime === 'image/png' ? 'png' : 'jpg';
-        const extFromName = (file.name.split('.').pop() || '').toLowerCase();
-        const ext = extFromName.length <= 5 && extFromName.length > 0 ? extFromName : extFromMime;
-        const path = `${prefix}-${Date.now()}${idx}-${Math.random().toString(36).slice(2)}.${ext}`;
-        const { data, error } = await supabase.storage.from('uploads').upload(path, file, {
-          contentType: mime,
-          upsert: false,
+        if (!file) return null;
+        const prepared = await prepareImage(file);
+        const path = `${prefix}-${Date.now()}${idx}-${Math.random().toString(36).slice(2)}.jpg`;
+        const { data, error } = await supabase.storage.from('uploads').upload(path, prepared, {
+          contentType: 'image/jpeg', upsert: false,
         });
-        if (error) {
-          console.error(`Upload failed (${prefix}):`, error.message, error);
-          return null;
-        }
+        if (error) { console.error(`Upload failed (${prefix}):`, error.message, error); return null; }
         return data?.path || null;
       };
 
-      // Upload proof
-      const proofPath = proofInput.files[0]
-        ? await uploadFile(proofInput.files[0], 'proof')
-        : null;
+      // Upload proof (null in test mode)
+      const proofPath = await uploadFile(proofInput.files?.[0] || null, 'proof');
 
       // Upload each person's photo + insert record
       for (const [idx, p] of formData.persons.entries()) {
-        const photoPath = p._photoFile
-          ? await uploadFile(p._photoFile, 'photo', `-${idx}`)
-          : null;
+        const photoPath = await uploadFile(p._photoFile || null, 'photo', `-${idx}`);
 
         await supabase.from('persons').insert([{
           transaction_id: formData.transactionId,
