@@ -104,7 +104,7 @@
                 <th class="px-4 py-3 text-left">Instagram</th>
                 <th class="px-4 py-3 text-left">No HP</th>
                 <th class="px-4 py-3 text-left">MBTI</th>
-                <th class="px-4 py-3 text-left">Foto</th>
+                <th class="px-4 py-3 text-left">Foto KTM</th>
                 <th class="px-4 py-3 text-left">Aksi</th>
               </tr>
             </thead>
@@ -332,7 +332,7 @@ function renderRegTable() {
           let photoBtn = '';
           if (p.full_body_photo_url) {
             const url = supabase.storage.from('uploads').getPublicUrl(p.full_body_photo_url).data.publicUrl;
-            photoBtn = `<a href="${url}" target="_blank" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-lg transition text-center">📷 Foto</a>`;
+            photoBtn = `<a href="${url}" target="_blank" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-lg transition text-center">📷 Foto KTM</a>`;
           }
           return `<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
             <div class="flex justify-between items-start mb-2">
@@ -386,7 +386,7 @@ window.showDetail = (p) => {
   let photoHtml = '';
   if (p.full_body_photo_url) {
     const url = supabase.storage.from('uploads').getPublicUrl(p.full_body_photo_url).data.publicUrl;
-    photoHtml = `<a href="${url}" target="_blank" class="inline-block mt-1 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg">📷 Lihat Foto Full Body</a>`;
+    photoHtml = `<a href="${url}" target="_blank" class="inline-block mt-1 px-3 py-1.5 bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg">📷 Lihat Foto KTM</a>`;
   }
   if (p.transaction_proof_url) {
     const url = supabase.storage.from('uploads').getPublicUrl(p.transaction_proof_url).data.publicUrl;
