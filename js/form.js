@@ -9,6 +9,84 @@ let step = 1;
 let selectedPackage = null;
 const STEPS = 5;
 
+// ── Draft persistence ──────────────────────────────────────
+const DRAFT_KEY = 'fmp_draft';
+
+function saveDraft() {
+  if (step !== 3) return;
+  const persons = [];
+  for (const card of document.querySelectorAll('.person-card')) {
+    const g = n => card.querySelector(`[name="${n}"]`);
+    persons.push({
+      fullName: g('fullName')?.value || '',
+      gender: g('gender')?.value || '',
+      birthPlace: g('birthPlace')?.value || '',
+      birthDate: g('birthDate')?.value || '',
+      zodiac: g('zodiac')?.value || '',
+      university: g('university')?.value || '',
+      religion: g('religion')?.value || '',
+      height: g('height')?.value || '',
+      weight: g('weight')?.value || '',
+      ethnicity: g('ethnicity')?.value || '',
+      purpose: g('purpose')?.value || '',
+      phone: g('phone')?.value || '',
+      hobby: g('hobby')?.value || '',
+      idealType: g('idealType')?.value || '',
+      socialMedia: g('socialMedia')?.value || '',
+      surveyPersonality: g('surveyPersonality')?.value || '',
+      surveyLoveLanguage: g('surveyLoveLanguage')?.value || '',
+      surveyCommunication: g('surveyCommunication')?.value || '',
+    });
+  }
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({
+      package: formData.package,
+      transactionId: formData.transactionId,
+      persons,
+    }));
+  } catch {}
+}
+
+function clearDraft() {
+  localStorage.removeItem(DRAFT_KEY);
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function restoreDraftToForm() {
+  if (step !== 3) return;
+  const draft = loadDraft();
+  if (!draft?.persons?.length) return;
+  const cards = document.querySelectorAll('.person-card');
+  cards.forEach((card, i) => {
+    const p = draft.persons[i];
+    if (!p) return;
+    const set = (name, val) => {
+      if (!val) return;
+      const el = card.querySelector(`[name="${name}"]`);
+      if (el) el.value = val;
+    };
+    set('fullName', p.fullName);   set('gender', p.gender);
+    set('birthPlace', p.birthPlace); set('birthDate', p.birthDate);
+    set('zodiac', p.zodiac);       set('university', p.university);
+    set('religion', p.religion);   set('height', p.height);
+    set('weight', p.weight);       set('ethnicity', p.ethnicity);
+    set('purpose', p.purpose);     set('phone', p.phone);
+    set('hobby', p.hobby);         set('idealType', p.idealType);
+    set('socialMedia', p.socialMedia);
+    set('surveyPersonality', p.surveyPersonality);
+    set('surveyLoveLanguage', p.surveyLoveLanguage);
+    set('surveyCommunication', p.surveyCommunication);
+  });
+  applySelectStyles();
+}
+
+// ── Step meta ──────────────────────────────────────────────
 const stepMeta = {
   1: { title: 'Syarat & Ketentuan ✏️',   sub: '' },
   2: { title: '💎 Pilih Paket',           sub: 'Pilih paket yang sesuai kebutuhanmu' },
@@ -18,9 +96,18 @@ const stepMeta = {
 };
 
 export function initForm() {
-  step = 1;
-  selectedPackage = null;
-  Object.assign(formData, { package: null, transactionId: null, persons: [] });
+  const draft = loadDraft();
+  if (draft?.persons?.length > 0 && draft.package) {
+    // Restore to step 3 with saved package + transaction
+    step = 3;
+    selectedPackage = draft.package;
+    formData.package = draft.package;
+    formData.transactionId = draft.transactionId;
+  } else {
+    step = 1;
+    selectedPackage = null;
+    Object.assign(formData, { package: null, transactionId: null, persons: [] });
+  }
   renderForm();
 }
 
@@ -96,7 +183,14 @@ async function renderContent() {
 
   } else if (step === 3) {
     const count = selectedPackage === '2 Person' ? 2 : selectedPackage === '3 Person' ? 3 : 1;
-    el.innerHTML = Array.from({ length: count }, (_, i) => renderPersonForm(i + 1)).join('');
+    const draft = loadDraft();
+    const hasDraft = draft?.persons?.some(p => Object.values(p).some(v => v));
+    el.innerHTML = (hasDraft
+      ? `<div style="background:#f0f9ee;border:1.5px solid var(--green);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);">
+           <span style="font-size:18px;">💾</span>
+           <span><strong>Data tersimpan dipulihkan.</strong> Lanjut dari bagian yang belum selesai — foto perlu diupload ulang.</span>
+         </div>`
+      : '') + Array.from({ length: count }, (_, i) => renderPersonForm(i + 1)).join('');
 
   } else if (step === 4) {
     const priceMap  = { 'Solo': 'Rp 15.000', '2 Person': 'Rp 25.000', '3 Person': 'Rp 35.000' };
@@ -249,12 +343,14 @@ function renderNav() {
   if (isLast) return;
   const btn = document.getElementById('continue-btn');
 
+  // ── Step 1: checkbox gate ────────────────────────────────
   if (step === 1) {
     document.getElementById('tos-agree').addEventListener('change', e => {
       btn.disabled = !e.target.checked;
     });
   }
 
+  // ── Step 2: package selection ────────────────────────────
   if (step === 2) {
     btn.disabled = true;
     document.querySelectorAll('input[name="package"]').forEach(radio => {
@@ -271,30 +367,32 @@ function renderNav() {
     });
   }
 
+  // ── Step 3: personal info (always-on btn + validate on click) ──
   if (step === 3) {
-    btn.disabled = true;
-    const inputs = document.querySelectorAll('.person-card input, .person-card select, .person-card textarea');
+    // Restore draft data now that DOM is ready
+    restoreDraftToForm();
+
+    const inputs  = document.querySelectorAll('.person-card input, .person-card select, .person-card textarea');
     const isEmpty = inp => inp.type === 'file' ? !inp.files?.length : !inp.value.trim();
-    const validate = () => {
-      btn.disabled = [...inputs].some(isEmpty);
-    };
-    const markField = inp => {
-      inp.style.borderColor = isEmpty(inp) ? '#ef4444' : '';
-    };
-    btn.addEventListener('click', () => {
-      if (btn.disabled) {
-        inputs.forEach(markField);
-        const first = [...inputs].find(isEmpty);
-        if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, true);
+    const markField = inp => { inp.style.borderColor = isEmpty(inp) ? '#ef4444' : ''; };
+
+    // Live feedback + auto-save
     inputs.forEach(inp => {
-      inp.addEventListener('input',  () => { validate(); if (!isEmpty(inp)) inp.style.borderColor = ''; });
-      inp.addEventListener('change', () => { validate(); markField(inp); });
-      inp.addEventListener('blur',   () => { if (isEmpty(inp)) inp.style.borderColor = '#ef4444'; });
+      inp.addEventListener('input',  () => { if (!isEmpty(inp)) inp.style.borderColor = ''; saveDraft(); });
+      inp.addEventListener('change', () => { markField(inp); saveDraft(); });
+      inp.addEventListener('blur',   () => markField(inp));
     });
 
     btn.onclick = () => {
+      // Validate all — mark empties red
+      inputs.forEach(markField);
+      const firstEmpty = [...inputs].find(isEmpty);
+      if (firstEmpty) {
+        firstEmpty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return; // Block navigation
+      }
+
+      // All valid — collect data
       formData.persons = [];
       for (const card of document.querySelectorAll('.person-card')) {
         const get = n => card.querySelector(`[name="${n}"]`);
@@ -323,32 +421,50 @@ function renderNav() {
     };
   }
 
+  // ── Step 4: payment ──────────────────────────────────────
   if (step === 4) {
     btn.disabled = true;
     const proofInput = document.getElementById('proof-upload');
     proofInput.addEventListener('change', () => {
       btn.disabled = !proofInput.files?.length;
-    });
-    proofInput.addEventListener('blur', () => {
-      if (!proofInput.files?.length) proofInput.style.borderColor = '#ef4444';
+      if (proofInput.files?.length) proofInput.style.borderColor = '';
     });
 
     btn.onclick = async () => {
+      if (!proofInput.files?.length) {
+        proofInput.style.borderColor = '#ef4444';
+        proofInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
       btn.disabled = true;
       btn.textContent = 'Menyimpan...';
 
+      // Upload proof
       let proofPath = null;
       const proofFile = proofInput.files[0];
       if (proofFile) {
-        const { data } = await supabase.storage.from('uploads').upload(`proof-${Date.now()}.jpg`, proofFile);
-        if (data) proofPath = data.path;
+        const ext = (proofFile.name.split('.').pop() || 'jpg').toLowerCase();
+        const { data, error } = await supabase.storage.from('uploads').upload(
+          `proof-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`,
+          proofFile,
+          { contentType: proofFile.type }
+        );
+        if (error) console.error('Proof upload error:', error);
+        else if (data) proofPath = data.path;
       }
 
-      for (const p of formData.persons) {
+      // Upload each person's photo + insert record
+      for (const [idx, p] of formData.persons.entries()) {
         let photoPath = null;
         if (p._photoFile) {
-          const { data } = await supabase.storage.from('uploads').upload(`photo-${Date.now()}.jpg`, p._photoFile);
-          if (data) photoPath = data.path;
+          const ext = (p._photoFile.name.split('.').pop() || 'jpg').toLowerCase();
+          const { data, error } = await supabase.storage.from('uploads').upload(
+            `photo-${Date.now()}-${idx}-${Math.random().toString(36).slice(2)}.${ext}`,
+            p._photoFile,
+            { contentType: p._photoFile.type }
+          );
+          if (error) console.error('Photo upload error:', error);
+          else if (data) photoPath = data.path;
         }
         await supabase.from('persons').insert([{
           transaction_id: formData.transactionId,
@@ -365,6 +481,7 @@ function renderNav() {
         }]);
       }
 
+      clearDraft();
       step = 5;
       renderForm();
     };
