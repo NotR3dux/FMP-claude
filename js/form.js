@@ -368,6 +368,10 @@ function renderNav() {
   const isFirst = step === 1;
   const isLast  = step === STEPS;
 
+  // Top nav "Kembali ke Beranda" hidden on submitted step (already shown in content)
+  const navBack = document.getElementById('form-nav-back');
+  if (navBack) navBack.style.display = isLast ? 'none' : '';
+
   // On the last step (submitted), no back-to-step button — only return to home, centered.
   if (isLast) {
     el.style.justifyContent = 'center';
