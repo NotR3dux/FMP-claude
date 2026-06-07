@@ -368,18 +368,24 @@ function renderNav() {
   const isFirst = step === 1;
   const isLast  = step === STEPS;
 
+  // On the last step (submitted), no back-to-step button — only return to home, centered.
+  if (isLast) {
+    el.style.justifyContent = 'center';
+    el.innerHTML = `
+      <button onclick="window.navTo('home')" class="btn-red" style="padding:12px 30px;font-size:14px;">Kembali ke Beranda 🏠</button>
+    `;
+    return;
+  }
+  el.style.justifyContent = '';
+
   el.innerHTML = `
     <button onclick="${isFirst ? "window.navTo('home')" : 'window.stepBack()'}"
       style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;font-family:'Inter',sans-serif;padding:12px 0;">
       ← Kembali
     </button>
-    ${isLast
-      ? `<button onclick="window.navTo('home')" class="btn-red" style="padding:12px 30px;font-size:14px;">Kembali ke Beranda 🏠</button>`
-      : `<button id="continue-btn" onclick="window.stepNext()" class="btn-red" style="padding:12px 30px;font-size:14px;" ${isFirst ? 'disabled' : ''}>Lanjut →</button>`
-    }
+    <button id="continue-btn" onclick="window.stepNext()" class="btn-red" style="padding:12px 30px;font-size:14px;" ${isFirst ? 'disabled' : ''}>Lanjut →</button>
   `;
 
-  if (isLast) return;
   const btn = document.getElementById('continue-btn');
 
   // ── Step 1: checkbox gate ────────────────────────────────
