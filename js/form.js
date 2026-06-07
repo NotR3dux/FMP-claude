@@ -13,8 +13,8 @@ const stepMeta = {
   1: { title: 'Syarat & Ketentuan ✏️',   sub: '' },
   2: { title: '💎 Pilih Paket',           sub: 'Pilih paket yang sesuai kebutuhanmu' },
   3: { title: 'Info Personal 📝',         sub: 'Ceritain sedikit tentang dirimu!' },
-  4: { title: 'Konfirmasi ✔️',            sub: 'Pastikan semua data sudah benar' },
-  5: { title: 'Terima Kasih! 🎉',         sub: 'Pendaftaran berhasil!' },
+  4: { title: 'Pembayaran 💳',             sub: 'Transfer dan upload bukti pembayaran' },
+  5: { title: 'Sedang Diproses ⏳',       sub: 'Pendaftaran kamu sedang kami proses' },
 };
 
 export function initForm() {
@@ -99,44 +99,54 @@ async function renderContent() {
     el.innerHTML = Array.from({ length: count }, (_, i) => renderPersonForm(i + 1)).join('');
 
   } else if (step === 4) {
-    const persons = formData.persons;
+    const priceMap  = { 'Solo': 'Rp 15.000', '2 Person': 'Rp 25.000', '3 Person': 'Rp 35.000' };
+    const pkgLabel  = { 'Solo': 'Solo (1 orang)', '2 Person': '2 Orang', '3 Person': '3 Orang' };
+    const price     = priceMap[formData.package] || '';
+    const pkg       = pkgLabel[formData.package] || formData.package;
+    const firstName = formData.persons?.[0]?.fullName || 'Nama Lengkap';
     el.innerHTML = `
       <div class="fcard">
-        <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Pastikan semua informasi sudah benar sebelum submit.</p>
-        ${(persons || []).map((p, i) => `
-          <div class="confirm-card">
-            <h3 style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:10px;">Person ${i + 1}</h3>
-            ${Object.entries({
-              'Nama': p.fullName, 'Jenis Kelamin': p.gender, 'Tempat, Tgl Lahir': p.birth,
-              'Universitas': p.university, 'Agama': p.religion, 'TB/BB': p.heightWeight, 'Etnis': p.ethnicity,
-              'Zodiak': p.zodiac, 'Tujuan': p.purpose, 'Hobi': p.hobby,
-              'Tipe Ideal': p.idealType, 'Instagram': p.socialMedia, 'No. HP': p.phone,
-              'MBTI': p.surveyPersonality, 'Love Language': p.surveyLoveLanguage,
-              'Communication Style': p.surveyCommunication,
-            }).filter(([,v]) => v).map(([k,v]) => `
-              <div style="display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:13px;">
-                <span style="font-weight:700;color:var(--dark);min-width:140px;">${k}:</span>
-                <span style="color:var(--muted);">${v}</span>
-              </div>
-            `).join('')}
-            <div style="display:flex;gap:8px;padding:5px 0;font-size:13px;"><span style="font-weight:700;color:var(--dark);min-width:140px;">Foto:</span><span style="color:var(--green-d);">✅ Uploaded</span></div>
-            <div style="display:flex;gap:8px;padding:5px 0;font-size:13px;"><span style="font-weight:700;color:var(--dark);min-width:140px;">Bukti Bayar:</span><span style="color:var(--green-d);">✅ Uploaded</span></div>
+        <div style="background:#f0f9ee;border-radius:12px;padding:14px 18px;margin-bottom:20px;border:1.5px solid var(--green);display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:2px;">Paket yang dipilih</div>
+            <div style="font-size:16px;font-weight:800;color:var(--dark);">${pkg}</div>
           </div>
-        `).join('')}
+          <div style="font-size:26px;font-weight:900;color:var(--green-d);">${price}</div>
+        </div>
+
+        <h3 style="font-size:15px;font-weight:800;color:var(--dark);margin-bottom:12px;">💳 Info Pembayaran</h3>
+        <div style="background:#fff;border:1.5px solid #e8e8e8;border-radius:12px;padding:16px 18px;margin-bottom:16px;">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px;">Transfer ke rekening:</div>
+          <div style="font-size:16px;font-weight:800;color:var(--dark);">BLU BCA</div>
+          <div style="font-size:24px;font-weight:900;color:var(--green-d);letter-spacing:3px;margin:8px 0;">0067 0723 8457</div>
+          <div style="font-size:13px;color:var(--muted);">a.n. <strong style="color:var(--dark);">Olivia Calista Widodo</strong></div>
+        </div>
+
+        <div style="background:#fffbe6;border:1.5px solid #F5C840;border-radius:12px;padding:14px 16px;margin-bottom:20px;">
+          <div style="font-size:13px;font-weight:800;color:var(--dark);margin-bottom:6px;">📝 Berita Acara Transfer</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">Format: <code style="background:#fff3cc;padding:2px 7px;border-radius:4px;font-size:12px;font-weight:700;">NamaLengkap_PaketYangDipilih</code></div>
+          <div style="font-size:13px;color:var(--muted);">Contoh: <strong style="color:var(--dark);">${firstName}_Paket ${pkg}</strong></div>
+        </div>
+
+        <div class="fgroup">
+          <label>Screenshot Bukti Transfer *</label>
+          <input type="file" id="proof-upload" accept="image/*">
+          <small style="color:var(--muted);font-size:12px;margin-top:4px;display:block;">Upload screenshot bukti transfer dari aplikasi banking kamu</small>
+        </div>
       </div>`;
 
   } else if (step === 5) {
     el.innerHTML = `
       <div class="fcard" style="text-align:center;padding:40px 24px;">
-        <div style="font-size:64px;margin-bottom:16px;">🎉</div>
-        <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px;">Pendaftaran Berhasil!</h2>
-        <p style="font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:16px;">
-          Tim Find My Partner akan hubungi kamu via <strong>DM Instagram</strong> kalau kamu dapat match.
-          Pastikan DM terbuka dan cek notifikasi secara berkala. 💌✨
+        <div style="font-size:64px;margin-bottom:16px;">⏳</div>
+        <h2 class="jk" style="font-size:24px;font-weight:900;color:var(--dark);margin-bottom:12px;">Pesanan Sedang Diproses!</h2>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:20px;">
+          Pembayaran kamu sedang kami verifikasi. Tim Find My Partner akan menghubungi kamu lewat
+          <strong>DM Instagram</strong> kalau sudah dapat match. Sabar ya! 💌
         </p>
-        <div style="background:#f0f9ee;border-radius:12px;padding:16px;margin-bottom:20px;border:1.5px solid var(--green);">
-          <ul style="font-size:13px;color:var(--muted);text-align:left;list-style:disc;padding-left:18px;line-height:1.8;">
-            <li>Pastikan DM Instagram kamu terbuka</li>
+        <div style="background:#f0f9ee;border-radius:12px;padding:16px 18px;margin-bottom:20px;border:1.5px solid var(--green);text-align:left;">
+          <ul style="font-size:13px;color:var(--muted);list-style:disc;padding-left:18px;line-height:1.9;margin:0;">
+            <li>Pastikan DM Instagram kamu <strong style="color:var(--dark);">terbuka</strong></li>
             <li>Follow <a href="https://www.instagram.com/_findmypartner/" target="_blank" style="color:var(--green-d);font-weight:700;">@_findmypartner</a></li>
             <li>Cek notifikasi secara berkala</li>
           </ul>
@@ -284,26 +294,14 @@ function renderNav() {
       inp.addEventListener('blur',   () => { if (isEmpty(inp)) inp.style.borderColor = '#ef4444'; });
     });
 
-    btn.onclick = async () => {
-      btn.disabled = true;
-      btn.textContent = 'Menyimpan...';
+    btn.onclick = () => {
       formData.persons = [];
-
       for (const card of document.querySelectorAll('.person-card')) {
         const get = n => card.querySelector(`[name="${n}"]`);
-        const photoFile = get('fullBodyPhoto').files[0];
-        const proofFile = null;
-
-        let photoPath = null;
-        if (photoFile) {
-          const { data } = await supabase.storage.from('uploads').upload(`photo-${Date.now()}.jpg`, photoFile);
-          if (data) photoPath = data.path;
-        }
-
         const birthDateRaw = get('birthDate').value;
         const [by, bm, bd] = birthDateRaw ? birthDateRaw.split('-') : ['', '', ''];
         const birthFormatted = birthDateRaw ? `${bd}/${bm}/${by}` : '';
-        const p = {
+        formData.persons.push({
           fullName: get('fullName').value, gender: get('gender').value,
           birth: get('birthPlace').value + (birthFormatted ? ', ' + birthFormatted : ''),
           university: get('university').value,
@@ -317,8 +315,41 @@ function renderNav() {
           surveyPersonality: get('surveyPersonality').value,
           surveyLoveLanguage: get('surveyLoveLanguage').value,
           surveyCommunication: get('surveyCommunication').value,
-        };
+          _photoFile: get('fullBodyPhoto').files[0] || null,
+        });
+      }
+      step = 4;
+      renderForm();
+    };
+  }
 
+  if (step === 4) {
+    btn.disabled = true;
+    const proofInput = document.getElementById('proof-upload');
+    proofInput.addEventListener('change', () => {
+      btn.disabled = !proofInput.files?.length;
+    });
+    proofInput.addEventListener('blur', () => {
+      if (!proofInput.files?.length) proofInput.style.borderColor = '#ef4444';
+    });
+
+    btn.onclick = async () => {
+      btn.disabled = true;
+      btn.textContent = 'Menyimpan...';
+
+      let proofPath = null;
+      const proofFile = proofInput.files[0];
+      if (proofFile) {
+        const { data } = await supabase.storage.from('uploads').upload(`proof-${Date.now()}.jpg`, proofFile);
+        if (data) proofPath = data.path;
+      }
+
+      for (const p of formData.persons) {
+        let photoPath = null;
+        if (p._photoFile) {
+          const { data } = await supabase.storage.from('uploads').upload(`photo-${Date.now()}.jpg`, p._photoFile);
+          if (data) photoPath = data.path;
+        }
         await supabase.from('persons').insert([{
           transaction_id: formData.transactionId,
           full_name: p.fullName, gender: p.gender, birth: p.birth,
@@ -330,17 +361,13 @@ function renderNav() {
           survey_love_language: p.surveyLoveLanguage,
           survey_communication: p.surveyCommunication,
           full_body_photo_url: photoPath,
+          transaction_proof_url: proofPath,
         }]);
-
-        formData.persons.push(p);
       }
-      step = 4;
+
+      step = 5;
       renderForm();
     };
-  }
-
-  if (step === 4) {
-    btn.onclick = () => { step = 5; renderForm(); };
   }
 }
 
