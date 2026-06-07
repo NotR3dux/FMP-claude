@@ -10,14 +10,16 @@
     body { font-family: 'Inter', sans-serif; }
     .jk { font-family: 'Nunito', sans-serif; }
     .tab-btn.active { background: #266010; color: #fff; }
-    .badge { display:inline-block; padding:2px 10px; border-radius:9999px; font-size:11px; font-weight:700; }
+    .badge { display:inline-block; padding:2px 10px; border-radius:9999px; font-size:11px; font-weight:700; white-space:nowrap; }
+    .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
+    .scrollbar-hide::-webkit-scrollbar { display:none; }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
 <!-- LOGIN -->
-<div id="login-screen" class="min-h-screen flex items-center justify-center">
-  <div class="bg-white shadow-xl rounded-2xl p-10 w-full max-w-sm">
+<div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white shadow-xl rounded-2xl p-8 md:p-10 w-full max-w-sm">
     <div class="text-center mb-8">
       <div style="font-size:48px;margin-bottom:8px;">🔒</div>
       <h1 class="jk text-2xl font-black text-gray-800">Admin Panel</h1>
@@ -35,52 +37,52 @@
 <!-- ADMIN PANEL -->
 <div id="admin-panel" class="hidden">
 
-  <header class="bg-green-800 text-white px-8 py-4 flex items-center justify-between shadow-lg">
-    <div class="flex items-center gap-3">
-      <span class="text-2xl">🌿</span>
+  <header class="bg-green-800 text-white px-4 md:px-8 py-3 md:py-4 flex items-center justify-between shadow-lg sticky top-0 z-10">
+    <div class="flex items-center gap-2 md:gap-3">
+      <span class="text-xl md:text-2xl">🌿</span>
       <div>
-        <h1 class="jk font-black text-xl">Find My Partner</h1>
+        <h1 class="jk font-black text-base md:text-xl leading-tight">Find My Partner</h1>
         <p class="text-green-300 text-xs">Admin Dashboard</p>
       </div>
     </div>
     <button onclick="logout()" class="text-green-300 hover:text-white text-sm font-semibold transition">Keluar →</button>
   </header>
 
-  <div class="bg-white border-b border-gray-200 px-8">
-    <div class="flex gap-1 pt-3">
-      <button class="tab-btn active px-5 py-2.5 rounded-t-lg font-bold text-sm jk transition" onclick="switchTab('registrations', this)">📋 Pendaftaran</button>
-      <button class="tab-btn px-5 py-2.5 rounded-t-lg font-bold text-sm text-gray-500 hover:text-gray-700 jk transition" onclick="switchTab('reviews', this)">💬 Reviews</button>
-      <button class="tab-btn px-5 py-2.5 rounded-t-lg font-bold text-sm text-gray-500 hover:text-gray-700 jk transition" onclick="switchTab('prices', this)">💰 Harga</button>
+  <div class="bg-white border-b border-gray-200 px-3 md:px-8">
+    <div class="flex gap-1 pt-3 scrollbar-hide overflow-x-auto">
+      <button class="tab-btn active px-4 py-2 md:px-5 md:py-2.5 rounded-t-lg font-bold text-xs md:text-sm jk transition whitespace-nowrap" onclick="switchTab('registrations', this)">📋 Pendaftaran</button>
+      <button class="tab-btn px-4 py-2 md:px-5 md:py-2.5 rounded-t-lg font-bold text-xs md:text-sm text-gray-500 hover:text-gray-700 jk transition whitespace-nowrap" onclick="switchTab('reviews', this)">💬 Reviews</button>
+      <button class="tab-btn px-4 py-2 md:px-5 md:py-2.5 rounded-t-lg font-bold text-xs md:text-sm text-gray-500 hover:text-gray-700 jk transition whitespace-nowrap" onclick="switchTab('prices', this)">💰 Harga</button>
     </div>
   </div>
 
-  <div class="p-6">
+  <div class="p-3 md:p-6">
 
     <!-- ── REGISTRATIONS ──────────────────────────────────── -->
     <div id="tab-registrations">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-          <p class="text-3xl font-black text-blue-600 jk" id="s-total">-</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
+        <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm border border-gray-100 text-center">
+          <p class="text-2xl md:text-3xl font-black text-blue-600 jk" id="s-total">-</p>
           <p class="text-xs text-gray-500 mt-1 font-semibold">Total Pendaftar</p>
         </div>
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-          <p class="text-3xl font-black text-green-600 jk" id="s-solo">-</p>
+        <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm border border-gray-100 text-center">
+          <p class="text-2xl md:text-3xl font-black text-green-600 jk" id="s-solo">-</p>
           <p class="text-xs text-gray-500 mt-1 font-semibold">Solo</p>
         </div>
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-          <p class="text-3xl font-black text-purple-600 jk" id="s-duo">-</p>
+        <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm border border-gray-100 text-center">
+          <p class="text-2xl md:text-3xl font-black text-purple-600 jk" id="s-duo">-</p>
           <p class="text-xs text-gray-500 mt-1 font-semibold">2 Person</p>
         </div>
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
-          <p class="text-3xl font-black text-pink-600 jk" id="s-trio">-</p>
+        <div class="bg-white rounded-xl p-3 md:p-4 shadow-sm border border-gray-100 text-center">
+          <p class="text-2xl md:text-3xl font-black text-pink-600 jk" id="s-trio">-</p>
           <p class="text-xs text-gray-500 mt-1 font-semibold">3 Person</p>
         </div>
       </div>
 
-      <div class="flex gap-3 mb-4">
-        <input type="text" id="reg-search" placeholder="🔍 Cari nama, NIM, atau universitas..."
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-4">
+        <input type="text" id="reg-search" placeholder="🔍 Cari nama atau universitas..."
           class="flex-1 px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition">
-        <select id="reg-filter" class="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition">
+        <select id="reg-filter" class="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition sm:w-40">
           <option value="">Semua paket</option>
           <option value="Solo">Solo</option>
           <option value="2 Person">2 Person</option>
@@ -88,7 +90,8 @@
         </select>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <!-- Desktop table (hidden on mobile) -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hidden md:block">
         <div class="overflow-x-auto">
           <table class="min-w-full text-sm">
             <thead class="bg-green-50 text-green-800 text-xs uppercase font-bold">
@@ -114,12 +117,19 @@
           <button onclick="regNext()" class="px-4 py-2 bg-white border border-gray-200 hover:bg-gray-100 rounded-lg text-sm font-semibold transition">Next →</button>
         </div>
       </div>
+
+      <!-- Mobile cards (hidden on desktop) -->
+      <div id="reg-cards-wrap" class="md:hidden flex flex-col gap-3"></div>
+      <div id="reg-mobile-pagination" class="md:hidden flex justify-between items-center mt-3 bg-white rounded-xl p-3 border border-gray-100 shadow-sm">
+        <button onclick="regPrev()" class="px-4 py-2 bg-white border border-gray-200 hover:bg-gray-100 rounded-lg text-sm font-semibold transition">← Prev</button>
+        <span id="reg-page-info-mobile" class="text-xs text-gray-500 font-medium text-center"></span>
+        <button onclick="regNext()" class="px-4 py-2 bg-white border border-gray-200 hover:bg-gray-100 rounded-lg text-sm font-semibold transition">Next →</button>
+      </div>
     </div>
 
     <!-- ── REVIEWS ─────────────────────────────────────────── -->
     <div id="tab-reviews" class="hidden">
-      <!-- Add review manually -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-6 max-w-lg">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 md:p-5 mb-6 md:max-w-lg">
         <h2 class="jk font-black text-base text-gray-800 mb-4">➕ Tambah Review Manual</h2>
         <div class="flex flex-col gap-3">
           <input id="rv-add-name" type="text" placeholder="Nama" class="px-4 py-2.5 border-2 border-gray-200 rounded-xl text-sm focus:outline-none focus:border-green-600 transition">
@@ -139,13 +149,13 @@
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid md:grid-cols-2 gap-5 md:gap-6">
         <div>
-          <h2 class="jk font-black text-lg text-gray-800 mb-4">⏳ Pending <span id="pending-count" class="text-yellow-600 text-sm"></span></h2>
+          <h2 class="jk font-black text-base md:text-lg text-gray-800 mb-3">⏳ Pending <span id="pending-count" class="text-yellow-600 text-sm"></span></h2>
           <div id="pending-list"><p class="text-gray-400 text-sm">Memuat...</p></div>
         </div>
         <div>
-          <h2 class="jk font-black text-lg text-gray-800 mb-4">✅ Approved <span id="approved-count" class="text-green-600 text-sm"></span></h2>
+          <h2 class="jk font-black text-base md:text-lg text-gray-800 mb-3">✅ Approved <span id="approved-count" class="text-green-600 text-sm"></span></h2>
           <div id="approved-list"><p class="text-gray-400 text-sm">Memuat...</p></div>
         </div>
       </div>
@@ -155,7 +165,7 @@
     <div id="tab-prices" class="hidden">
       <div class="max-w-sm">
         <h2 class="jk font-black text-lg text-gray-800 mb-5">💰 Edit Harga</h2>
-        <div id="price-form" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col gap-4">
+        <div id="price-form" class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 md:p-6 flex flex-col gap-4">
           <p class="text-gray-400 text-sm">Memuat...</p>
         </div>
         <button onclick="savePrices()" class="mt-4 w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-xl font-bold jk transition">Simpan Harga</button>
@@ -166,9 +176,9 @@
   </div>
 </div>
 
-<!-- DETAIL MODAL -->
-<div id="detail-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onclick="if(event.target===this)closeDetail()">
-  <div class="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-6">
+<!-- DETAIL MODAL — bottom sheet on mobile, centered on desktop -->
+<div id="detail-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center" onclick="if(event.target===this)closeDetail()">
+  <div class="bg-white rounded-t-2xl md:rounded-2xl shadow-xl w-full md:max-w-lg max-h-[85vh] overflow-y-auto p-5 md:p-6">
     <div class="flex justify-between items-center mb-4">
       <h3 class="jk font-black text-lg text-gray-800">Detail Pendaftar</h3>
       <button onclick="closeDetail()" class="text-gray-400 hover:text-gray-700 text-2xl leading-none">✕</button>
@@ -194,12 +204,10 @@ function showPanel() {
   loadAll();
 }
 
-// ── Auth state ─────────────────────────────────────────────
 supabase.auth.getSession().then(({ data: { session } }) => {
   if (session) showPanel();
 });
 
-// ── Login ──────────────────────────────────────────────────
 async function doLogin() {
   const email    = document.getElementById('admin-email').value.trim();
   const password = document.getElementById('admin-password').value;
@@ -225,7 +233,6 @@ window.logout = async () => {
   document.getElementById('admin-password').value = '';
 };
 
-// ── Tabs ───────────────────────────────────────────────────
 window.switchTab = (tab, btn) => {
   ['registrations','reviews','prices'].forEach(t => document.getElementById('tab-'+t).classList.add('hidden'));
   document.getElementById('tab-'+tab).classList.remove('hidden');
@@ -237,7 +244,6 @@ async function loadAll() {
   await Promise.all([loadRegistrations(), loadReviews(), loadPriceForm()]);
 }
 
-// ── Registrations ──────────────────────────────────────────
 async function loadRegistrations() {
   const { data, error } = await supabase
     .from('persons')
@@ -271,14 +277,15 @@ function updateStats() {
   document.getElementById('s-trio').textContent  = filteredReg.filter(p => p.transactions?.package === '3 Person').length;
 }
 
+const pkgColor = { 'Solo': 'bg-blue-100 text-blue-700', '2 Person': 'bg-purple-100 text-purple-700', '3 Person': 'bg-pink-100 text-pink-700' };
+const purposeColor = p => p === 'Pasangan' ? 'bg-pink-100 text-pink-700' : 'bg-green-100 text-green-700';
+
 function renderRegTable() {
   const start = (regPage - 1) * PER_PAGE;
   const rows  = filteredReg.slice(start, start + PER_PAGE);
   const total = Math.ceil(filteredReg.length / PER_PAGE) || 1;
 
-  const pkgColor = { 'Solo': 'bg-blue-100 text-blue-700', '2 Person': 'bg-purple-100 text-purple-700', '3 Person': 'bg-pink-100 text-pink-700' };
-  const purposeColor = p => p === 'Pasangan' ? 'bg-pink-100 text-pink-700' : 'bg-green-100 text-green-700';
-
+  // ── Desktop table rows ──────────────────────────────────
   document.getElementById('reg-tbody').innerHTML = rows.length === 0
     ? `<tr><td colspan="10" class="px-4 py-8 text-center text-gray-400">Tidak ada data pendaftar.</td></tr>`
     : rows.map(p => {
@@ -301,26 +308,66 @@ function renderRegTable() {
           <td class="px-4 py-3 text-gray-600 text-xs">${p.phone || '-'}</td>
           <td class="px-4 py-3 text-gray-600 text-xs">${p.survey_personality || '-'}</td>
           <td class="px-4 py-3">${photoCell}</td>
-          <td class="px-4 py-3 flex gap-1.5">
-            <button onclick="showDetail(${JSON.stringify(p).replace(/"/g,'&quot;')})"
-              class="px-3 py-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold rounded-lg transition">
-              Detail
-            </button>
-            <button onclick="deleteReg('${p.id}','${p.transaction_id}')"
-              class="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition">
-              Hapus
-            </button>
+          <td class="px-4 py-3">
+            <div class="flex gap-1.5">
+              <button onclick="showDetail(${JSON.stringify(p).replace(/"/g,'&quot;')})"
+                class="px-3 py-1 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold rounded-lg transition">Detail</button>
+              <button onclick="deleteReg('${p.id}','${p.transaction_id}')"
+                class="px-3 py-1 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition">Hapus</button>
+            </div>
           </td>
         </tr>`;
       }).join('');
 
+  // ── Mobile cards ────────────────────────────────────────
+  const cardsWrap = document.getElementById('reg-cards-wrap');
+  if (cardsWrap) {
+    cardsWrap.innerHTML = rows.length === 0
+      ? `<div class="bg-white rounded-xl p-6 text-center text-gray-400 border border-gray-100 shadow-sm text-sm">Tidak ada data pendaftar.</div>`
+      : rows.map(p => {
+          const pkg  = p.transactions?.package || '-';
+          const date = p.transactions?.created_at
+            ? new Date(p.transactions.created_at).toLocaleDateString('id-ID', { day:'2-digit', month:'short', year:'numeric' })
+            : '-';
+          let photoBtn = '';
+          if (p.full_body_photo_url) {
+            const url = supabase.storage.from('uploads').getPublicUrl(p.full_body_photo_url).data.publicUrl;
+            photoBtn = `<a href="${url}" target="_blank" class="px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-xs font-bold rounded-lg transition text-center">📷 Foto</a>`;
+          }
+          return `<div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <div class="flex justify-between items-start mb-2">
+              <div class="min-w-0 flex-1 mr-2">
+                <div class="font-bold text-gray-800 text-sm truncate">${p.full_name || '-'}</div>
+                <div class="text-xs text-gray-400 mt-0.5 truncate">${p.university || '-'}</div>
+              </div>
+              <span class="badge ${pkgColor[pkg] || 'bg-gray-100 text-gray-600'} shrink-0">${pkg}</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              ${p.purpose ? `<span class="badge ${purposeColor(p.purpose)}">${p.purpose}</span>` : ''}
+              ${p.social_media ? `<span class="text-xs bg-gray-100 text-gray-600 rounded-full px-2 py-0.5">${p.social_media}</span>` : ''}
+              ${p.survey_personality ? `<span class="text-xs bg-gray-100 text-gray-600 rounded-full px-2 py-0.5">${p.survey_personality}</span>` : ''}
+              <span class="text-xs text-gray-400">${date}</span>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="showDetail(${JSON.stringify(p).replace(/"/g,'&quot;')})"
+                class="flex-1 py-2 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold rounded-lg transition text-center">Detail</button>
+              ${photoBtn}
+              <button onclick="deleteReg('${p.id}','${p.transaction_id}')"
+                class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-lg transition">Hapus</button>
+            </div>
+          </div>`;
+        }).join('');
+  }
+
+  const pageText = `Hal ${regPage} / ${total} · ${filteredReg.length} data`;
   document.getElementById('reg-page-info').textContent = `Halaman ${regPage} dari ${total} (${filteredReg.length} data)`;
+  const mobileInfo = document.getElementById('reg-page-info-mobile');
+  if (mobileInfo) mobileInfo.textContent = pageText;
 }
 
 window.regPrev = () => { if (regPage > 1) { regPage--; renderRegTable(); } };
 window.regNext = () => { if (regPage < Math.ceil(filteredReg.length / PER_PAGE)) { regPage++; renderRegTable(); } };
 
-// ── Detail modal ───────────────────────────────────────────
 window.showDetail = (p) => {
   const fields = {
     'Nama Lengkap': p.full_name, 'Gender': p.gender, 'Tgl Lahir': p.birth,
@@ -353,8 +400,8 @@ window.showDetail = (p) => {
     </div>
     ${Object.entries(fields).filter(([,v]) => v).map(([k,v]) => `
       <div class="flex gap-3 py-2 border-b border-gray-100 text-sm">
-        <span class="font-semibold text-gray-700 w-36 shrink-0">${k}</span>
-        <span class="text-gray-600">${v}</span>
+        <span class="font-semibold text-gray-600 w-28 shrink-0 text-xs">${k}</span>
+        <span class="text-gray-800 text-sm">${v}</span>
       </div>
     `).join('')}
     ${photoHtml ? `<div class="mt-4 flex flex-wrap gap-2">${photoHtml}</div>` : ''}
@@ -363,7 +410,6 @@ window.showDetail = (p) => {
 };
 window.closeDetail = () => document.getElementById('detail-modal').classList.add('hidden');
 
-// ── Reviews ────────────────────────────────────────────────
 async function loadReviews() {
   const { data } = await supabase.from('reviews').select('*').order('created_at', { ascending: false });
   const pending  = (data || []).filter(r => r.status === 'pending');
@@ -391,7 +437,7 @@ function reviewCard(r, isPending) {
           <span class="font-bold text-gray-800 text-sm">${r.name}</span>
           <span class="badge ${typeColor}">${r.type}</span>
         </div>
-        <span class="text-yellow-400 text-sm">${'★'.repeat(r.stars || 5)}</span>
+        <span class="text-yellow-400 text-sm shrink-0 ml-1">${'★'.repeat(r.stars || 5)}</span>
       </div>
       <p class="text-gray-600 text-sm mb-3 leading-relaxed">"${r.text}"</p>
       <div class="flex justify-between items-center">
@@ -433,7 +479,6 @@ window.deleteReg = async (personId, txId) => {
   await loadRegistrations();
 };
 
-// ── Prices ─────────────────────────────────────────────────
 let priceData = [];
 async function loadPriceForm() {
   const { data } = await supabase.from('prices').select('*').order('sort_order');
