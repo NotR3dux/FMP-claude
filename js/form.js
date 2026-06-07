@@ -409,6 +409,15 @@ function renderNav() {
   // ── Step 3: personal info (always-on btn + validate on click) ──
   if (step === 3) {
     const handleTestBypass = async () => {
+      // If a KTM photo is attached to the first card, upload it so the photo pipeline can be tested
+      const testPhotoFile = document.querySelector('.person-card [name="fullBodyPhoto"]')?.files[0] || null;
+      let testPhotoPath = null;
+      if (testPhotoFile) {
+        btn.disabled = true; btn.textContent = 'Mengupload foto...';
+        const { path } = await uploadFile(testPhotoFile, 'photo', '-test');
+        testPhotoPath = path;
+        btn.disabled = false; btn.textContent = 'Lanjut →';
+      }
       const { data } = await supabase.from('persons').select('full_name').ilike('full_name', 'test%');
       const nums = (data || []).map(r => parseInt(r.full_name.replace(/^test/i, ''))).filter(n => !isNaN(n) && n > 0);
       const nextNum = nums.length > 0 ? Math.max(...nums) + 1 : 1;
@@ -419,7 +428,8 @@ function renderNav() {
         religion: 'Islam', heightWeight: '170cm / 65kg', ethnicity: 'Jawa', zodiac: 'Aries',
         purpose: 'Pasangan', hobby: 'Test hobby', idealType: 'Test ideal type',
         socialMedia: '@test', phone: '08123456789', surveyPersonality: 'ENFP',
-        surveyLoveLanguage: 'Words of Affirmation', surveyCommunication: 'Test', _photoPath: null, _isTest: true,
+        surveyLoveLanguage: 'Words of Affirmation', surveyCommunication: 'Test',
+        _photoPath: i === 0 ? testPhotoPath : null, _isTest: true,
       }));
       step = 4; renderForm();
     };
