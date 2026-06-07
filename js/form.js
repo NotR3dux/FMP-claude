@@ -32,6 +32,21 @@ async function prepareImage(file) {
   });
 }
 
+// ── Upload helper (module scope so any step can use it) ────
+async function uploadFile(file, prefix, idx = '') {
+  if (!file) return { path: null, error: null };
+  const prepared = await prepareImage(file);
+  const path = `${prefix}-${Date.now()}${idx}-${Math.random().toString(36).slice(2)}.jpg`;
+  const { data, error } = await supabase.storage.from('uploads').upload(path, prepared, {
+    contentType: 'image/jpeg', upsert: false,
+  });
+  if (error) {
+    console.error(`Upload failed (${prefix}):`, error.message, error);
+    return { path: null, error: error.message };
+  }
+  return { path: data?.path || null, error: null };
+}
+
 // ── Draft persistence ──────────────────────────────────────
 const DRAFT_KEY = 'fmp_draft';
 
@@ -404,7 +419,7 @@ function renderNav() {
         religion: 'Islam', heightWeight: '170cm / 65kg', ethnicity: 'Jawa', zodiac: 'Aries',
         purpose: 'Pasangan', hobby: 'Test hobby', idealType: 'Test ideal type',
         socialMedia: '@test', phone: '08123456789', surveyPersonality: 'ENFP',
-        surveyLoveLanguage: 'Words of Affirmation', surveyCommunication: 'Test', _photoFile: null, _isTest: true,
+        surveyLoveLanguage: 'Words of Affirmation', surveyCommunication: 'Test', _photoPath: null, _isTest: true,
       }));
       step = 4; renderForm();
     };
@@ -435,13 +450,25 @@ function renderNav() {
         return; // Block navigation
       }
 
-      // All valid — collect data
+      // All valid — collect data + upload photo NOW (input still live)
+      btn.disabled = true;
+      const origLabel = btn.textContent;
+      btn.textContent = 'Mengupload foto...';
       formData.persons = [];
-      for (const card of document.querySelectorAll('.person-card')) {
+      const cards = [...document.querySelectorAll('.person-card')];
+      for (const [idx, card] of cards.entries()) {
         const get = n => card.querySelector(`[name="${n}"]`);
         const birthDateRaw = get('birthDate').value;
         const [by, bm, bd] = birthDateRaw ? birthDateRaw.split('-') : ['', '', ''];
         const birthFormatted = birthDateRaw ? `${bd}/${bm}/${by}` : '';
+        const photoFile = get('fullBodyPhoto').files[0] || null;
+        const { path: photoPath, error: upErr } = await uploadFile(photoFile, 'photo', `-${idx}`);
+        if (upErr) {
+          btn.disabled = false;
+          btn.textContent = origLabel;
+          alert('Gagal upload foto KTM: ' + upErr + '\nCoba lagi.');
+          return;
+        }
         formData.persons.push({
           fullName: get('fullName').value, gender: get('gender').value,
           birth: get('birthPlace').value + (birthFormatted ? ', ' + birthFormatted : ''),
@@ -456,7 +483,7 @@ function renderNav() {
           surveyPersonality: get('surveyPersonality').value,
           surveyLoveLanguage: get('surveyLoveLanguage').value,
           surveyCommunication: get('surveyCommunication').value,
-          _photoFile: get('fullBodyPhoto').files[0] || null,
+          _photoPath: photoPath,
         });
       }
       step = 4;
@@ -486,28 +513,13 @@ function renderNav() {
       btn.textContent = 'Menyimpan...';
 
       let uploadError = null;
-      const uploadFile = async (file, prefix, idx = '') => {
-        if (!file) return null;
-        const prepared = await prepareImage(file);
-        const path = `${prefix}-${Date.now()}${idx}-${Math.random().toString(36).slice(2)}.jpg`;
-        const { data, error } = await supabase.storage.from('uploads').upload(path, prepared, {
-          contentType: 'image/jpeg', upsert: false,
-        });
-        if (error) {
-          console.error(`Upload failed (${prefix}):`, error.message, error);
-          uploadError = `Upload error: ${error.message}`;
-          return null;
-        }
-        return data?.path || null;
-      };
 
-      // Upload proof (null in test mode)
-      const proofPath = await uploadFile(proofInput.files?.[0] || null, 'proof');
+      // Upload proof (null in test mode) — photo already uploaded at step 3
+      const { path: proofPath, error: proofErr } = await uploadFile(proofInput.files?.[0] || null, 'proof');
+      if (proofErr) uploadError = `Upload error: ${proofErr}`;
 
-      // Upload each person's photo + insert record
-      for (const [idx, p] of formData.persons.entries()) {
-        const photoPath = await uploadFile(p._photoFile || null, 'photo', `-${idx}`);
-
+      // Insert each person record (photo path captured at step 3)
+      for (const p of formData.persons) {
         const { error: insertErr } = await supabase.from('persons').insert([{
           transaction_id: formData.transactionId,
           full_name: p.fullName, gender: p.gender, birth: p.birth,
@@ -518,7 +530,7 @@ function renderNav() {
           survey_personality: p.surveyPersonality,
           survey_love_language: p.surveyLoveLanguage,
           survey_communication: p.surveyCommunication,
-          full_body_photo_url: photoPath,
+          full_body_photo_url: p._photoPath || null,
           transaction_proof_url: proofPath,
         }]);
         if (insertErr) uploadError = (uploadError ? uploadError + ' | ' : '') + `DB error: ${insertErr.message}`;
