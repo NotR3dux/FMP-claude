@@ -801,6 +801,7 @@ select.finput {
   display: flex;
   gap: 18px;
   width: max-content;
+  margin: 0 auto;
 }
 .review-card {
   width: 280px;

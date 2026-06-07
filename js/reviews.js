@@ -23,9 +23,13 @@ async function loadReviews() {
   const reviews = error ? fallbackReviews : (data || []);
 
   if (reviews.length === 0) {
-    container.innerHTML = `<p style="text-align:center;color:rgba(255,255,255,0.75);font-size:14px;padding:32px 0;width:100%;">Belum ada ulasan. Jadilah yang pertama! 💌</p>`;
+    container.style.width = 'auto';
+    container.style.margin = '0 auto';
+    container.innerHTML = `<p style="text-align:center;color:rgba(255,255,255,0.75);font-size:14px;padding:32px 0;min-width:60vw;">Belum ada ulasan. Jadilah yang pertama! 💌</p>`;
     return;
   }
+  container.style.width = '';
+  container.style.margin = '';
 
   container.innerHTML = reviews.map((r, i) => `
     <div class="review-card" style="background:${r.color || '#FEF0F5'};animation-delay:${i * 0.08}s;">
