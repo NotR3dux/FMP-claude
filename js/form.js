@@ -169,6 +169,26 @@ function renderTitle() {
   `;
 }
 
+// ── Prices (live from DB, cached; falls back to current defaults) ──
+let cachedPrices = null;
+const PKG_BY_ORDER  = { 1: 'Solo', 2: '2 Person', 3: '3 Person' };
+const PRICE_FALLBACK = { 'Solo': '20k', '2 Person': '35k', '3 Person': '50k' };
+async function getPrices() {
+  if (cachedPrices) return cachedPrices;
+  try {
+    const { data } = await supabase.from('prices').select('price_text,sort_order').order('sort_order');
+    const map = {};
+    (data || []).forEach(r => { const k = PKG_BY_ORDER[r.sort_order]; if (k) map[k] = r.price_text; });
+    cachedPrices = { ...PRICE_FALLBACK, ...map };
+  } catch { cachedPrices = { ...PRICE_FALLBACK }; }
+  return cachedPrices;
+}
+function formatRupiah(text) {
+  const m = String(text).trim().match(/^(\d+(?:[.,]\d+)?)\s*k$/i);
+  if (m) return 'Rp ' + (parseFloat(m[1].replace(',', '.')) * 1000).toLocaleString('id-ID');
+  return String(text).startsWith('Rp') ? String(text) : 'Rp ' + text;
+}
+
 // ── Step content ───────────────────────────────────────────
 async function renderContent() {
   const el = document.getElementById('step-content');
@@ -195,14 +215,15 @@ async function renderContent() {
       </div>`;
 
   } else if (step === 2) {
+    const prices = await getPrices();
     el.innerHTML = `
       <div class="fcard">
         <p class="int" style="font-size:13px;color:var(--muted);margin-bottom:18px;text-align:center;">Harga promo presale — pilih paket yang sesuai:</p>
         <div style="display:flex;flex-direction:column;gap:12px;">
           ${[
-            { value:'Solo',     emoji:'🧍', label:'Solo',     price:'15k', sub:'1 orang',  color:'#6AADE0' },
-            { value:'2 Person', emoji:'👫', label:'2 Orang',  price:'25k', sub:'2 orang',  color:'#B9A3DC' },
-            { value:'3 Person', emoji:'👨‍👩‍👧', label:'3 Orang', price:'35k', sub:'3 orang',  color:'#6BC47A' },
+            { value:'Solo',     emoji:'🧍', label:'Solo',     price:prices['Solo'],     sub:'1 orang',  color:'#6AADE0' },
+            { value:'2 Person', emoji:'👫', label:'2 Orang',  price:prices['2 Person'], sub:'2 orang',  color:'#B9A3DC' },
+            { value:'3 Person', emoji:'👨‍👩‍👧', label:'3 Orang', price:prices['3 Person'], sub:'3 orang',  color:'#6BC47A' },
           ].map(pkg => `
             <label class="pkg-label" style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-radius:14px;border:2.5px solid #e8e8e8;cursor:pointer;background:#fff;transition:border-color 0.2s,background 0.2s;">
               <div style="display:flex;align-items:center;gap:12px;">
@@ -231,9 +252,9 @@ async function renderContent() {
       : '') + Array.from({ length: count }, (_, i) => renderPersonForm(i + 1)).join('');
 
   } else if (step === 4) {
-    const priceMap  = { 'Solo': 'Rp 15.000', '2 Person': 'Rp 25.000', '3 Person': 'Rp 35.000' };
+    const prices    = await getPrices();
     const pkgLabel  = { 'Solo': 'Solo (1 orang)', '2 Person': '2 Orang', '3 Person': '3 Orang' };
-    const price     = priceMap[formData.package] || '';
+    const price     = formatRupiah(prices[formData.package] || '');
     const pkg       = pkgLabel[formData.package] || formData.package;
     const firstName = formData.persons?.[0]?.fullName || 'Nama Lengkap';
     el.innerHTML = `
